@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+.built {
+  --built-cream: #efebe0;
+  --built-orange: #f0a52b;
+  --built-indigo: var(--bear-bg, #2f3399);
+  --built-green: var(--bear-accent, #d3d818);
+
+  position: relative;
+  padding: 56px 40px 24px;
+  background-color: var(--built-cream);
+  overflow: hidden;
+}
+
+.built-main {
+  /* max-width: 1100px; */
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  gap: 40px;
+}
+
+.built-left {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 10px;
+}
+
+.built-right{
+  width: 50%;
+}
+
+.built-title {
+  margin: 0;
+  font-family: 'Anton', 'Sharp Grotesk Black', sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 0.92;
+  color: var(--built-indigo);
+}
+
+.built-title-line {
+  display: block;
+  font-size: clamp(30px, 5vw, 52px);
+}
+
+.built-title-line--accent {
+  color: var(--built-orange);
+}
+
+.built-image {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  /* margin-top: -8px; */
+}
+
+.built-placeholder {
+  flex: 1 1 0;
+  align-self: stretch;
+  min-height: 420px;
+  border-radius: 18px;
+  background-color: var(--built-indigo);
+}
+
+.built-bar {
+  height: 12px;
+  margin: 24px -40px -24px;
+  background-color: var(--built-green);
+}
+
+@media (max-width: 760px) {
+  .built {
+    padding: 40px 20px 16px;
+  }
+
+  .built-main {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .built-left,
+  .built-right {
+    width: 100%;
+  }
+
+  .built-image {
+    max-width: 100%;
+  }
+
+  .built-placeholder {
+    width: 100%;
+    min-height: 280px;
+  }
+
+  .built-bar {
+    margin: 24px -20px -16px;
+  }
+}

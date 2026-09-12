@@ -1,0 +1,35 @@
+.marquee {
+  position: relative;
+  overflow: hidden;
+  background: var(--bear-bg);
+  border-top: 1.5px solid var(--bear-gold);
+  border-bottom: 1.5px solid var(--bear-gold);
+  padding: 14px 0;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 18s linear infinite;
+}
+
+.marquee-item {
+  font-family: 'Sharp Grotesk PE Trial Bold', sans-serif;
+  font-weight: 700;
+  font-size: clamp(18px, 4vw, 36px);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--bear-gold);
+  white-space: nowrap;
+  padding: 0 20px;
+}
+
+.marquee-divider {
+  color: var(--bear-gold);
+  opacity: 0.6;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}

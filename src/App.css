@@ -1,0 +1,4 @@
+.crt-content {
+  filter: url(#crtBulge);
+  will-change: filter;
+}

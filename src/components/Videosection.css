@@ -1,0 +1,14 @@
+.video-section{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bg-white);
+}
+
+.video-title{
+    color: var(--bg);
+    font-family: 'Easy Pixel Regular', sans-serif;
+    font-size: clamp(28px, 6vw, 56px);
+}

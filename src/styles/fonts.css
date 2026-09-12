@@ -1,0 +1,1763 @@
+@font-face {
+  font-family: 'SharpGroteskPETrialBlack';
+  src: url('/fonts/SharpGroteskPETrialBlack-05-BF646589e025c12.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlack';
+  src: url('/fonts/SharpGroteskPETrialBlack-06-BF646589df98b79.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlack';
+  src: url('/fonts/SharpGroteskPETrialBlack-07-BF646589dfe1e08.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlack';
+  src: url('/fonts/SharpGroteskPETrialBlack-08-BF646589dfac479.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlack';
+  src: url('/fonts/SharpGroteskPETrialBlack-09-BF646589dfceae5.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlack';
+  src: url('/fonts/SharpGroteskPETrialBlack-10-BF646589df8784b.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlack';
+  src: url('/fonts/SharpGroteskPETrialBlack-11-BF646589dfac376.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlack';
+  src: url('/fonts/SharpGroteskPETrialBlack-12-BF646589dfe6b0f.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlack';
+  src: url('/fonts/SharpGroteskPETrialBlack-13-BF646589df95fda.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlack';
+  src: url('/fonts/SharpGroteskPETrialBlack-14-BF646589df6b9fb.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlack';
+  src: url('/fonts/SharpGroteskPETrialBlack-15-BF646589df83e60.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlack';
+  src: url('/fonts/SharpGroteskPETrialBlack-16-BF646589def27ca.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlack';
+  src: url('/fonts/SharpGroteskPETrialBlack-17-BF646589df032ff.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlack';
+  src: url('/fonts/SharpGroteskPETrialBlack-18-BF646589df77b28.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlack';
+  src: url('/fonts/SharpGroteskPETrialBlack-19-BF646589df73fe4.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlack';
+  src: url('/fonts/SharpGroteskPETrialBlack-20-BF646589df777d3.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlack';
+  src: url('/fonts/SharpGroteskPETrialBlack-21-BF646589df500f7.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlack';
+  src: url('/fonts/SharpGroteskPETrialBlack-22-BF646589df84341.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlack';
+  src: url('/fonts/SharpGroteskPETrialBlack-23-BF646589df17cfa.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlack';
+  src: url('/fonts/SharpGroteskPETrialBlack-24-BF646589def2032.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlack';
+  src: url('/fonts/SharpGroteskPETrialBlack-25-BF646589def36f4.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlackItl';
+  src: url('/fonts/SharpGroteskPETrialBlackItl-05-BF646589de1bee0.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlackItl';
+  src: url('/fonts/SharpGroteskPETrialBlackItl-06-BF646589dee9c3e.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlackItl';
+  src: url('/fonts/SharpGroteskPETrialBlackItl-07-BF646589dea74e0.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlackItl';
+  src: url('/fonts/SharpGroteskPETrialBlackItl-08-BF646589de2273c.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlackItl';
+  src: url('/fonts/SharpGroteskPETrialBlackItl-09-BF646589df1529d.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlackItl';
+  src: url('/fonts/SharpGroteskPETrialBlackItl-10-BF646589ddf29fa.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlackItl';
+  src: url('/fonts/SharpGroteskPETrialBlackItl-11-BF646589dea5367.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlackItl';
+  src: url('/fonts/SharpGroteskPETrialBlackItl-12-BF646589deb4f42.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlackItl';
+  src: url('/fonts/SharpGroteskPETrialBlackItl-13-BF646589de3646f.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlackItl';
+  src: url('/fonts/SharpGroteskPETrialBlackItl-14-BF646589deddbd3.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlackItl';
+  src: url('/fonts/SharpGroteskPETrialBlackItl-15-BF646589de447dd.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlackItl';
+  src: url('/fonts/SharpGroteskPETrialBlackItl-16-BF646589dde03a2.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlackItl';
+  src: url('/fonts/SharpGroteskPETrialBlackItl-17-BF646589de5c194.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlackItl';
+  src: url('/fonts/SharpGroteskPETrialBlackItl-18-BF646589df017b9.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlackItl';
+  src: url('/fonts/SharpGroteskPETrialBlackItl-19-BF646589def3414.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlackItl';
+  src: url('/fonts/SharpGroteskPETrialBlackItl-20-BF646589de72e29.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlackItl';
+  src: url('/fonts/SharpGroteskPETrialBlackItl-21-BF646589dedd4d8.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlackItl';
+  src: url('/fonts/SharpGroteskPETrialBlackItl-22-BF646589df017b4.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlackItl';
+  src: url('/fonts/SharpGroteskPETrialBlackItl-23-BF646589de1e828.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlackItl';
+  src: url('/fonts/SharpGroteskPETrialBlackItl-24-BF646589de34917.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBlackItl';
+  src: url('/fonts/SharpGroteskPETrialBlackItl-25-BF646589de7075d.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBold';
+  src: url('/fonts/SharpGroteskPETrialBold-05-BF646589d8e1d5b.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBold';
+  src: url('/fonts/SharpGroteskPETrialBold-06-BF646589dd96699.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBold';
+  src: url('/fonts/SharpGroteskPETrialBold-07-BF646589d88b903.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBold';
+  src: url('/fonts/SharpGroteskPETrialBold-08-BF646589dd478d1.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBold';
+  src: url('/fonts/SharpGroteskPETrialBold-09-BF646589d8b820b.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBold';
+  src: url('/fonts/SharpGroteskPETrialBold-10-BF646589d8f183e.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBold';
+  src: url('/fonts/SharpGroteskPETrialBold-11-BF646589d88a518.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBold';
+  src: url('/fonts/SharpGroteskPETrialBold-12-BF646589ddc11c4.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBold';
+  src: url('/fonts/SharpGroteskPETrialBold-13-BF646589dd0510e.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBold';
+  src: url('/fonts/SharpGroteskPETrialBold-14-BF646589ddc1331.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBold';
+  src: url('/fonts/SharpGroteskPETrialBold-15-BF646589dd920c5.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBold';
+  src: url('/fonts/SharpGroteskPETrialBold-16-BF646589ddc1328.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBold';
+  src: url('/fonts/SharpGroteskPETrialBold-17-BF646589dd64166.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBold';
+  src: url('/fonts/SharpGroteskPETrialBold-18-BF646589dd5b391.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBold';
+  src: url('/fonts/SharpGroteskPETrialBold-19-BF646589dd60a9a.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBold';
+  src: url('/fonts/SharpGroteskPETrialBold-20-BF646589dd6807c.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBold';
+  src: url('/fonts/SharpGroteskPETrialBold-21-BF646589dde1f63.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBold';
+  src: url('/fonts/SharpGroteskPETrialBold-22-BF646589dd9ebb5.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBold';
+  src: url('/fonts/SharpGroteskPETrialBold-23-BF646589dddfe45.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBold';
+  src: url('/fonts/SharpGroteskPETrialBold-24-BF646589dd9b269.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBold';
+  src: url('/fonts/SharpGroteskPETrialBold-25-BF646589dd9b691.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBoldItl';
+  src: url('/fonts/SharpGroteskPETrialBoldItl-05-BF646589d88d4e6.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBoldItl';
+  src: url('/fonts/SharpGroteskPETrialBoldItl-06-BF646589dd67a22.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBoldItl';
+  src: url('/fonts/SharpGroteskPETrialBoldItl-07-BF646589dcdbea1.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBoldItl';
+  src: url('/fonts/SharpGroteskPETrialBoldItl-08-BF646589dd67e31.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBoldItl';
+  src: url('/fonts/SharpGroteskPETrialBoldItl-09-BF646589dd091b0.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBoldItl';
+  src: url('/fonts/SharpGroteskPETrialBoldItl-10-BF646589df654f2.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBoldItl';
+  src: url('/fonts/SharpGroteskPETrialBoldItl-11-BF646589df767af.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBoldItl';
+  src: url('/fonts/SharpGroteskPETrialBoldItl-12-BF646589dd024fd.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBoldItl';
+  src: url('/fonts/SharpGroteskPETrialBoldItl-13-BF646589df29ad9.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBoldItl';
+  src: url('/fonts/SharpGroteskPETrialBoldItl-14-BF646589df767ee.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBoldItl';
+  src: url('/fonts/SharpGroteskPETrialBoldItl-15-BF646589d6970f5.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBoldItl';
+  src: url('/fonts/SharpGroteskPETrialBoldItl-16-BF646589dc8f201.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBoldItl';
+  src: url('/fonts/SharpGroteskPETrialBoldItl-17-BF646589dd69cae.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBoldItl';
+  src: url('/fonts/SharpGroteskPETrialBoldItl-18-BF646589df4a852.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBoldItl';
+  src: url('/fonts/SharpGroteskPETrialBoldItl-19-BF646589dcb7e03.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBoldItl';
+  src: url('/fonts/SharpGroteskPETrialBoldItl-20-BF646589dca06f5.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBoldItl';
+  src: url('/fonts/SharpGroteskPETrialBoldItl-21-BF646589dcf1e1d.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBoldItl';
+  src: url('/fonts/SharpGroteskPETrialBoldItl-22-BF646589ded57c4.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBoldItl';
+  src: url('/fonts/SharpGroteskPETrialBoldItl-23-BF646589dd0b1e0.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBoldItl';
+  src: url('/fonts/SharpGroteskPETrialBoldItl-24-BF646589dcb0914.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBoldItl';
+  src: url('/fonts/SharpGroteskPETrialBoldItl-25-BF646589dcf1eb6.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBook';
+  src: url('/fonts/SharpGroteskPETrialBook-05-BF646589dc799c4.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBook';
+  src: url('/fonts/SharpGroteskPETrialBook-06-BF646589dd1067a.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBook';
+  src: url('/fonts/SharpGroteskPETrialBook-07-BF646589dc3905b.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBook';
+  src: url('/fonts/SharpGroteskPETrialBook-08-BF646589dc71e5a.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBook';
+  src: url('/fonts/SharpGroteskPETrialBook-09-BF646589dc99c60.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBook';
+  src: url('/fonts/SharpGroteskPETrialBook-10-BF646589d66a472.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBook';
+  src: url('/fonts/SharpGroteskPETrialBook-11-BF646589d68dc50.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBook';
+  src: url('/fonts/SharpGroteskPETrialBook-12-BF646589dc22d4c.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBook';
+  src: url('/fonts/SharpGroteskPETrialBook-13-BF646589dc7c3b2.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBook';
+  src: url('/fonts/SharpGroteskPETrialBook-14-BF646589dbeff40.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBook';
+  src: url('/fonts/SharpGroteskPETrialBook-15-BF646589d66d4c8.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBook';
+  src: url('/fonts/SharpGroteskPETrialBook-16-BF646589dc79614.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBook';
+  src: url('/fonts/SharpGroteskPETrialBook-17-BF646589dc33449.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBook';
+  src: url('/fonts/SharpGroteskPETrialBook-18-BF646589dc60c30.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBook';
+  src: url('/fonts/SharpGroteskPETrialBook-19-BF646589dbd79d8.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBook';
+  src: url('/fonts/SharpGroteskPETrialBook-20-BF646589dc50528.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBook';
+  src: url('/fonts/SharpGroteskPETrialBook-21-BF646589dc468e0.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBook';
+  src: url('/fonts/SharpGroteskPETrialBook-22-BF646589dc58e0b.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBook';
+  src: url('/fonts/SharpGroteskPETrialBook-23-BF646589dc88dee.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBook';
+  src: url('/fonts/SharpGroteskPETrialBook-24-BF646589dc37d01.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBook';
+  src: url('/fonts/SharpGroteskPETrialBook-25-BF646589dc31b8a.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBookItl';
+  src: url('/fonts/SharpGroteskPETrialBookItl-05-BF646589dc027a3.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBookItl';
+  src: url('/fonts/SharpGroteskPETrialBookItl-06-BF646589d67ebd1.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBookItl';
+  src: url('/fonts/SharpGroteskPETrialBookItl-07-BF646589de069ff.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBookItl';
+  src: url('/fonts/SharpGroteskPETrialBookItl-08-BF646589d66d564.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBookItl';
+  src: url('/fonts/SharpGroteskPETrialBookItl-09-BF646589dc8a1f7.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBookItl';
+  src: url('/fonts/SharpGroteskPETrialBookItl-10-BF646589dbd34d6.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBookItl';
+  src: url('/fonts/SharpGroteskPETrialBookItl-11-BF646589dbacbb0.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBookItl';
+  src: url('/fonts/SharpGroteskPETrialBookItl-12-BF646589dbd0f7d.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBookItl';
+  src: url('/fonts/SharpGroteskPETrialBookItl-13-BF646589dc52626.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBookItl';
+  src: url('/fonts/SharpGroteskPETrialBookItl-14-BF646589d669e1f.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBookItl';
+  src: url('/fonts/SharpGroteskPETrialBookItl-15-BF646589dbd89c8.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBookItl';
+  src: url('/fonts/SharpGroteskPETrialBookItl-16-BF646589dbd96c0.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBookItl';
+  src: url('/fonts/SharpGroteskPETrialBookItl-17-BF646589dba4f75.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBookItl';
+  src: url('/fonts/SharpGroteskPETrialBookItl-18-BF646589db93909.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBookItl';
+  src: url('/fonts/SharpGroteskPETrialBookItl-19-BF646589db9f9ed.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBookItl';
+  src: url('/fonts/SharpGroteskPETrialBookItl-20-BF646589dbd3825.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBookItl';
+  src: url('/fonts/SharpGroteskPETrialBookItl-21-BF646589dc1afd9.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBookItl';
+  src: url('/fonts/SharpGroteskPETrialBookItl-22-BF646589dba745c.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBookItl';
+  src: url('/fonts/SharpGroteskPETrialBookItl-23-BF646589dc0bf4d.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBookItl';
+  src: url('/fonts/SharpGroteskPETrialBookItl-24-BF646589dc08018.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialBookItl';
+  src: url('/fonts/SharpGroteskPETrialBookItl-25-BF646589dc07c6d.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLight';
+  src: url('/fonts/SharpGroteskPETrialLight-05-BF646589d68da2a.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLight';
+  src: url('/fonts/SharpGroteskPETrialLight-06-BF646589d684468.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLight';
+  src: url('/fonts/SharpGroteskPETrialLight-07-BF646589d65e5bb.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLight';
+  src: url('/fonts/SharpGroteskPETrialLight-08-BF646589db21bff.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLight';
+  src: url('/fonts/SharpGroteskPETrialLight-09-BF646589db21e86.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLight';
+  src: url('/fonts/SharpGroteskPETrialLight-10-BF646589d6034ad.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLight';
+  src: url('/fonts/SharpGroteskPETrialLight-11-BF646589db72550.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLight';
+  src: url('/fonts/SharpGroteskPETrialLight-12-BF646589db6ee81.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLight';
+  src: url('/fonts/SharpGroteskPETrialLight-13-BF646589daa7aa5.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLight';
+  src: url('/fonts/SharpGroteskPETrialLight-14-BF646589db051ba.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLight';
+  src: url('/fonts/SharpGroteskPETrialLight-15-BF646589db2e22f.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLight';
+  src: url('/fonts/SharpGroteskPETrialLight-16-BF646589daabc70.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLight';
+  src: url('/fonts/SharpGroteskPETrialLight-17-BF646589da71ec3.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLight';
+  src: url('/fonts/SharpGroteskPETrialLight-18-BF646589db2d719.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLight';
+  src: url('/fonts/SharpGroteskPETrialLight-19-BF646589daaf740.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLight';
+  src: url('/fonts/SharpGroteskPETrialLight-20-BF646589db2664c.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLight';
+  src: url('/fonts/SharpGroteskPETrialLight-21-BF646589daef83b.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLight';
+  src: url('/fonts/SharpGroteskPETrialLight-22-BF646589db369d0.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLight';
+  src: url('/fonts/SharpGroteskPETrialLight-23-BF646589db49aa4.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLight';
+  src: url('/fonts/SharpGroteskPETrialLight-24-BF646589db14041.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLight';
+  src: url('/fonts/SharpGroteskPETrialLight-25-BF646589de555a9.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLightItl';
+  src: url('/fonts/SharpGroteskPETrialLightItl-05-BF646589da9b5c8.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLightItl';
+  src: url('/fonts/SharpGroteskPETrialLightItl-06-BF646589d5ca67a.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLightItl';
+  src: url('/fonts/SharpGroteskPETrialLightItl-07-BF646589da7011f.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLightItl';
+  src: url('/fonts/SharpGroteskPETrialLightItl-08-BF646589da7b0ba.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLightItl';
+  src: url('/fonts/SharpGroteskPETrialLightItl-09-BF646589d5c195c.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLightItl';
+  src: url('/fonts/SharpGroteskPETrialLightItl-10-BF646589d4c3ae3.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLightItl';
+  src: url('/fonts/SharpGroteskPETrialLightItl-11-BF646589da91105.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLightItl';
+  src: url('/fonts/SharpGroteskPETrialLightItl-12-BF646589dab213c.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLightItl';
+  src: url('/fonts/SharpGroteskPETrialLightItl-13-BF646589da663cb.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLightItl';
+  src: url('/fonts/SharpGroteskPETrialLightItl-14-BF646589d4cb04d.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLightItl';
+  src: url('/fonts/SharpGroteskPETrialLightItl-15-BF646589da9dec1.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLightItl';
+  src: url('/fonts/SharpGroteskPETrialLightItl-16-BF646589da85c29.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLightItl';
+  src: url('/fonts/SharpGroteskPETrialLightItl-17-BF646589d4a6c8a.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLightItl';
+  src: url('/fonts/SharpGroteskPETrialLightItl-18-BF646589da9202b.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLightItl';
+  src: url('/fonts/SharpGroteskPETrialLightItl-19-BF646589daedd9b.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLightItl';
+  src: url('/fonts/SharpGroteskPETrialLightItl-20-BF646589da5454e.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLightItl';
+  src: url('/fonts/SharpGroteskPETrialLightItl-21-BF646589d432752.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLightItl';
+  src: url('/fonts/SharpGroteskPETrialLightItl-22-BF646589da4b6e2.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLightItl';
+  src: url('/fonts/SharpGroteskPETrialLightItl-23-BF646589da58573.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLightItl';
+  src: url('/fonts/SharpGroteskPETrialLightItl-24-BF646589d43254b.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialLightItl';
+  src: url('/fonts/SharpGroteskPETrialLightItl-25-BF646589da712f7.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMedium';
+  src: url('/fonts/SharpGroteskPETrialMedium-05-BF646589d3efd33.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMedium';
+  src: url('/fonts/SharpGroteskPETrialMedium-06-BF646589d40cabc.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMedium';
+  src: url('/fonts/SharpGroteskPETrialMedium-07-BF646589d9d3a0c.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMedium';
+  src: url('/fonts/SharpGroteskPETrialMedium-08-BF646589da98d5a.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMedium';
+  src: url('/fonts/SharpGroteskPETrialMedium-09-BF646589da36fed.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMedium';
+  src: url('/fonts/SharpGroteskPETrialMedium-10-BF646589d3d25e1.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMedium';
+  src: url('/fonts/SharpGroteskPETrialMedium-11-BF646589da892bc.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMedium';
+  src: url('/fonts/SharpGroteskPETrialMedium-12-BF646589d999a2e.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMedium';
+  src: url('/fonts/SharpGroteskPETrialMedium-13-BF646589d9b522c.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMedium';
+  src: url('/fonts/SharpGroteskPETrialMedium-14-BF646589d9eb97d.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMedium';
+  src: url('/fonts/SharpGroteskPETrialMedium-15-BF646589da3175d.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMedium';
+  src: url('/fonts/SharpGroteskPETrialMedium-16-BF646589d9ead21.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMedium';
+  src: url('/fonts/SharpGroteskPETrialMedium-17-BF646589d984f62.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMedium';
+  src: url('/fonts/SharpGroteskPETrialMedium-18-BF646589da18f5f.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMedium';
+  src: url('/fonts/SharpGroteskPETrialMedium-19-BF646589d9a6994.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMedium';
+  src: url('/fonts/SharpGroteskPETrialMedium-20-BF646589dac6232.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMedium';
+  src: url('/fonts/SharpGroteskPETrialMedium-21-BF646589dabe549.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMedium';
+  src: url('/fonts/SharpGroteskPETrialMedium-22-BF646589da4f228.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMedium';
+  src: url('/fonts/SharpGroteskPETrialMedium-23-BF646589ddc25a1.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMedium';
+  src: url('/fonts/SharpGroteskPETrialMedium-24-BF646589dad8434.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMedium';
+  src: url('/fonts/SharpGroteskPETrialMedium-25-BF646589da0bf69.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMediumItl';
+  src: url('/fonts/SharpGroteskPETrialMediumItl-05-BF646589d3e0ebe.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMediumItl';
+  src: url('/fonts/SharpGroteskPETrialMediumItl-06-BF646589d9708cd.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMediumItl';
+  src: url('/fonts/SharpGroteskPETrialMediumItl-07-BF646589d92b47b.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMediumItl';
+  src: url('/fonts/SharpGroteskPETrialMediumItl-08-BF646589d99765b.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMediumItl';
+  src: url('/fonts/SharpGroteskPETrialMediumItl-09-BF646589d8e5d4b.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMediumItl';
+  src: url('/fonts/SharpGroteskPETrialMediumItl-10-BF646589d9cef94.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMediumItl';
+  src: url('/fonts/SharpGroteskPETrialMediumItl-11-BF646589d85b2a4.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMediumItl';
+  src: url('/fonts/SharpGroteskPETrialMediumItl-12-BF646589da3cfe6.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMediumItl';
+  src: url('/fonts/SharpGroteskPETrialMediumItl-13-BF646589d3b309b.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMediumItl';
+  src: url('/fonts/SharpGroteskPETrialMediumItl-14-BF646589d93f193.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMediumItl';
+  src: url('/fonts/SharpGroteskPETrialMediumItl-15-BF646589d8dee63.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMediumItl';
+  src: url('/fonts/SharpGroteskPETrialMediumItl-16-BF646589d97178d.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMediumItl';
+  src: url('/fonts/SharpGroteskPETrialMediumItl-17-BF646589d3ec69c.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMediumItl';
+  src: url('/fonts/SharpGroteskPETrialMediumItl-18-BF646589d8658cf.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMediumItl';
+  src: url('/fonts/SharpGroteskPETrialMediumItl-19-BF646589d8b8a39.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMediumItl';
+  src: url('/fonts/SharpGroteskPETrialMediumItl-20-BF646589da4950c.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMediumItl';
+  src: url('/fonts/SharpGroteskPETrialMediumItl-21-BF646589d95972f.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMediumItl';
+  src: url('/fonts/SharpGroteskPETrialMediumItl-22-BF646589d8d9988.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMediumItl';
+  src: url('/fonts/SharpGroteskPETrialMediumItl-23-BF646589d963dd5.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMediumItl';
+  src: url('/fonts/SharpGroteskPETrialMediumItl-24-BF646589d97ee71.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialMediumItl';
+  src: url('/fonts/SharpGroteskPETrialMediumItl-25-BF646589ddde545.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBold';
+  src: url('/fonts/SharpGroteskPETrialSmBold-05-BF646589d3b62b7.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBold';
+  src: url('/fonts/SharpGroteskPETrialSmBold-06-BF646589d840327.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBold';
+  src: url('/fonts/SharpGroteskPETrialSmBold-07-BF646589dd62171.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBold';
+  src: url('/fonts/SharpGroteskPETrialSmBold-08-BF646589d8bc733.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBold';
+  src: url('/fonts/SharpGroteskPETrialSmBold-09-BF646589d7d1ea4.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBold';
+  src: url('/fonts/SharpGroteskPETrialSmBold-10-BF646589d3b223d.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBold';
+  src: url('/fonts/SharpGroteskPETrialSmBold-11-BF646589d7f111b.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBold';
+  src: url('/fonts/SharpGroteskPETrialSmBold-12-BF646589d9061c0.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBold';
+  src: url('/fonts/SharpGroteskPETrialSmBold-13-BF646589d90ca5c.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBold';
+  src: url('/fonts/SharpGroteskPETrialSmBold-14-BF646589d835d5e.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBold';
+  src: url('/fonts/SharpGroteskPETrialSmBold-15-BF646589d80ac97.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBold';
+  src: url('/fonts/SharpGroteskPETrialSmBold-16-BF646589d835f76.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBold';
+  src: url('/fonts/SharpGroteskPETrialSmBold-17-BF646589d80ac93.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBold';
+  src: url('/fonts/SharpGroteskPETrialSmBold-18-BF646589d90c720.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBold';
+  src: url('/fonts/SharpGroteskPETrialSmBold-19-BF646589d8e0b3b.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBold';
+  src: url('/fonts/SharpGroteskPETrialSmBold-20-BF646589d7efcd5.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBold';
+  src: url('/fonts/SharpGroteskPETrialSmBold-21-BF646589d82a687.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBold';
+  src: url('/fonts/SharpGroteskPETrialSmBold-22-BF646589d907caf.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBold';
+  src: url('/fonts/SharpGroteskPETrialSmBold-23-BF646589d8138ce.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBold';
+  src: url('/fonts/SharpGroteskPETrialSmBold-24-BF646589d837397.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBold';
+  src: url('/fonts/SharpGroteskPETrialSmBold-25-BF646589d85a16e.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBoldItl';
+  src: url('/fonts/SharpGroteskPETrialSmBoldItl-05-BF646589d375fdc.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBoldItl';
+  src: url('/fonts/SharpGroteskPETrialSmBoldItl-06-BF646589d352375.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBoldItl';
+  src: url('/fonts/SharpGroteskPETrialSmBoldItl-07-BF646589d827327.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBoldItl';
+  src: url('/fonts/SharpGroteskPETrialSmBoldItl-08-BF646589d32c4a1.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBoldItl';
+  src: url('/fonts/SharpGroteskPETrialSmBoldItl-09-BF646589d840ba2.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBoldItl';
+  src: url('/fonts/SharpGroteskPETrialSmBoldItl-10-BF646589d914cdd.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBoldItl';
+  src: url('/fonts/SharpGroteskPETrialSmBoldItl-11-BF646589d9158cc.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBoldItl';
+  src: url('/fonts/SharpGroteskPETrialSmBoldItl-12-BF646589d8e3dd3.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBoldItl';
+  src: url('/fonts/SharpGroteskPETrialSmBoldItl-13-BF646589d9066f2.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBoldItl';
+  src: url('/fonts/SharpGroteskPETrialSmBoldItl-14-BF646589d904b92.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBoldItl';
+  src: url('/fonts/SharpGroteskPETrialSmBoldItl-15-BF646589d8daffc.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBoldItl';
+  src: url('/fonts/SharpGroteskPETrialSmBoldItl-16-BF646589d907a29.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBoldItl';
+  src: url('/fonts/SharpGroteskPETrialSmBoldItl-17-BF646589d910956.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBoldItl';
+  src: url('/fonts/SharpGroteskPETrialSmBoldItl-18-BF646589d8e2623.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBoldItl';
+  src: url('/fonts/SharpGroteskPETrialSmBoldItl-19-BF646589d8e9fcc.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBoldItl';
+  src: url('/fonts/SharpGroteskPETrialSmBoldItl-20-BF646589d8f0750.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBoldItl';
+  src: url('/fonts/SharpGroteskPETrialSmBoldItl-21-BF646589ddf1a55.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBoldItl';
+  src: url('/fonts/SharpGroteskPETrialSmBoldItl-22-BF646589d91271b.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBoldItl';
+  src: url('/fonts/SharpGroteskPETrialSmBoldItl-23-BF646589ddcb801.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBoldItl';
+  src: url('/fonts/SharpGroteskPETrialSmBoldItl-24-BF646589d88c105.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialSmBoldItl';
+  src: url('/fonts/SharpGroteskPETrialSmBoldItl-25-BF646589dda6e77.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThin';
+  src: url('/fonts/SharpGroteskPETrialThin-05-BF646589d89acf5.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThin';
+  src: url('/fonts/SharpGroteskPETrialThin-06-BF646589d8a08c9.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThin';
+  src: url('/fonts/SharpGroteskPETrialThin-07-BF646589d85e9f0.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThin';
+  src: url('/fonts/SharpGroteskPETrialThin-08-BF646589d6a1c54.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThin';
+  src: url('/fonts/SharpGroteskPETrialThin-09-BF646589d2e2fba.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThin';
+  src: url('/fonts/SharpGroteskPETrialThin-10-BF646589d67d93c.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThin';
+  src: url('/fonts/SharpGroteskPETrialThin-11-BF646589d85518d.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThin';
+  src: url('/fonts/SharpGroteskPETrialThin-12-BF646589d7d426a.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThin';
+  src: url('/fonts/SharpGroteskPETrialThin-13-BF646589d6d401e.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThin';
+  src: url('/fonts/SharpGroteskPETrialThin-14-BF646589d6a04e7.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThin';
+  src: url('/fonts/SharpGroteskPETrialThin-15-BF646589d6d1d0d.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThin';
+  src: url('/fonts/SharpGroteskPETrialThin-16-BF646589d66c1b9.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThin';
+  src: url('/fonts/SharpGroteskPETrialThin-17-BF646589d675b1b.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThin';
+  src: url('/fonts/SharpGroteskPETrialThin-18-BF646589d66ea8d.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThin';
+  src: url('/fonts/SharpGroteskPETrialThin-19-BF646589d68a2bb.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThin';
+  src: url('/fonts/SharpGroteskPETrialThin-20-BF646589d68351d.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThin';
+  src: url('/fonts/SharpGroteskPETrialThin-21-BF646589d69bd14.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThin';
+  src: url('/fonts/SharpGroteskPETrialThin-22-BF646589d67ce0b.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThin';
+  src: url('/fonts/SharpGroteskPETrialThin-23-BF646589d68c4ae.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThin';
+  src: url('/fonts/SharpGroteskPETrialThin-24-BF646589d67e02d.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThin';
+  src: url('/fonts/SharpGroteskPETrialThin-25-BF646589d65245e.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThinItl';
+  src: url('/fonts/SharpGroteskPETrialThinItl-05-BF646589d6747fd.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThinItl';
+  src: url('/fonts/SharpGroteskPETrialThinItl-06-BF646589d64a58d.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThinItl';
+  src: url('/fonts/SharpGroteskPETrialThinItl-07-BF646589d65c209.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThinItl';
+  src: url('/fonts/SharpGroteskPETrialThinItl-08-BF646589d663012.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThinItl';
+  src: url('/fonts/SharpGroteskPETrialThinItl-09-BF646589d5bb77f.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThinItl';
+  src: url('/fonts/SharpGroteskPETrialThinItl-10-BF646589d591f6c.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThinItl';
+  src: url('/fonts/SharpGroteskPETrialThinItl-11-BF646589d5dc2c2.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThinItl';
+  src: url('/fonts/SharpGroteskPETrialThinItl-12-BF646589d59d7a3.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThinItl';
+  src: url('/fonts/SharpGroteskPETrialThinItl-13-BF646589d5c7079.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThinItl';
+  src: url('/fonts/SharpGroteskPETrialThinItl-14-BF646589d581aec.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThinItl';
+  src: url('/fonts/SharpGroteskPETrialThinItl-15-BF646589d5bcf47.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThinItl';
+  src: url('/fonts/SharpGroteskPETrialThinItl-16-BF646589d438b57.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThinItl';
+  src: url('/fonts/SharpGroteskPETrialThinItl-17-BF646589d4be2c4.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThinItl';
+  src: url('/fonts/SharpGroteskPETrialThinItl-18-BF646589d4b534e.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThinItl';
+  src: url('/fonts/SharpGroteskPETrialThinItl-19-BF646589d3b0b9d.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThinItl';
+  src: url('/fonts/SharpGroteskPETrialThinItl-20-BF646589d3e31ba.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThinItl';
+  src: url('/fonts/SharpGroteskPETrialThinItl-21-BF646589d3b7e35.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThinItl';
+  src: url('/fonts/SharpGroteskPETrialThinItl-22-BF646589d382f15.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThinItl';
+  src: url('/fonts/SharpGroteskPETrialThinItl-23-BF646589d3bfa37.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThinItl';
+  src: url('/fonts/SharpGroteskPETrialThinItl-24-BF646589d2847d1.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SharpGroteskPETrialThinItl';
+  src: url('/fonts/SharpGroteskPETrialThinItl-25-BF646589d389b5f.ttf') format('truetype');
+  font-display: swap;
+}

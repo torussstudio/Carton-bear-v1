@@ -1,0 +1,69 @@
+@import './fonts.css';
+@import "tailwindcss";
+
+:root {
+  --bg: #0d0b0a;
+  --bg-white: #ffffff;
+  --panel: #1e1a17;
+  --accent: #d97757;
+  --text: #ece6dd;
+  --muted: #948a7f;
+
+  --bear-bg: #0506cc;
+  --bear-accent: #d3d818;
+  --bear-text: #ece9f2;
+  --bear-gold: #ffd400; 
+
+  --font-sharp: 'Sharp Grotesk PE Trial Black', sans-serif;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+html, body {
+  background-color: var(--bear-bg);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 34px 34px;
+  font-family: Georgia, 'Times New Roman', serif;
+  color: #1c1a18;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
+#root {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+img, video, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+}
+
+
+
+.font-sharp{
+  font-family: 'Sharp Grotesk PE Trial Black', sans-serif;
+}
+
+.font-pixel{
+  font-family: 'Easy Pixel Regular', sans-serif;
+}
+
+#crtContent {
+  will-change: filter;
+}

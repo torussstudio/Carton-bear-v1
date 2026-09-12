@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+.prefooter {
+  --prefooter-bg: var(--bear-bg, #2f3399);
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 72px 24px 96px;
+  background-color: var(--prefooter-bg);
+  overflow: hidden;
+}
+
+.prefooter-headline {
+  width: 100%;
+  max-width: 900px;
+  height: auto;
+}
+
+.prefooter-line {
+  font-family: 'Anton', 'Sharp Grotesk Black', sans-serif;
+  font-weight: 400;
+  fill: #f4f2ea;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.prefooter-line--one,
+.prefooter-line--two {
+  font-size: 92px;
+}
+
+.prefooter-line--three {
+  font-size: 68px;
+}
+
+.prefooter-cta {
+  margin-top: 12px;
+  font-size: 18px;
+  letter-spacing: 0.03em;
+  padding: 14px 32px;
+  border: none;
+}
+
+@media (max-width: 640px) {
+  .prefooter {
+    padding: 56px 16px 72px;
+  }
+
+  .prefooter-line--one,
+  .prefooter-line--two {
+    font-size: 58px;
+  }
+
+  .prefooter-line--three {
+    font-size: 42px;
+  }
+
+  .prefooter-cta {
+    font-size: 16px;
+    padding: 12px 26px;
+  }
+}
