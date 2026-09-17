@@ -1,0 +1,49 @@
+/* Scroll-reveal initial states.
+   These give every [data-reveal] element a sane "hidden" starting point
+   before JS/GSAP takes over, so there's no flash of fully-visible content
+   on slow connections. GSAP overrides these with inline styles once it
+   boots, and reduced-motion users bypass all of it below. */
+
+[data-reveal='fade'] {
+  opacity: 0;
+  transform: translateY(48px);
+  will-change: transform, opacity;
+}
+
+[data-reveal='image'] {
+  opacity: 0;
+  transform: scale(1.12);
+  will-change: transform, opacity;
+}
+
+.reveal-mask {
+  display: block;
+  overflow: hidden;
+}
+
+.reveal-mask > * {
+  display: inline-block;
+  transform: translateY(100%);
+  will-change: transform;
+}
+
+[data-reveal='scrub-words'] .word {
+  opacity: 0.16;
+}
+
+[data-reveal='draw'] circle,
+[data-reveal='draw'] text {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal='fade'],
+  [data-reveal='image'],
+  .reveal-mask > *,
+  [data-reveal='scrub-words'] .word,
+  [data-reveal='draw'] circle,
+  [data-reveal='draw'] text {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

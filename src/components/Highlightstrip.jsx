@@ -19,7 +19,9 @@ function Highlightstrip() {
        max-w-[80%] 
        text-center 
        tracking-wide
-       ">
+       "
+       data-reveal="scrub-words"
+      >
         PACKAGING EXECUTION FROM INDIA, BUILT FOR GLOBAL BRANDS.
       </p>
     </div>

@@ -13,11 +13,11 @@
 
 .bear-pill {
   font-family: 'Sharp Grotesk PE Trial Bold', sans-serif;
-  font-size: clamp(15px, 2.4vw, 28px);
+  font-size: clamp(15px, 2.4vw, 26px);
   font-weight: 800;
   /* letter-spacing: 0.05em; */
   text-decoration: none;
-  padding: 10px 22px;
+  padding: 3px 26px;
   border-radius: 29px;
   border: 1.5px solid var(--bear-accent);
   cursor: pointer;

@@ -78,14 +78,18 @@ function WithoutUsSection() {
       >
 
 
-        <h2 className="font-pixel text-[clamp(32px,8vw,80px)] font-normal leading-[1.1] text-[#e6392b]"style={{ marginBottom: '12px' }}> 
-          <span className="block">Without Us, You&apos;re</span>
-          <span className="block">Dealing With :</span>
+        <h2 className="font-pixel text-[clamp(32px,8vw,80px)] font-normal leading-[1.1] text-[#e6392b]"style={{ marginBottom: '12px' }} data-reveal="lines"> 
+          <span className="reveal-mask">
+            <span className="block">Without Us, You&apos;re</span>
+          </span>
+          <span className="reveal-mask">
+            <span className="block">Dealing With :</span>
+          </span>
         </h2>
 
         <ul className="flex list-none flex-col gap-[15px] font-pixel text-[clamp(20px,5vw,40px)] font-normal text-[#e6392b]">
           {PAIN_POINTS.map((point) => (
-            <li key={point}>
+            <li key={point} data-reveal="fade">
               <span className="opacity-90">&gt;</span> {point}
             </li>
           ))}
@@ -93,62 +97,62 @@ function WithoutUsSection() {
       </div>
 
       {/* Visual */}
-      <div className="relative 
-      mx-auto 
-      max-w-[1300px]"
-      style={{marginBottom: "30px"}}
-      
-      >
-        <img
-          src={bearHand}
-          alt="A furry bear hand holding a glowing packaging box"
-          className="block h-auto w-full"
+<div className="relative 
+mx-auto 
+max-w-[1300px]"
+style={{marginBottom: "30px"}}
+data-reveal="hand-lift"
+>
+  <img
+    src={bearHand}
+    alt="A furry bear hand holding a glowing packaging box"
+    className="block h-auto w-full bear-hand-image"
+  />
+
+  <svg
+    className="absolute top-[-11%] left-[-2%] max-w-[90%] bear-hand-callouts"
+    viewBox="0 0 500 260"
+    preserveAspectRatio="xMidYMid meet"
+    aria-hidden="true"
+  >
+    {CALLOUTS.map((c) => (
+      <g key={c.label}>
+        <path
+          d={c.path}
+          fill="none"
+          stroke="#ffd400"
+          strokeWidth="1"
+          opacity="0.85"
         />
 
-        <svg
-          className="absolute top-[-11%] left-[-2%] max-w-[90%]"
-          viewBox="0 0 500 260"
-          preserveAspectRatio="xMidYMid meet"
-          aria-hidden="true"
+        <circle
+          cx={c.dotX}
+          cy={c.dotY}
+          r="2.5"
+          fill="#ffd400"
+        />
+
+        <text
+          x={c.labelX}
+          y={c.labelY}
+          textAnchor={c.anchor}
+          fill="#ffd400"
+          fontFamily="Roboto Slab, serif"
+          fontSize="9.5"
+          letterSpacing="0.01em"
         >
-          {CALLOUTS.map((c) => (
-            <g key={c.label}>
-              <path
-                d={c.path}
-                fill="none"
-                stroke="#ffd400"
-                strokeWidth="1"
-                opacity="0.85"
-              />
-
-              <circle
-                cx={c.dotX}
-                cy={c.dotY}
-                r="2.5"
-                fill="#ffd400"
-              />
-
-              <text
-                x={c.labelX}
-                y={c.labelY}
-                textAnchor={c.anchor}
-                fill="#ffd400"
-                fontFamily="Roboto Slab, serif"
-                fontSize="9.5"
-                letterSpacing="0.01em"
-              >
-                {c.label}
-              </text>
-            </g>
-          ))}
-        </svg>
-      </div>
+          {c.label}
+        </text>
+      </g>
+    ))}
+  </svg>
+</div>
 
       {/* Footer */}
 <div
   className="mx-auto flex w-full max-w-[1550px] flex-col items-center gap-6 md:flex-row md:items-center md:justify-between md:gap-10"
 >
-  <p className="m-0 max-w-[810px] font-pixel text-[clamp(22px,4.5vw,40px)] font-normal uppercase leading-[1.5] tracking-[0.02em] text-[#ffd400]">
+  <p className="m-0 max-w-[810px] font-pixel text-[clamp(22px,4.5vw,40px)] font-normal uppercase leading-[1.5] tracking-[0.02em] text-[#ffd400]" data-reveal="fade">
     Whether you&apos;re a global brand sourcing from India, a growing
     export business, or an agency managing international production
     we help make packaging execution feel less exhausting.
@@ -168,6 +172,7 @@ function WithoutUsSection() {
       padding: '13px 39px',
       textShadow: '0 0 6px rgba(255,212,0,0.9), 0 0 14px rgba(255,212,0,0.7), 0 0 24px rgba(255,212,0,0.4)',
     }}
+    data-reveal="fade"
   >
     Talk To Us About Export
   </button>

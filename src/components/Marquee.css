@@ -10,13 +10,13 @@
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee-scroll 18s linear infinite;
+  animation: marquee-scroll 20s linear infinite;
 }
 
 .marquee-item {
   font-family: 'Sharp Grotesk PE Trial Bold', sans-serif;
   font-weight: 700;
-  font-size: clamp(18px, 4vw, 36px);
+  font-size: clamp(18px, 4vw, 50px);
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--bear-gold);

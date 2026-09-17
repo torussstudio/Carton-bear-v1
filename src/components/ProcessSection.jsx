@@ -56,6 +56,7 @@ function ProcessSection() {
           "
           viewBox="0 0 620 260"
           aria-hidden="true"
+          data-reveal="fade"
         >
           <path
             d="M64,158 C58,86 182,42 322,42 C464,42 566,78 566,142 C566,198 462,228 320,228 C214,228 128,210 78,180"
@@ -78,10 +79,11 @@ function ProcessSection() {
           "
           viewBox="0 0 40 40"
           aria-hidden="true"
+          data-reveal="image"
         >
           <path
             d="M20 1 C21.5 14 26 18.5 39 20 C26 21.5 21.5 26 20 39 C18.5 26 14 21.5 1 20 C14 18.5 18.5 14 20 1 Z"
-            fill="#e63a2a"
+            fill="#ff0000"
           />
         </svg>
 
@@ -96,26 +98,31 @@ function ProcessSection() {
             font-normal
             uppercase
             leading-[0.8]
-            text-[#e63a2a]"
+            text-[#ff0000]"
+          data-reveal="lines"
         >
-          <span
-            className="
-              block
-              text-[clamp(32px,9.5vw,150px)]
-            "
-          >
-            Clear Process
+          <span className="reveal-mask">
+            <span
+              className="
+                block
+                text-[clamp(32px,10.5vw,150px)]
+              "
+            >
+              Clear Process
+            </span>
           </span>
 
-          <span
-            className="
-              block
-              text-[clamp(44px,10.8vw,150px)]
-            "
+          <span className="reveal-mask">
+            <span
+              className="
+                block
+                text-[clamp(44px,10.8vw,150px)]
+              "
 
-            style={{ marginTop: '0.06em' }}
-          >
-            No Chaos
+              style={{ marginTop: '0.06em' }}
+            >
+              No Chaos
+            </span>
           </span>
         </h2>
       </div>
@@ -136,6 +143,7 @@ function ProcessSection() {
             "
             style= {{ padding:"20px 35px"}}
             key={step}
+            data-reveal="fade"
           >
             {step}
           </li>

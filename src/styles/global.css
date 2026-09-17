@@ -1,5 +1,6 @@
 @import './fonts.css';
 @import "tailwindcss";
+@import './animations.css';
 
 :root {
   --bg: #0d0b0a;
@@ -53,8 +54,6 @@ img, video, svg {
 button, input, select, textarea {
   font-family: inherit;
 }
-
-
 
 .font-sharp{
   font-family: 'Sharp Grotesk PE Trial Black', sans-serif;

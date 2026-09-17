@@ -35,6 +35,7 @@ function PreFooterSection() {
           className="prefooter-line prefooter-line--one"
           textAnchor="middle"
           filter="url(#prefooterShadow)"
+          data-reveal="fade"
         >
           <textPath href="#prefooterLine1" startOffset="50%">
             LET&apos;S MAKE
@@ -45,6 +46,7 @@ function PreFooterSection() {
           className="prefooter-line prefooter-line--two"
           textAnchor="middle"
           filter="url(#prefooterShadow)"
+          data-reveal="fade"
         >
           <textPath href="#prefooterLine2" startOffset="50%">
             PACKAGING
@@ -55,6 +57,7 @@ function PreFooterSection() {
           className="prefooter-line prefooter-line--three"
           textAnchor="middle"
           filter="url(#prefooterShadow)"
+          data-reveal="fade"
         >
           <textPath href="#prefooterLine3" startOffset="50%">
             LESS EXHAUSTING
@@ -65,6 +68,7 @@ function PreFooterSection() {
       <button
         type="button"
         className="bear-pill bear-pill--solid prefooter-cta"
+        data-reveal="fade"
       >
         Let&apos;s Get Packing
       </button>

@@ -12,14 +12,18 @@ const DISPATCH_ITEMS = [
 function DispatchesSection() {
   return (
     <section className="dispatches">
-      <h2 className="dispatches-title">
-        <span className="dispatches-title-line">Dispatches From</span>
-        <span className="dispatches-title-line">Cartonbear.</span>
+      <h2 className="dispatches-title" data-reveal="lines">
+        <span className="reveal-mask">
+          <span className="dispatches-title-line">Dispatches From</span>
+        </span>
+        <span className="reveal-mask">
+          <span className="dispatches-title-line">Cartonbear.</span>
+        </span>
       </h2>
 
       <ul className="dispatches-list">
         {DISPATCH_ITEMS.map((item, index) => (
-          <li className="dispatches-list-item" key={item}>
+          <li className="dispatches-list-item" key={item} data-reveal="fade">
             <span className="dispatches-list-text">{item}</span>
             <span className="dispatches-list-number">
               {String(index + 1).padStart(3, '0')}

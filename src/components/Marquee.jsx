@@ -28,7 +28,7 @@ function MarqueeTrack() {
 
 function Marquee() {
   return (
-    <div className="marquee">
+    <div className="marquee" data-reveal="fade">
       <div className="marquee-track">
         {/* rendered twice back-to-back so the loop is seamless */}
         <MarqueeTrack />

@@ -30,9 +30,13 @@ const SHIPPING_ITEMS = [
 function ShippingSection() {
   return (
     <section className="shipping">
-      <h2 className="shipping-title">
-        <span className="shipping-title-line">Some Things</span>
-        <span className="shipping-title-line">We&apos;ve Been Shipping.</span>
+      <h2 className="shipping-title" data-reveal="lines">
+        <span className="reveal-mask">
+          <span className="shipping-title-line">Some Things</span>
+        </span>
+        <span className="reveal-mask">
+          <span className="shipping-title-line">We&apos;ve Been Shipping.</span>
+        </span>
       </h2>
 
       <div className="shipping-grid">
@@ -43,8 +47,8 @@ function ShippingSection() {
             }`}
             key={item.title}
           >
-            <div className="shipping-image" aria-hidden="true" />
-            <div className="shipping-copy">
+            <div className="shipping-image" aria-hidden="true" data-reveal="image" />
+            <div className="shipping-copy" data-reveal="fade">
               <h3 className="shipping-copy-title">{item.title}</h3>
               <p className="shipping-copy-desc">{item.desc}</p>
             </div>
@@ -52,13 +56,19 @@ function ShippingSection() {
         ))}
       </div>
 
-      <div className="shipping-closing">
-        <p className="shipping-closing-line shipping-closing-line--lg">
-          Good Packaging <br></br> Doesn&apos;t{' '}
-          <span className="shipping-closing-blur">Scream</span>
-        </p>
-        <p className="shipping-closing-line">It Just Quietly Makes</p>
-        <p className="shipping-closing-line">The Brand Feel More Legit.</p>
+      <div className="shipping-closing" data-reveal="lines">
+        <div className="reveal-mask">
+          <p className="shipping-closing-line shipping-closing-line--lg">
+            Good Packaging <br></br> Doesn&apos;t{' '}
+            <span className="shipping-closing-blur">Scream</span>
+          </p>
+        </div>
+        <div className="reveal-mask">
+          <p className="shipping-closing-line">It Just Quietly Makes</p>
+        </div>
+        <div className="reveal-mask">
+          <p className="shipping-closing-line">The Brand Feel More Legit.</p>
+        </div>
       </div>
     </section>
   );

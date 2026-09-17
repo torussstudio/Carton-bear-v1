@@ -1,4 +1,5 @@
 import { useLenis } from './hooks/useLenis.js';
+import { useScrollReveal } from './hooks/useScrollReveal.js';
 import CrtFilter from './components/CrtFilter.jsx';
 import CrtOverlay from './components/CrtOverlay.jsx';
 import HeroSection from './components/HeroSection.jsx';
@@ -22,6 +23,7 @@ const GRAIN = 0.1;
 
 function App() {
   useLenis();
+  useScrollReveal();
 
   return (
     <>
@@ -31,7 +33,7 @@ function App() {
         <HeroSection />
         <Marquee />
         <PackagingSection />
-        <Videosection />
+        {/* <Videosection /> */}
         <ServicesSection />
         {/* <BuiltForBrandsSection /> */}
         <ProcessSection />
