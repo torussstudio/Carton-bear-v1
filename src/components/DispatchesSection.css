@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Roboto+Slab:wght@400;500;600&display=swap');
 
+
+/* =========================================
+   DISPATCHES SECTION
+   DESKTOP — ORIGINAL DESIGN
+========================================= */
+
 .dispatches {
   --dispatches-bg: #f7f2b6;
   --dispatches-red: #e6392b;
@@ -8,75 +14,557 @@
   --dispatches-line: rgba(23, 20, 15, 0.65);
 
   position: relative;
+
   padding-top: 64px;
   padding-bottom: 64px;
+
   background-color: var(--dispatches-bg);
+
   background-image:
-    linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+    linear-gradient(
+      rgba(0, 0, 0, 0.04) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.04) 1px,
+      transparent 1px
+    );
+
   background-size: 34px 34px;
+
   overflow: hidden;
 }
 
+
+/* =========================================
+   TITLE
+========================================= */
+
 .dispatches-title {
   margin: 0 0 56px;
-  font-family: 'Sharp Grotesk triaBold', sans-serif;
+
+  font-family:
+    'Sharp Grotesk triaBold',
+    sans-serif;
+
   font-weight: 400;
+
   text-transform: uppercase;
   text-align: center;
+
   color: var(--dispatches-red);
+
   line-height: 0.96;
 }
 
 .dispatches-title-line {
   display: block;
-  font-size: clamp(34px, 6.6vw, 76px);
+
+  font-size: clamp(
+    34px,
+    6.6vw,
+    76px
+  );
 }
+
+
+/* =========================================
+   LIST
+========================================= */
 
 .dispatches-list {
   list-style: none;
-  /* max-width: 1180px; */
-  /* margin: 0 auto; */
+
   padding: 0;
-  /* border-top: 1.5px solid var(--dispatches-line); */
+
+  margin: 0;
 }
+
+
+/* =========================================
+   LIST ITEM
+========================================= */
 
 .dispatches-list-item {
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
+
   gap: 24px;
-  padding: 26px 34px;
-  border-bottom: 1.5px solid var(--dispatches-line);
+
+  padding: 26px 48px;
+
+  border-bottom:
+    1.5px solid
+    var(--dispatches-line);
+
+  box-sizing: border-box;
+
+  min-width: 0;
 }
 
+
+/* =========================================
+   LIST TEXT
+========================================= */
+
 .dispatches-list-text {
-  font-family: 'Easy Pixel Regular', 'Sharp Grotesk Book', serif;
+  font-family:
+    'Easy Pixel Regular',
+    'Sharp Grotesk Book',
+    serif;
+
   font-weight: 400;
-  font-size: clamp(17px, 2vw, 24px);
+
+  font-size:
+    clamp(
+      17px,
+      2vw,
+      24px
+    );
+
   line-height: 1.35;
+
   color: var(--dispatches-orange);
+
   max-width: 78%;
+
+  min-width: 0;
+
+  overflow-wrap: break-word;
 }
+
+
+/* =========================================
+   NUMBER
+========================================= */
 
 .dispatches-list-number {
   flex-shrink: 0;
-  font-family: 'Easy Pixel Regular', 'Sharp Grotesk Book', serif;
+
+  font-family:
+    'Easy Pixel Regular',
+    'Sharp Grotesk Book',
+    serif;
+
   font-weight: 400;
-  font-size: clamp(24px, 3.2vw, 40px);
+
+  font-size:
+    clamp(
+      24px,
+      3.2vw,
+      40px
+    );
+
   color: var(--dispatches-ghost);
+
+  line-height: 1;
+
+  white-space: nowrap;
 }
 
-@media (max-width: 640px) {
+
+/* =========================================================
+   TABLET
+   Desktop layout above remains untouched.
+========================================================= */
+
+@media (max-width: 960px) and (min-width: 641px) {
+
   .dispatches {
-    padding: 48px 20px 16px;
+    padding-top: 56px;
+    padding-bottom: 56px;
+
+    width: 100%;
+    max-width: 100%;
+
+    box-sizing: border-box;
   }
+
+
+  /* -----------------------------------------
+     TITLE
+  ----------------------------------------- */
+
+  .dispatches-title {
+    margin-bottom: 48px;
+
+    padding: 0 24px;
+
+    box-sizing: border-box;
+  }
+
+  .dispatches-title-line {
+    font-size: clamp(
+      32px,
+      7vw,
+      64px
+    );
+  }
+
+
+  /* -----------------------------------------
+     LIST ITEM
+  ----------------------------------------- */
 
   .dispatches-list-item {
-    align-items: flex-start;
+    padding: 24px 32px;
+
+    gap: 20px;
   }
 
+
+  /* -----------------------------------------
+     TEXT
+  ----------------------------------------- */
+
   .dispatches-list-text {
-    max-width: 65%;
+    max-width: 82%;
+
+    font-size: clamp(
+      16px,
+      2.3vw,
+      22px
+    );
   }
+
+
+  /* -----------------------------------------
+     NUMBER
+  ----------------------------------------- */
+
+  .dispatches-list-number {
+    font-size: clamp(
+      22px,
+      3.5vw,
+      34px
+    );
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 640px) {
+
+  .dispatches {
+
+    width: 100%;
+    max-width: 100%;
+
+    box-sizing: border-box;
+
+    padding:
+      48px
+      18px
+      24px;
+
+    overflow-x: hidden;
+  }
+
+
+  /* -----------------------------------------
+     TITLE
+  ----------------------------------------- */
+
+  .dispatches-title {
+
+    width: 100%;
+    max-width: 100%;
+
+    margin:
+      0
+      0
+      44px;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+    line-height: 0.98;
+  }
+
+
+  .dispatches-title-line {
+
+    width: 100%;
+    max-width: 100%;
+
+    font-size:
+      clamp(
+        30px,
+        9vw,
+        48px
+      );
+
+    line-height: 0.98;
+
+    overflow-wrap: break-word;
+  }
+
+
+  /* -----------------------------------------
+     LIST
+  ----------------------------------------- */
+
+  .dispatches-list {
+
+    width: 100%;
+    max-width: 100%;
+
+    margin: 0;
+
+    padding: 0;
+
+    box-sizing: border-box;
+  }
+
+
+  /* -----------------------------------------
+     LIST ITEM
+  ----------------------------------------- */
+
+  .dispatches-list-item {
+
+    width: 100%;
+    max-width: 100%;
+
+    min-width: 0;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 14px;
+
+    padding:
+      22px
+      0;
+
+    box-sizing: border-box;
+  }
+
+
+  /* -----------------------------------------
+     TEXT
+  ----------------------------------------- */
+
+  .dispatches-list-text {
+
+    flex:
+      1 1 auto;
+
+    width: auto;
+
+    max-width:
+      calc(
+        100% - 58px
+      );
+
+    min-width: 0;
+
+    font-size:
+      clamp(
+        15px,
+        4.4vw,
+        20px
+      );
+
+    line-height: 1.35;
+
+    overflow-wrap:
+      anywhere;
+
+    word-break:
+      normal;
+  }
+
+
+  /* -----------------------------------------
+     NUMBER
+  ----------------------------------------- */
+
+  .dispatches-list-number {
+
+    flex:
+      0 0 auto;
+
+    width: auto;
+
+    font-size:
+      clamp(
+        20px,
+        6vw,
+        30px
+      );
+
+    line-height: 1;
+
+    white-space:
+      nowrap;
+
+    padding-top: 2px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .dispatches {
+
+    padding:
+      42px
+      14px
+      20px;
+  }
+
+
+  /* -----------------------------------------
+     TITLE
+  ----------------------------------------- */
+
+  .dispatches-title {
+
+    margin-bottom: 38px;
+  }
+
+
+  .dispatches-title-line {
+
+    font-size:
+      clamp(
+        27px,
+        9vw,
+        42px
+      );
+  }
+
+
+  /* -----------------------------------------
+     ITEMS
+  ----------------------------------------- */
+
+  .dispatches-list-item {
+
+    gap: 10px;
+
+    padding:
+      20px
+      0;
+  }
+
+
+  .dispatches-list-text {
+
+    max-width:
+      calc(
+        100% - 52px
+      );
+
+    font-size:
+      clamp(
+        14px,
+        4.5vw,
+        18px
+      );
+
+    line-height: 1.35;
+  }
+
+
+  .dispatches-list-number {
+
+    font-size:
+      clamp(
+        18px,
+        5.5vw,
+        26px
+      );
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 360px) {
+
+  .dispatches {
+
+    padding:
+      36px
+      10px
+      18px;
+  }
+
+
+  .dispatches-title {
+
+    margin-bottom: 32px;
+  }
+
+
+  .dispatches-title-line {
+
+    font-size: 25px;
+  }
+
+
+  .dispatches-list-item {
+
+    gap: 8px;
+
+    padding:
+      18px
+      0;
+  }
+
+
+  .dispatches-list-text {
+
+    max-width:
+      calc(
+        100% - 46px
+      );
+
+    font-size: 13px;
+
+    line-height: 1.4;
+  }
+
+
+  .dispatches-list-number {
+
+    font-size: 18px;
+  }
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .dispatches * {
+
+    scroll-behavior: auto;
+  }
+
 }

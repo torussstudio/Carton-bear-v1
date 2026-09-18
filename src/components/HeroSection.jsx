@@ -1,16 +1,26 @@
 import { useLayoutEffect, useRef } from 'react';
 import Nav from './Nav.jsx';
-import { gsap, prefersReducedMotion } from '../lib/gsapSetup';
+import { gsap, SplitText, prefersReducedMotion } from '../lib/gsapSetup';
 import './HeroSection.css';
 import './Nav.css';
 
 function HeroSection() {
   const rootRef = useRef(null);
+  const kickerRef = useRef(null);
 
   useLayoutEffect(() => {
-    if (prefersReducedMotion() || !rootRef.current) return undefined;
+    if (prefersReducedMotion() || !rootRef.current || !kickerRef.current) {
+      return undefined;
+    }
+
+    let split;
 
     const ctx = gsap.context(() => {
+      split = new SplitText(kickerRef.current, {
+        type: 'words',
+        wordsClass: 'bear-hero-kicker__word',
+      });
+
       gsap
         .timeline({ defaults: { ease: 'power3.out' }, delay: 0.15 })
         .from('.bear-nav-logo', { opacity: 0, y: -18, duration: 0.7 })
@@ -19,9 +29,22 @@ function HeroSection() {
           { opacity: 0, y: -16, stagger: 0.1, duration: 0.6 },
           '-=0.4'
         )
-        .from(
-          '.bear-hero-kicker',
-          { opacity: 0, y: 34, duration: 0.9 },
+                .from(
+          split.words,
+          {
+            // opacity: 0,
+            // x: 26,
+            // filter: 'blur(28px)',
+            // stagger: 0.05,
+            // duration: 1.5,
+            // ease: 'expo.out',
+            // clearProps: 'filter,transform',
+
+              y: 50, opacity: 0,
+              filter: 'blur(28px)',
+  stagger: 0.03, duration: 1,
+  ease: "back.out(1.7)"
+          },
           '-=0.2'
         )
         .from(
@@ -31,7 +54,10 @@ function HeroSection() {
         );
     }, rootRef);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      split?.revert();
+    };
   }, []);
 
   return (
@@ -39,7 +65,7 @@ function HeroSection() {
       <Nav />
 
       <div className="bear-hero-content">
-        <p className="bear-hero-kicker">
+        <p className="bear-hero-kicker" ref={kickerRef}>
           For D2C brands, ecommerce businesses, agencies, and growing
           consumer brands. From dieline to doorstep.
         </p>

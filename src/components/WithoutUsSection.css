@@ -1,11 +1,930 @@
-@media (max-width: 680px) {
-  .without-us {
-    padding: 56px 18px 40px;
+/* =========================================
+   WITHOUT US SECTION
+========================================= */
+
+.without-us {
+  --without-us-bg: #0d0b0a;
+  --without-us-red: #e6392b;
+  --without-us-yellow: #ffd400;
+
+  position: relative;
+
+  width: 100%;
+  max-width: 100%;
+
+  box-sizing: border-box;
+
+  padding:
+    clamp(56px, 7vw, 100px)
+    clamp(18px, 3vw, 40px)
+    clamp(48px, 6vw, 80px);
+
+  background-color: var(--without-us-bg);
+
+  overflow: hidden;
+}
+
+
+/* =========================================
+   INTRO
+========================================= */
+
+.without-us-intro {
+  width: 100%;
+  max-width: 1500px;
+
+  margin:
+    0 auto
+    clamp(64px, 11vw, 150px);
+
+  text-align: center;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================
+   MAIN TITLE
+========================================= */
+
+.without-us-title {
+  width: 100%;
+
+  margin:
+    0 0
+    clamp(14px, 2vw, 24px);
+
+  padding: 0;
+
+  font-family:
+    'Easy Pixel Regular',
+    'Sharp Grotesk PE Trial Bold',
+    sans-serif;
+
+  font-size:
+    clamp(32px, 7vw, 80px);
+
+  font-weight: 400;
+
+  line-height: 1.08;
+
+  letter-spacing: 0;
+
+  color: var(--without-us-red);
+
+  text-align: center;
+
+  text-transform: none;
+
+  box-sizing: border-box;
+}
+
+
+.without-us-title-line {
+  display: block;
+
+  width: 100%;
+}
+
+
+/* =========================================
+   RED GLOW
+========================================= */
+
+.without-us-title-glow,
+.without-us-red-glow {
+  animation:
+    without-us-red-glow-pulse
+    3.2s
+    ease-in-out
+    infinite;
+
+  will-change: text-shadow;
+}
+
+
+@keyframes without-us-red-glow-pulse {
+
+  0%,
+  100% {
+    text-shadow:
+      0 0 3px rgba(230, 57, 43, 0.45),
+      0 0 8px rgba(230, 57, 43, 0.45),
+      0 0 18px rgba(230, 57, 43, 0.30),
+      0 0 32px rgba(230, 57, 43, 0.18);
   }
+
+  50% {
+    text-shadow:
+      0 0 4px rgba(255, 70, 55, 0.90),
+      0 0 12px rgba(255, 70, 55, 0.85),
+      0 0 25px rgba(255, 60, 45, 0.70),
+      0 0 45px rgba(255, 55, 40, 0.50),
+      0 0 70px rgba(255, 45, 35, 0.28);
+  }
+}
+
+
+/* =========================================
+   PAIN POINTS
+========================================= */
+
+.without-us-pain-points {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  width: 100%;
+
+  margin: 0;
+
+  padding: 0;
+
+  list-style: none;
+
+  gap:
+    clamp(12px, 2vw, 24px);
+
+  box-sizing: border-box;
+
+  font-family:
+    'Easy Pixel Regular',
+    'Sharp Grotesk PE Trial Book',
+    sans-serif;
+
+  font-size:
+    clamp(20px, 4.2vw, 40px);
+
+  font-weight: 400;
+
+  line-height: 1.2;
+
+  color: var(--without-us-red);
+
+  text-align: center;
+}
+
+
+.without-us-pain-point {
+  display: flex;
+
+  align-items: baseline;
+
+  justify-content: center;
+
+  width: 100%;
+
+  max-width: 100%;
+
+  margin: 0;
+
+  padding: 0;
+
+  box-sizing: border-box;
+
+  overflow-wrap: anywhere;
+}
+
+
+.without-us-arrow {
+  flex: 0 0 auto;
+
+  margin-right: 0.35em;
+
+  opacity: 0.9;
+}
+
+
+/* =========================================
+   BEAR HAND VISUAL
+========================================= */
+
+.bear-hand-visual {
+  position: relative;
+
+  width: 100%;
+
+  max-width: 1300px;
+
+  margin:
+    0 auto
+    clamp(40px, 6vw, 70px);
+
+  box-sizing: border-box;
+
+  isolation: isolate;
+}
+
+
+/* =========================================
+   BEAR HAND IMAGE
+========================================= */
+
+.bear-hand-image {
+  position: relative;
+
+  z-index: 2;
+
+  display: block;
+
+  width: 100%;
+  max-width: 100%;
+
+  height: auto;
+
+  margin: 0;
+
+  object-fit: contain;
+
+  box-sizing: border-box;
+
+  isolation: isolate;
+}
+
+
+/* =========================================
+   SVG CALLOUTS
+========================================= */
+
+.bear-hand-callouts {
+  position: absolute;
+
+  z-index: 1;
+
+  top: -5%;
+  left: 3%;
+
+  width: 100%;
+  height: 100%;
+
+  max-width: none;
+
+  overflow: visible;
+
+  pointer-events: none;
+
+  transform: rotate(4deg);
+
+  transform-origin: center center;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================
+   CALLOUT GROUP
+========================================= */
+
+.bear-callout {
+  transform-box: fill-box;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.without-us-footer {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap:
+    clamp(24px, 5vw, 70px);
+
+  width: 100%;
+
+  max-width: 1550px;
+
+  margin: 0 auto;
+
+  box-sizing: border-box;
+}
+
+
+.without-us-footer-text {
+  flex: 1 1 auto;
+
+  width: 100%;
+
+  max-width: 810px;
+
+  margin: 0;
+
+  padding: 0;
+
+  font-family:
+    'Easy Pixel Regular',
+    'Sharp Grotesk PE Trial Book',
+    sans-serif;
+
+  font-size:
+    clamp(22px, 3.5vw, 40px);
+
+  font-weight: 400;
+
+  line-height: 1.5;
+
+  letter-spacing: 0.02em;
+
+  text-transform: uppercase;
+
+  color: var(--without-us-yellow);
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.without-us-button {
+  flex: 0 0 auto;
+
+  max-width: 100%;
+
+  padding:
+    clamp(11px, 1.2vw, 15px)
+    clamp(20px, 2.5vw, 39px);
+
+  border: 0;
+
+  white-space: nowrap;
+
+  font-family:
+    'Easy Pixel Regular',
+    sans-serif;
+
+  font-size:
+    clamp(16px, 2vw, 28px);
+
+  line-height: 1.2;
+
+  text-transform: uppercase;
+
+  text-shadow:
+    0 0 6px rgba(255, 212, 0, 0.9),
+    0 0 14px rgba(255, 212, 0, 0.7),
+    0 0 24px rgba(255, 212, 0, 0.4);
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================
+   LARGE DESKTOP
+========================================= */
+
+@media (min-width: 1440px) {
+
+  .without-us {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+
+  .without-us-intro {
+    max-width: 1550px;
+  }
+
+
+  .without-us-title {
+    font-size:
+      clamp(60px, 5.2vw, 90px);
+  }
+
+
+  .without-us-pain-points {
+    font-size:
+      clamp(30px, 3vw, 42px);
+  }
+
+
+  .bear-hand-visual {
+    max-width: 1400px;
+  }
+
+}
+
+
+/* =========================================
+   DESKTOP / LAPTOP
+========================================= */
+
+@media (max-width: 1200px) {
+
+  .without-us {
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+
+
+  .without-us-intro {
+    margin-bottom:
+      clamp(70px, 10vw, 120px);
+  }
+
+
+  .without-us-title {
+    font-size:
+      clamp(34px, 7vw, 72px);
+  }
+
+
+  .without-us-pain-points {
+    font-size:
+      clamp(21px, 4vw, 36px);
+  }
+
+
+  .bear-hand-visual {
+    max-width: 1100px;
+  }
+
+
+  .without-us-footer {
+    gap: 40px;
+  }
+
+
+  .without-us-footer-text {
+    max-width: 700px;
+
+    font-size:
+      clamp(21px, 3.4vw, 34px);
+  }
+
+
+  .without-us-button {
+    font-size:
+      clamp(15px, 2vw, 24px);
+  }
+
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 960px) {
+
+  .without-us {
+    padding:
+      60px
+      24px
+      60px;
+  }
+
+
+  .without-us-intro {
+    margin-bottom:
+      clamp(64px, 10vw, 100px);
+  }
+
+
+  .without-us-title {
+    font-size:
+      clamp(34px, 7.8vw, 64px);
+
+    line-height: 1.08;
+  }
+
+
+  .without-us-pain-points {
+    gap: 16px;
+
+    font-size:
+      clamp(20px, 4.8vw, 34px);
+
+    line-height: 1.18;
+  }
+
+
+  .bear-hand-visual {
+    width: 100%;
+
+    max-width: 850px;
+  }
+
+
+  .bear-hand-callouts {
+    top: -4%;
+
+    left: 2%;
+
+    transform: rotate(3deg);
+  }
+
+
+  .without-us-footer {
+    align-items: center;
+
+    gap: 30px;
+  }
+
+
+  .without-us-footer-text {
+    max-width: 580px;
+
+    font-size:
+      clamp(20px, 3.3vw, 30px);
+
+    line-height: 1.45;
+  }
+
+
+  .without-us-button {
+    font-size:
+      clamp(14px, 2.1vw, 22px);
+
+    padding:
+      12px 24px;
+  }
+
+}
+
+
+/* =========================================
+   SMALL TABLET
+========================================= */
+
+@media (max-width: 760px) {
+
+  .without-us {
+    padding:
+      52px
+      20px
+      52px;
+  }
+
+
+  .without-us-intro {
+    margin-bottom:
+      clamp(58px, 12vw, 85px);
+  }
+
+
+  .without-us-title {
+    font-size:
+      clamp(31px, 8.5vw, 54px);
+
+    line-height: 1.08;
+  }
+
+
+  .without-us-pain-points {
+    gap: 14px;
+
+    font-size:
+      clamp(19px, 5.2vw, 30px);
+
+    line-height: 1.2;
+  }
+
+
+  .without-us-pain-point {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+
+  .bear-hand-visual {
+    max-width: 700px;
+
+    margin-bottom: 50px;
+  }
+
+
+  .bear-hand-callouts {
+    top: -3%;
+
+    left: 1%;
+
+    transform: rotate(2deg);
+  }
+
 
   .without-us-footer {
     flex-direction: column;
-    align-items: flex-start;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 28px;
+
+    text-align: center;
+  }
+
+
+  .without-us-footer-text {
+    max-width: 100%;
+
+    font-size:
+      clamp(20px, 5vw, 29px);
+
+    line-height: 1.45;
+
+    text-align: center;
+  }
+
+
+  .without-us-button {
+    width: auto;
+
+    max-width: 100%;
+
+    white-space: normal;
+
+    text-align: center;
+
+    font-size:
+      clamp(14px, 4vw, 21px);
+
+    padding:
+      12px 22px;
+  }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+  .without-us {
+    padding:
+      46px
+      16px
+      48px;
+
+    overflow-x: hidden;
+  }
+
+
+  .without-us-intro {
+    margin-bottom: 60px;
+  }
+
+
+  .without-us-title {
+    font-size:
+      clamp(28px, 8.8vw, 46px);
+
+    line-height: 1.08;
+
+    margin-bottom: 18px;
+  }
+
+
+  .without-us-pain-points {
+    gap: 13px;
+
+    font-size:
+      clamp(18px, 5.5vw, 27px);
+
+    line-height: 1.22;
+  }
+
+
+  .without-us-pain-point {
+    max-width: 100%;
+
+    overflow-wrap: anywhere;
+  }
+
+
+  .without-us-arrow {
+    margin-right: 0.3em;
+  }
+
+
+  .bear-hand-visual {
+    width: 100%;
+
+    max-width: 100%;
+
+    margin-bottom: 44px;
+  }
+
+
+  .bear-hand-image {
+    width: 100%;
+  }
+
+
+  /*
+   * Keep the SVG tied to the image dimensions.
+   * No fixed pixel width is introduced here.
+   */
+
+  .bear-hand-callouts {
+    top: -2%;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    transform: rotate(1.5deg);
+  }
+
+
+  .without-us-footer {
+    width: 100%;
+
     gap: 24px;
   }
+
+
+  .without-us-footer-text {
+    width: 100%;
+
+    max-width: 100%;
+
+    font-size:
+      clamp(18px, 5.5vw, 26px);
+
+    line-height: 1.45;
+
+    text-align: center;
+  }
+
+
+  .without-us-button {
+    width: min(100%, 360px);
+
+    padding:
+      12px 18px;
+
+    font-size:
+      clamp(13px, 4.2vw, 19px);
+
+    line-height: 1.25;
+  }
+
+
+  .without-us-title-glow,
+  .without-us-red-glow {
+    animation-duration: 3.6s;
+  }
+
+}
+
+
+/* =========================================
+   SMALL PHONES
+========================================= */
+
+@media (max-width: 480px) {
+
+  .without-us {
+    padding:
+      40px
+      13px
+      42px;
+  }
+
+
+  .without-us-intro {
+    margin-bottom: 52px;
+  }
+
+
+  .without-us-title {
+    font-size:
+      clamp(25px, 8.8vw, 40px);
+
+    line-height: 1.1;
+  }
+
+
+  .without-us-pain-points {
+    gap: 12px;
+
+    font-size:
+      clamp(17px, 5.7vw, 24px);
+
+    line-height: 1.2;
+  }
+
+
+  .bear-hand-visual {
+    margin-bottom: 38px;
+  }
+
+
+  /*
+   * The SVG remains proportional to the image.
+   * Slightly reduce the rotation on very small
+   * screens so the callouts stay visually stable.
+   */
+
+  .bear-hand-callouts {
+    top: -1%;
+
+    transform: rotate(0.75deg);
+  }
+
+
+  .without-us-footer {
+    gap: 22px;
+  }
+
+
+  .without-us-footer-text {
+    font-size:
+      clamp(17px, 5.8vw, 23px);
+
+    line-height: 1.45;
+  }
+
+
+  .without-us-button {
+    width: 100%;
+
+    max-width: 340px;
+
+    padding:
+      11px 15px;
+
+    font-size:
+      clamp(12px, 4.1vw, 17px);
+  }
+
+}
+
+
+/* =========================================
+   VERY SMALL PHONES
+========================================= */
+
+@media (max-width: 360px) {
+
+  .without-us {
+    padding:
+      36px
+      10px
+      38px;
+  }
+
+
+  .without-us-title {
+    font-size:
+      clamp(23px, 8.8vw, 34px);
+  }
+
+
+  .without-us-pain-points {
+    gap: 10px;
+
+    font-size:
+      clamp(16px, 5.6vw, 21px);
+  }
+
+
+  .without-us-footer-text {
+    font-size:
+      clamp(16px, 5.5vw, 20px);
+  }
+
+
+  .without-us-button {
+    max-width: 300px;
+
+    font-size:
+      clamp(11px, 4vw, 15px);
+
+    padding:
+      10px 12px;
+  }
+
+}
+
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .without-us-title-glow,
+  .without-us-red-glow {
+    animation: none;
+
+    text-shadow:
+      0 0 5px rgba(230, 57, 43, 0.65),
+      0 0 14px rgba(230, 57, 43, 0.45),
+      0 0 28px rgba(230, 57, 43, 0.25);
+  }
+
 }

@@ -1,102 +1,809 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
+
+/* =========================================
+   BASE SECTION
+========================================== */
+
 .built {
-  --built-cream: #efebe0;
-  --built-orange: #f0a52b;
-  --built-indigo: var(--bear-bg, #2f3399);
-  --built-green: var(--bear-accent, #d3d818);
+  --built-cream: #ffecbd;
+  --built-olive: var(--bear-accent, #d9dc3a);
+  --built-blue: #1414a8;
+  --built-red: #dc1a24;
+  --built-ink: #17140f;
+  --built-muted: #6b6558;
+  --built-border: #282723;
+  --built-icon: #f4c17a;
 
   position: relative;
-  padding: 56px 40px 24px;
+
+  width: 100%;
+  max-width: 100%;
+
   background-color: var(--built-cream);
+
   overflow: hidden;
+
+  box-sizing: border-box;
 }
+
+.built *,
+.built *::before,
+.built *::after {
+  box-sizing: border-box;
+}
+
+
+/* =========================================
+   KICKER
+========================================== */
+
+.built-kicker {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  width: 100%;
+
+  padding: 0;
+}
+
+.built-kicker-dash {
+  display: block;
+
+  flex: 0 0 auto;
+
+  width: 22px;
+  height: 2px;
+
+  background-color: var(--built-red);
+}
+
+.built-kicker-text {
+  font-family:
+    'Sharp Grotesk PE Trial Bold',
+    sans-serif;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  letter-spacing: 0.18em;
+
+  text-transform: uppercase;
+
+  color: var(--built-red);
+
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   MAIN CONTENT
+========================================== */
 
 .built-main {
-  /* max-width: 1100px; */
-  width: 100%;
-  margin: 0 auto;
   display: flex;
-  gap: 40px;
+
+  align-items: flex-start;
+
+  gap: clamp(20px, 2vw, 40px);
+
+  width: 100%;
+  max-width: 1600px;
+
+  margin: 0 auto;
+
+  padding: 0 clamp(20px, 3vw, 40px);
 }
+
+
+/* =========================================
+   LEFT CONTENT
+========================================== */
 
 .built-left {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  gap: 10px;
+  flex: 1 1 56%;
+
+  width: 56%;
+
+  min-width: 0;
+
+  padding-top: clamp(28px, 3vw, 40px);
 }
 
-.built-right{
-  width: 50%;
+
+/* =========================================
+   RIGHT IMAGE AREA
+========================================== */
+
+.built-right {
+  position: relative;
+
+  flex: 0 1 44%;
+
+  width: 44%;
+
+  min-width: 0;
+
+  /*
+   * Reserve vertical space for the absolute
+   * image so it does not collapse the layout.
+   */
+  min-height: clamp(380px, 42vw, 620px);
+
+  display: block;
 }
+
+
+/* =========================================
+   TITLE
+========================================== */
 
 .built-title {
+  width: 100%;
+
   margin: 0;
-  font-family: 'Sharp Grotesk Black', sans-serif;
+
+  font-family:
+    'Anton',
+    'Sharp Grotesk Black',
+    sans-serif;
+
   font-weight: 400;
+
   text-transform: uppercase;
-  line-height: 0.92;
-  color: var(--built-indigo);
+
+  line-height: 0.95;
+
+  /*
+   * Fluid instead of fixed 200px.
+   * This keeps the title proportional
+   * across desktop sizes.
+   */
+  font-size: clamp(72px, 11.2vw, 200px);
+
+  /*
+   * Prevent the title from creating
+   * horizontal overflow.
+   */
+  letter-spacing: clamp(-0.08rem, -0.012vw, -0.2rem);
+
+  overflow-wrap: normal;
 }
 
 .built-title-line {
   display: block;
-  font-size: clamp(30px, 5vw, 52px);
+
+  width: max-content;
+
+  max-width: 100%;
+}
+
+.built-title-line--blue {
+  color: var(--built-blue);
 }
 
 .built-title-line--accent {
-  color: var(--built-orange);
+  color: var(--built-red);
 }
+
+
+/* =========================================
+   GIRL / HERO IMAGE
+========================================== */
 
 .built-image {
+  position: absolute;
+
+  z-index: 2;
+
+  /*
+   * Responsive negative top position.
+   * Keeps the image visually lifted toward
+   * the section above without affecting
+   * document flow.
+   */
+  top: clamp(-70px, -4.5vw, -28px);
+
+  right: 0;
+
   display: block;
-  width: 100%;
-  max-width: 400px;
+
+  width: min(100%, 545px);
+
+  max-width: 545px;
+
   height: auto;
-  /* margin-top: -8px; */
+
+  margin: 0;
+
+  object-fit: contain;
+
+  /*
+   * Prevent accidental overflow.
+   */
+  max-height: none;
 }
 
-.built-placeholder {
-  flex: 1 1 0;
-  align-self: stretch;
-  min-height: 420px;
-  border-radius: 18px;
-  background-color: var(--built-indigo);
+
+/* =========================================
+   AUDIENCE GRID
+========================================== */
+
+.built-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  width: calc(100% - clamp(40px, 6vw, 80px));
+
+  max-width: 1600px;
+
+  margin:
+    clamp(32px, 3vw, 48px)
+    auto
+    clamp(40px, 4vw, 50px);
+
+  border-top: 1px solid var(--built-border);
+  border-left: 1px solid var(--built-border);
 }
 
-.built-bar {
-  height: 12px;
-  margin: 24px -40px -24px;
-  background-color: var(--built-green);
+.built-card {
+  position: relative;
+
+  display: flex;
+
+  min-width: 0;
+
+  flex-direction: column;
+
+  padding:
+    clamp(24px, 3vw, 36px)
+    clamp(20px, 2.6vw, 30px)
+    clamp(28px, 3vw, 38px);
+
+  border-right: 1px solid var(--built-border);
+  border-bottom: 1px solid var(--built-border);
 }
 
-@media (max-width: 760px) {
-  .built {
-    padding: 40px 20px 16px;
-  }
+.built-card--cream {
+  background-color: var(--built-cream);
+}
+
+.built-card--olive {
+  background-color: var(--built-olive);
+}
+
+
+/* =========================================
+   CARD NUMBER
+========================================== */
+
+.built-card-number {
+  font-family:
+    'Sharp Grotesk PE Trial Bold',
+    sans-serif;
+
+  font-size: 13px;
+
+  letter-spacing: 0.04em;
+
+  color: var(--built-ink);
+
+  opacity: 0.65;
+
+  margin-bottom: 22px;
+}
+
+
+/* =========================================
+   CARD ICON
+========================================== */
+
+.built-card-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
+
+  width: 56px;
+  height: 56px;
+
+  margin-bottom: 20px;
+
+  background-color: var(--built-red);
+
+  color: var(--built-icon);
+}
+
+.built-card-icon svg {
+  width: 30px;
+  height: 30px;
+}
+
+
+/* =========================================
+   CARD TITLE
+========================================== */
+
+.built-card-title {
+  margin: 0 0 12px;
+
+  font-family:
+    'Anton',
+    'Sharp Grotesk Black',
+    sans-serif;
+
+  font-weight: 400;
+
+  text-transform: uppercase;
+
+  line-height: 1.05;
+
+  font-size: clamp(20px, 2.1vw, 27px);
+
+  color: var(--built-ink);
+}
+
+.built-card-title-line {
+  display: block;
+}
+
+
+/* =========================================
+   CARD DESCRIPTION
+========================================== */
+
+.built-card-desc {
+  margin: 0;
+
+  max-width: 260px;
+
+  font-family:
+    'Sharp Grotesk PE Trial Book',
+    sans-serif;
+
+  font-size: clamp(13px, 1vw, 14.5px);
+
+  line-height: 1.5;
+
+  color: var(--built-muted);
+}
+
+
+/* =========================================
+   CARD BADGE
+========================================== */
+
+.built-card-badge {
+  align-self: flex-start;
+
+  margin-top: 16px;
+
+  padding: 6px 12px;
+
+  border: 1px solid var(--built-red);
+
+  font-family:
+    'Sharp Grotesk PE Trial Bold',
+    sans-serif;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.05em;
+
+  text-transform: uppercase;
+
+  color: var(--built-red);
+}
+
+
+/* =========================================
+   LARGE DESKTOP
+========================================== */
+
+@media (min-width: 1441px) {
 
   .built-main {
-    flex-direction: column;
-    gap: 20px;
+    max-width: 1700px;
   }
 
-  .built-left,
+  .built-grid {
+    max-width: 1700px;
+  }
+
+  .built-title {
+    font-size: clamp(150px, 10.8vw, 220px);
+  }
+
   .built-right {
-    width: 100%;
+    min-height: clamp(500px, 40vw, 700px);
   }
 
   .built-image {
+    max-width: 590px;
+
+    top: clamp(-85px, -4vw, -45px);
+  }
+}
+
+
+/* =========================================
+   TABLET / SMALL DESKTOP
+========================================== */
+
+@media (max-width: 1100px) {
+
+  .built-main {
+    gap: 20px;
+
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+
+  .built-left {
+    width: 55%;
+
+    padding-top: 36px;
+  }
+
+  .built-right {
+    width: 45%;
+
+    min-height: clamp(360px, 46vw, 500px);
+  }
+
+  .built-title {
+    font-size: clamp(78px, 11vw, 145px);
+  }
+
+  .built-image {
+    width: min(100%, 450px);
+
+    top: clamp(-65px, -5vw, -30px);
+  }
+
+  .built-grid {
+    width: calc(100% - 56px);
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    margin-top: 40px;
+  }
+}
+
+
+/* =========================================
+   TABLET
+========================================== */
+
+@media (max-width: 860px) {
+
+  .built-main {
+    gap: 18px;
+
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .built-left {
+    width: 54%;
+
+    padding-top: 30px;
+  }
+
+  .built-right {
+    width: 46%;
+
+    min-height: clamp(330px, 48vw, 430px);
+  }
+
+  .built-title {
+    font-size: clamp(68px, 11.5vw, 110px);
+
+    letter-spacing: -0.08rem;
+  }
+
+  .built-image {
+    width: min(100%, 380px);
+
+    top: clamp(-50px, -5vw, -22px);
+  }
+
+  .built-kicker-text {
+    font-size: 11px;
+
+    letter-spacing: 0.14em;
+  }
+
+  .built-grid {
+    width: calc(100% - 48px);
+
+    margin-top: 34px;
+  }
+
+  .built-card {
+    padding:
+      24px
+      20px
+      30px;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 760px) {
+
+  .built-main {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 0;
+
+    width: 100%;
+
+    padding:
+      0
+      20px;
+  }
+
+
+  /* -----------------------------------------
+     LEFT CONTENT
+  ----------------------------------------- */
+
+  .built-left {
+    width: 100%;
+
+    padding-top: 28px;
+  }
+
+  .built-kicker {
+    width: 100%;
+
+    margin-bottom: 10px;
+  }
+
+  .built-kicker-dash {
+    width: 18px;
+  }
+
+  .built-kicker-text {
+    font-size: 10px;
+
+    letter-spacing: 0.12em;
+  }
+
+
+  /* -----------------------------------------
+     TITLE
+  ----------------------------------------- */
+
+  .built-title {
+    width: 100%;
+
+    font-size: clamp(64px, 17vw, 105px);
+
+    line-height: 0.94;
+
+    letter-spacing: -0.06rem;
+  }
+
+  .built-title-line {
+    width: max-content;
+
     max-width: 100%;
   }
 
-  .built-placeholder {
+
+  /* -----------------------------------------
+     IMAGE AREA
+  ----------------------------------------- */
+
+  .built-right {
     width: 100%;
-    min-height: 280px;
+
+    min-height: clamp(250px, 72vw, 330px);
+
+    margin-top: 8px;
+
+    display: block;
   }
 
-  .built-bar {
-    margin: 24px -20px -16px;
+  .built-image {
+    top: clamp(-28px, -5vw, -15px);
+
+    right: 50%;
+
+    width: min(78vw, 300px);
+
+    max-width: 300px;
+
+    transform: translateX(50%);
+  }
+
+
+  /* -----------------------------------------
+     GRID
+  ----------------------------------------- */
+
+  .built-grid {
+    width: calc(100% - 40px);
+
+    grid-template-columns: 1fr;
+
+    margin:
+      24px
+      20px
+      0;
+  }
+
+  .built-card {
+    min-width: 0;
+
+    padding:
+      24px
+      20px
+      30px;
+  }
+
+  .built-card-desc {
+    max-width: none;
+
+    font-size: 14px;
+  }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================== */
+
+@media (max-width: 480px) {
+
+  .built-main {
+    padding:
+      0
+      16px;
+  }
+
+  .built-left {
+    padding-top: 24px;
+  }
+
+  .built-kicker {
+    gap: 8px;
+
+    margin-bottom: 8px;
+  }
+
+  .built-kicker-dash {
+    width: 16px;
+    height: 2px;
+  }
+
+  .built-kicker-text {
+    font-size: 9px;
+
+    letter-spacing: 0.1em;
+  }
+
+  .built-title {
+    font-size: clamp(56px, 17vw, 82px);
+
+    line-height: 0.95;
+
+    letter-spacing: -0.04rem;
+  }
+
+  .built-right {
+    min-height: 250px;
+
+    margin-top: 4px;
+  }
+
+  .built-image {
+    top: -8px;
+
+    width: min(76vw, 270px);
+
+    max-width: 205px;
+  }
+
+  .built-grid {
+    width: calc(100% - 32px);
+
+    margin:
+      20px
+      16px
+      0;
+  }
+
+  .built-card {
+    padding:
+      22px
+      18px
+      28px;
+  }
+
+  .built-card-icon {
+    width: 52px;
+    height: 52px;
+
+    margin-bottom: 18px;
+  }
+
+  .built-card-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .built-card-title {
+    font-size: 24px;
+  }
+
+  .built-card-desc {
+    font-size: 13.5px;
+  }
+}
+
+
+/* =========================================
+   VERY SMALL PHONES
+========================================== */
+
+@media (max-width: 360px) {
+
+  .built-main {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .built-title {
+    font-size: 52px;
+  }
+
+  .built-right {
+    min-height: 225px;
+  }
+
+  .built-image {
+    width: min(74vw, 245px);
+
+    max-width: 245px;
+
+    top: -16px;
+  }
+
+  .built-grid {
+    width: calc(100% - 28px);
+
+    margin-left: 14px;
+    margin-right: 14px;
+  }
+}
+
+
+/* =========================================
+   REDUCED MOTION
+========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .built-image,
+  .built-title,
+  .built-card {
+    transition: none !important;
   }
 }

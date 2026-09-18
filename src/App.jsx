@@ -10,10 +10,11 @@ import ServicesSection from './components/ServicesSection.jsx';
 import ProcessSection from './components/ProcessSection.jsx';
 import Highlightstrip from './components/Highlightstrip.jsx';
 import DispatchesSection from './components/DispatchesSection.jsx';
-// import BuiltForBrandsSection from './components/BuiltForBrandsSection.jsx';
+import BuiltForBrandsSection from './components/BuiltForBrandsSection.jsx';
 import ShippingSection from './components/ShippingSection.jsx'; 
 import WithoutUsSection from './components/WithoutUsSection.jsx';
 import PreFooterSection from './components/PreFooterSection.jsx';
+import Footer from './components/Footer.jsx';
 
 import './App.css';
 
@@ -35,13 +36,14 @@ function App() {
         <PackagingSection />
         {/* <Videosection /> */}
         <ServicesSection />
-        {/* <BuiltForBrandsSection /> */}
+        <BuiltForBrandsSection />
         <ProcessSection />
         <Highlightstrip />
         <WithoutUsSection />
         <ShippingSection />
         <DispatchesSection />
         <PreFooterSection />
+        <Footer />
       </div>
 
 

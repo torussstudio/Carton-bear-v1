@@ -1,64 +1,335 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
+
+/* =========================================
+   PREFOOTER
+   DESKTOP — ORIGINAL DESIGN
+========================================= */
+
 .prefooter {
   --prefooter-bg: var(--bear-bg, #2f3399);
 
   position: relative;
+
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 72px 24px 96px;
+
+  padding: 0px 24px 0px;
+
   background-color: var(--prefooter-bg);
+
   overflow: hidden;
 }
 
-.prefooter-headline {
+
+/* =========================================
+   HEADLINE IMAGE
+========================================= */
+
+.prefooter-headline-image {
+  /*
+   * Desktop values intentionally preserved.
+   */
+
   width: 100%;
-  max-width: 900px;
-  height: auto;
+
+  height: 100vh;
+
+  margin: 0 auto;
+
+  display: block;
+
+  object-fit: contain;
+
+  object-position: center;
 }
 
-.prefooter-line {
-  font-family: 'Anton', 'Sharp Grotesk Black', sans-serif;
-  font-weight: 400;
-  fill: #f4f2ea;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
 
-.prefooter-line--one,
-.prefooter-line--two {
-  font-size: 92px;
-}
-
-.prefooter-line--three {
-  font-size: 68px;
-}
+/* =========================================
+   CTA
+========================================= */
 
 .prefooter-cta {
-  margin-top: 12px;
+  position: absolute;
+
+  bottom: 5%;
+
   font-size: 18px;
+
   letter-spacing: 0.03em;
+
   padding: 14px 32px;
+
   border: none;
 }
 
-@media (max-width: 640px) {
+
+/* =========================================================
+   TABLET
+   Only responsive behavior.
+   Desktop remains untouched.
+========================================================= */
+
+@media (max-width: 960px) and (min-width: 641px) {
+
   .prefooter {
-    padding: 56px 16px 72px;
+    width: 100%;
+    max-width: 100%;
+
+    box-sizing: border-box;
+
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
-  .prefooter-line--one,
-  .prefooter-line--two {
-    font-size: 58px;
+
+  .prefooter-headline-image {
+    width: 100%;
+    max-width: 100%;
+
+    height: auto;
+
+    min-height: 520px;
+
+    max-height: 80vh;
+
+    object-fit: contain;
+
+    object-position: center;
+
+    margin: 0 auto;
   }
 
-  .prefooter-line--three {
-    font-size: 42px;
-  }
 
   .prefooter-cta {
-    font-size: 16px;
-    padding: 12px 26px;
+    bottom: 6%;
+
+    font-size: 17px;
+
+    padding: 13px 30px;
+
+    max-width: calc(100% - 40px);
+
+    box-sizing: border-box;
+
+    white-space: nowrap;
   }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 640px) {
+
+  .prefooter {
+
+    width: 100%;
+    max-width: 100%;
+
+    min-height: unset !important;
+
+    box-sizing: border-box;
+
+    padding:
+      20px
+      16px
+      90px;
+
+    justify-content: center;
+
+    overflow: hidden;
+  }
+
+
+  /* -----------------------------------------
+     HEADLINE IMAGE
+  ----------------------------------------- */
+
+  .prefooter-headline-image {
+
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+
+    /*
+     * Do not keep the desktop 100vh height
+     * on mobile. It can make the image too
+     * tall and cause the CTA to overlap.
+     */
+
+    height: auto;
+
+    max-height: 72svh;
+
+    min-height: 0;
+
+    object-fit: contain;
+
+    object-position: center;
+
+    margin: 0 auto;
+
+    box-sizing: border-box;
+  }
+
+
+  /* -----------------------------------------
+     CTA
+  ----------------------------------------- */
+
+  .prefooter-cta {
+
+    position: absolute;
+
+
+    bottom: 24px;
+
+    transform: translateX(-50%);
+
+    width: max-content;
+
+    max-width: calc(100% - 32px);
+
+    box-sizing: border-box;
+
+    margin: 0;
+
+    font-size: 16px;
+
+    line-height: 1;
+
+    padding:
+      12px
+      26px;
+
+    white-space: nowrap;
+
+    z-index: 5;
+  }
+
+
+  /*
+   * Prevent any old headline-line
+   * rules from affecting the image-based
+   * version of this component.
+   */
+
+  .prefooter-line--one,
+  .prefooter-line--two,
+  .prefooter-line--three {
+    max-width: 100%;
+
+    box-sizing: border-box;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .prefooter {
+
+    min-height: 100svh;
+
+    padding:
+      16px
+      12px
+      82px;
+  }
+
+
+  .prefooter-headline-image {
+
+    width: 100%;
+    max-width: 100%;
+
+    max-height: 70svh;
+
+    height: auto;
+  }
+
+
+  .prefooter-cta {
+
+    bottom: 20px;
+
+    max-width: calc(100% - 24px);
+
+    font-size: 15px;
+
+    padding:
+      11px
+      22px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 360px) {
+
+  .prefooter {
+
+    min-height: 100svh;
+
+    padding:
+      12px
+      10px
+      76px;
+  }
+
+
+  .prefooter-headline-image {
+
+    width: 100%;
+
+    max-width: 100%;
+
+    max-height: 68svh;
+
+    height: auto;
+  }
+
+
+  .prefooter-cta {
+
+    bottom: 18px;
+
+    max-width: calc(100% - 20px);
+
+    font-size: 14px;
+
+    padding:
+      10px
+      18px;
+  }
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .prefooter-headline-image {
+
+    animation: none !important;
+
+    transition: none !important;
+  }
+
 }

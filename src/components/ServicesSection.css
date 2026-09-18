@@ -1,0 +1,563 @@
+/* =========================================
+   SERVICES SECTION
+========================================== */
+
+.services-section {
+  position: relative;
+
+  width: 100%;
+  max-width: 100%;
+
+  padding: 40px 0 0 50px;
+
+  background-color: #ffecbd;
+
+  overflow: hidden;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================
+   SERVICES GRID
+========================================== */
+
+.services-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  width: calc(100% - 20px);
+
+  margin: 0 20px 0 0;
+
+  border-top: 1px solid #282723;
+  border-left: 1px solid #282723;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================
+   SERVICE CARD
+========================================== */
+
+.service-card {
+  position: relative;
+
+  display: flex;
+
+  min-width: 0;
+
+  flex-direction: column;
+
+  padding: 24px;
+
+  border-right: 1px solid #282723;
+  border-bottom: 1px solid #282723;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+}
+
+
+/* =========================================
+   IMAGE WRAPPER
+========================================== */
+
+.service-image-wrapper {
+  position: relative;
+
+  width: 100%;
+
+  margin-bottom: 16px;
+
+  overflow: hidden;
+
+  border-radius: 14px;
+
+  perspective: 1000px;
+
+  transform-style: preserve-3d;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================
+   SERVICE IMAGE
+========================================== */
+
+.service-image {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  border-radius: 14px;
+
+  background-color: #b7c740;
+
+  transform-origin: center center;
+
+  transform-style: preserve-3d;
+
+  backface-visibility: hidden;
+
+  will-change:
+    transform,
+    clip-path;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================
+   IMAGE REVEAL
+========================================== */
+
+.service-image-reveal {
+  transform-origin: top center;
+
+  will-change: transform;
+}
+
+
+/* =========================================
+   SERVICE HEADING
+========================================== */
+
+.service-heading {
+  margin: 0 0 15px;
+
+  max-width: 100%;
+
+  font-family:
+    'Easy Pixel Regular',
+    Arial,
+    sans-serif;
+
+  font-size:
+    clamp(20px, 2.2vw, 29px);
+
+  font-weight: 500;
+
+  line-height: 1.3;
+
+  color: #282723;
+
+  overflow-wrap: break-word;
+
+  word-break: normal;
+}
+
+
+/* =========================================
+   TAGS
+========================================== */
+
+.service-tags {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 6px;
+
+  width: 100%;
+
+  margin-top: auto;
+
+  min-width: 0;
+}
+
+
+/* =========================================
+   TAG
+========================================== */
+
+.service-tag {
+  display: inline-block;
+
+  max-width: 100%;
+
+  padding: 4px 10px;
+
+  font-family:
+    'Sharp Grotesk PE Trial Book',
+    Arial,
+    sans-serif;
+
+  font-size:
+    clamp(12px, 1vw, 14px);
+
+  font-weight: 500;
+
+  line-height: 1.3;
+
+  color: #c5d12d;
+
+  background-color: #2a3482;
+
+  white-space: normal;
+
+  overflow-wrap: anywhere;
+
+  box-sizing: border-box;
+
+  will-change:
+    transform,
+    opacity,
+    clip-path;
+}
+
+
+/* =========================================
+   BOTTOM TEXT
+========================================== */
+
+.services-bottom-text {
+  display: block;
+
+  width: 100%;
+}
+
+.services-bottom-text .services-bottom-word {
+  display: inline-block;
+
+  white-space: normal;
+
+  will-change:
+    transform,
+    opacity,
+    filter;
+}
+
+
+/* =========================================
+   LARGE DESKTOP
+========================================== */
+
+@media (min-width: 1440px) {
+
+  .services-section {
+    padding-left: 50px;
+  }
+
+
+  .services-grid {
+    width: calc(100% - 20px);
+  }
+
+
+  .service-card {
+    padding: 28px;
+  }
+
+
+  .service-image-wrapper {
+    margin-bottom: 18px;
+  }
+
+
+}
+
+
+/* =========================================
+   SMALL DESKTOP / TABLET
+========================================== */
+
+@media (max-width: 1100px) {
+
+  .services-section {
+    padding: 36px 0 0 32px;
+  }
+
+
+  .services-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    width: calc(100% - 16px);
+
+    margin-right: 16px;
+  }
+
+
+  .service-card {
+    padding: 22px;
+  }
+
+
+  .service-image-wrapper {
+    aspect-ratio: 4 / 3;
+
+    border-radius: 13px;
+  }
+
+
+  .service-image {
+    border-radius: 13px;
+  }
+
+
+  .service-heading {
+    font-size:
+      clamp(21px, 2.8vw, 29px);
+
+    line-height: 1.25;
+  }
+
+
+  .service-tag {
+    font-size:
+      clamp(12px, 1.25vw, 14px);
+  }
+}
+
+
+/* =========================================
+   TABLET
+========================================== */
+
+@media (max-width: 760px) {
+
+  .services-section {
+    padding: 30px 0 0 20px;
+  }
+
+
+  .services-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    width: calc(100% - 20px);
+
+    margin-right: 20px;
+  }
+
+
+  .service-card {
+    padding: 16px;
+  }
+
+
+  .service-image-wrapper {
+    margin-bottom: 13px;
+
+    aspect-ratio: 4 / 3;
+
+    border-radius: 11px;
+  }
+
+
+  .service-image {
+    border-radius: 11px;
+  }
+
+
+  .service-heading {
+    margin-bottom: 12px;
+
+    font-size:
+      clamp(18px, 3.3vw, 24px);
+
+    line-height: 1.2;
+  }
+
+
+  .service-tags {
+    gap: 5px;
+  }
+
+
+  .service-tag {
+    padding: 4px 8px;
+
+    font-size: 11px;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 560px) {
+
+  .services-section {
+    padding: 24px 0 0 16px;
+  }
+
+
+  .services-grid {
+    grid-template-columns: 1fr;
+
+    width: calc(100% - 16px);
+
+    margin-right: 16px;
+  }
+
+
+  .service-card {
+    padding: 16px;
+  }
+
+
+  .service-image-wrapper {
+    aspect-ratio: 16 / 10;
+
+    margin-bottom: 14px;
+
+    border-radius: 12px;
+  }
+
+
+  .service-image {
+    border-radius: 12px;
+  }
+
+
+  .service-heading {
+    margin-bottom: 12px;
+
+    font-size:
+      clamp(21px, 6vw, 27px);
+
+    line-height: 1.2;
+  }
+
+
+  .service-tags {
+    gap: 6px;
+  }
+
+
+  .service-tag {
+    padding: 5px 9px;
+
+    font-size: 12px;
+  }
+}
+
+
+/* =========================================
+   SMALL PHONES
+========================================== */
+
+@media (max-width: 380px) {
+
+  .services-section {
+    padding-left: 12px;
+  }
+
+
+  .services-grid {
+    width: calc(100% - 12px);
+
+    margin-right: 12px;
+  }
+
+
+  .service-card {
+    padding: 13px;
+  }
+
+
+  .service-image-wrapper {
+    aspect-ratio: 16 / 10;
+
+    border-radius: 10px;
+  }
+
+
+  .service-image {
+    border-radius: 10px;
+  }
+
+
+  .service-heading {
+    font-size: 20px;
+
+    line-height: 1.18;
+  }
+
+
+  .service-tag {
+    font-size: 11px;
+
+    padding: 4px 8px;
+  }
+}
+
+
+/* =========================================
+   VERY SMALL PHONES
+========================================== */
+
+@media (max-width: 320px) {
+
+  .services-section {
+    padding-left: 10px;
+  }
+
+
+  .services-grid {
+    width: calc(100% - 10px);
+
+    margin-right: 10px;
+  }
+
+
+  .service-card {
+    padding: 12px;
+  }
+
+
+  .service-heading {
+    font-size: 19px;
+  }
+
+
+  .service-tag {
+    font-size: 10px;
+
+    padding: 4px 7px;
+  }
+}
+
+
+/* =========================================
+   TOUCH DEVICES
+========================================== */
+
+/*
+ * Mouse-based 3D interaction is already handled
+ * by GSAP in the JSX. On touch devices we avoid
+ * forcing hover-like behavior.
+ */
+
+@media (hover: none) and (pointer: coarse) {
+
+  .service-image {
+    transform: none !important;
+  }
+}
+
+
+/* =========================================
+   ACCESSIBILITY
+========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .service-image,
+  .service-image-wrapper,
+  .service-tag,
+  .service-heading {
+    transition: none !important;
+  }
+}

@@ -1,5 +1,6 @@
 import bearHand from '../images/Bear-hand.webp';
 import './Nav.css';
+import './WithoutUsSection.css';
 
 const PAIN_POINTS = [
   'Fragmented Communication',
@@ -11,172 +12,215 @@ const PAIN_POINTS = [
 const CALLOUTS = [
   {
     label: 'Production Management',
-    labelX: 150,
-    labelY: 40,
+    labelX: 90,
+    labelY: 25,
     anchor: 'start',
-    dotX: 260,
-    dotY: 48,
-    path: 'M260,48 C300,60 320,90 335,150',
+    dotX: 200,
+    dotY: 27,
+    path: 'M200,27 C230,40 250,65 255,85',
   },
   {
     label: 'Packaging Execution',
-    labelX: 345,
-    labelY: 30,
+    labelX: 300,
+    labelY: 28,
     anchor: 'start',
-    dotX: 340,
-    dotY: 40,
-    path: 'M340,40 C338,90 340,130 345,168',
+    dotX: 292,
+    dotY: 30,
+    path: 'M292,30 C288,50 283,68 280,82',
   },
   {
     label: 'Export Readiness',
-    labelX: 425,
-    labelY: 78,
+    labelX: 356,
+    labelY: 69,
     anchor: 'start',
-    dotX: 420,
-    dotY: 86,
-    path: 'M420,86 C400,110 385,140 375,178',
+    dotX: 348,
+    dotY: 69,
+    path: 'M348,69 C335,80 320,90 312,97',
   },
   {
     label: 'Vendor Communication',
-    labelX: 65,
-    labelY: 118,
+    labelX: 68,
+    labelY: 96,
     anchor: 'start',
-    dotX: 210,
-    dotY: 122,
-    path: 'M210,122 C260,128 300,150 320,190',
+    dotX: 134,
+    dotY: 75,
+    path: 'M134,75 C165,80 195,90 222,105',
   },
   {
     label: 'Dispatch Support',
-    labelX: 440,
-    labelY: 158,
+    labelX: 380,
+    labelY: 128,
     anchor: 'start',
-    dotX: 432,
-    dotY: 160,
-    path: 'M432,160 C400,168 380,185 365,205',
+    dotX: 374,
+    dotY: 124,
+    path: 'M374,124 C360,120 345,118 330,120',
   },
 ];
 
 function WithoutUsSection() {
   return (
-    <section className="relative 
-    overflow-hidden 
-    bg-[#0d0b0a]
-    without-us"
+    <section className="without-us">
 
-    style={{ 
-      padding: '60px 20px' 
-     }}
+      {/* =========================================
+          INTRO
+      ========================================== */}
 
-    >
-      
-      {/* Intro */}
-      <div className="
-      mx-auto 
-      text-center
-      "
-      style={{ marginBottom: 'clamp(48px, 12vw, 150px)' }}
-      >
+      <div className="without-us-intro">
 
+        {/* =========================================
+            MAIN HEADING
+        ========================================== */}
 
-        <h2 className="font-pixel text-[clamp(32px,8vw,80px)] font-normal leading-[1.1] text-[#e6392b]"style={{ marginBottom: '12px' }} data-reveal="lines"> 
+        <h2
+          className="without-us-title without-us-title-glow"
+          data-reveal="lines"
+        >
           <span className="reveal-mask">
-            <span className="block">Without Us, You&apos;re</span>
+            <span className="without-us-title-line">
+              Without Us, You&apos;re
+            </span>
           </span>
+
           <span className="reveal-mask">
-            <span className="block">Dealing With :</span>
+            <span className="without-us-title-line">
+              Dealing With :
+            </span>
           </span>
         </h2>
 
-        <ul className="flex list-none flex-col gap-[15px] font-pixel text-[clamp(20px,5vw,40px)] font-normal text-[#e6392b]">
+
+        {/* =========================================
+            PAIN POINTS
+        ========================================== */}
+
+        <ul className="without-us-pain-points without-us-red-glow">
           {PAIN_POINTS.map((point) => (
-            <li key={point} data-reveal="fade">
-              <span className="opacity-90">&gt;</span> {point}
+            <li
+              key={point}
+              className="without-us-pain-point"
+              data-reveal="fade"
+            >
+              <span className="without-us-arrow">
+                &gt;
+              </span>
+
+              <span>
+                {point}
+              </span>
             </li>
           ))}
         </ul>
+
       </div>
 
-      {/* Visual */}
-<div className="relative 
-mx-auto 
-max-w-[1300px]"
-style={{marginBottom: "30px"}}
-data-reveal="hand-lift"
->
-  <img
-    src={bearHand}
-    alt="A furry bear hand holding a glowing packaging box"
-    className="block h-auto w-full bear-hand-image"
-  />
 
-  <svg
-    className="absolute top-[-11%] left-[-2%] max-w-[90%] bear-hand-callouts"
-    viewBox="0 0 500 260"
-    preserveAspectRatio="xMidYMid meet"
-    aria-hidden="true"
-  >
-    {CALLOUTS.map((c) => (
-      <g key={c.label}>
-        <path
-          d={c.path}
-          fill="none"
-          stroke="#ffd400"
-          strokeWidth="1"
-          opacity="0.85"
-        />
+      {/* =========================================
+          BEAR HAND VISUAL
+      ========================================== */}
 
-        <circle
-          cx={c.dotX}
-          cy={c.dotY}
-          r="2.5"
-          fill="#ffd400"
-        />
+      <div
+        className="bear-hand-visual"
+        data-reveal="hand-lift"
+      >
 
-        <text
-          x={c.labelX}
-          y={c.labelY}
-          textAnchor={c.anchor}
-          fill="#ffd400"
-          fontFamily="Roboto Slab, serif"
-          fontSize="9.5"
-          letterSpacing="0.01em"
+        {/* =========================================
+            SVG POINTER LINES
+
+            The SVG remains behind the image so
+            the lines visually disappear underneath
+            the box/hand.
+        ========================================== */}
+
+        <svg
+          className="bear-hand-callouts"
+          viewBox="0 0 500 260"
+          preserveAspectRatio="xMidYMid meet"
+          aria-hidden="true"
         >
-          {c.label}
-        </text>
-      </g>
-    ))}
-  </svg>
-</div>
+          {CALLOUTS.map((callout) => (
+            <g
+              key={callout.label}
+              className="bear-callout"
+            >
 
-      {/* Footer */}
-<div
-  className="mx-auto flex w-full max-w-[1550px] flex-col items-center gap-6 md:flex-row md:items-center md:justify-between md:gap-10"
->
-  <p className="m-0 max-w-[810px] font-pixel text-[clamp(22px,4.5vw,40px)] font-normal uppercase leading-[1.5] tracking-[0.02em] text-[#ffd400]" data-reveal="fade">
-    Whether you&apos;re a global brand sourcing from India, a growing
-    export business, or an agency managing international production
-    we help make packaging execution feel less exhausting.
-  </p>
+              {/* Pointer line */}
 
-  <button
-    type="button"
-    className="bear-pill
-    font-pixel
-    bear-pill--solid
-    shrink-0
-    whitespace-nowrap
-    border-0
-    text-[clamp(16px,3vw,28px)] 
-    uppercase"
-    style={{
-      padding: '13px 39px',
-      textShadow: '0 0 6px rgba(255,212,0,0.9), 0 0 14px rgba(255,212,0,0.7), 0 0 24px rgba(255,212,0,0.4)',
-    }}
-    data-reveal="fade"
-  >
-    Talk To Us About Export
-  </button>
-</div>
+              <path
+                d={callout.path}
+                fill="none"
+                stroke="#ffd400"
+                strokeWidth="1"
+                opacity="0.85"
+              />
+
+
+              {/* Pointer dot */}
+
+              <circle
+                cx={callout.dotX}
+                cy={callout.dotY}
+                r="2.5"
+                fill="#ffd400"
+              />
+
+
+              {/* Label */}
+
+              <text
+                x={callout.labelX}
+                y={callout.labelY}
+                textAnchor={callout.anchor}
+                fill="#ffd400"
+                fontFamily="Roboto Slab, serif"
+                fontSize="9.5"
+                letterSpacing="0.01em"
+              >
+                {callout.label}
+              </text>
+
+            </g>
+          ))}
+        </svg>
+
+
+        {/* =========================================
+            BEAR HAND IMAGE
+        ========================================== */}
+
+        <img
+          src={bearHand}
+          alt="A furry bear hand holding a glowing packaging box"
+          className="bear-hand-image"
+        />
+
+      </div>
+
+
+      {/* =========================================
+          FOOTER
+      ========================================== */}
+
+      <div className="without-us-footer">
+
+        <p
+          className="without-us-footer-text"
+          data-reveal="fade"
+        >
+          Whether you&apos;re a global brand sourcing from India, a growing
+          export business, or an agency managing international production
+          we help make packaging execution feel less exhausting.
+        </p>
+
+
+        <button
+          type="button"
+          className="bear-pill bear-pill--solid without-us-button"
+          data-reveal="fade"
+        >
+          Talk To Us About Export
+        </button>
+
+      </div>
 
     </section>
   );

@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Roboto+Slab:wght@400;500;600&display=swap');
 
+
+/* =========================================
+   SHIPPING SECTION
+   DESKTOP — ORIGINAL DESIGN
+========================================= */
+
 .shipping {
   --shipping-yellow: var(--bear-accent, #d3d818);
   --shipping-red: #e6392b;
@@ -13,33 +19,66 @@
   overflow: hidden;
 }
 
+
+/* =========================================
+   TITLE
+========================================= */
+
 .shipping-title {
   margin: 0 0 56px;
-  font-family: 'Anton', 'Sharp Grotesk Black', sans-serif;
+
+  font-family:
+    'Anton',
+    'Sharp Grotesk Black',
+    sans-serif;
+
   font-weight: 400;
+
   text-transform: uppercase;
   text-align: center;
+
   color: var(--shipping-red);
+
   line-height: 1.02;
 }
 
 .shipping-title-line {
   display: block;
+
   font-size: clamp(28px, 5.2vw, 52px);
 }
 
+
+/* =========================================
+   SHIPPING GRID
+========================================= */
+
 .shipping-grid {
   max-width: 1080px;
+
   margin: 0 auto;
+
   display: flex;
   flex-direction: column;
 }
 
+
+/* =========================================
+   SHIPPING ROW
+========================================= */
+
 .shipping-row {
   display: flex;
+
   align-items: flex-start;
+
   gap: 32px;
 }
+
+
+/* =========================================
+   REVERSE ROW
+========================================= */
 
 .shipping-row--reverse {
   flex-direction: row-reverse;
@@ -49,82 +88,604 @@
   margin-top: -80px;
 }
 
+
+/* =========================================
+   IMAGE
+========================================= */
+
 .shipping-image {
   flex: 1 1 0;
+
   aspect-ratio: 4 / 3;
+
   border-radius: 20px;
+
   background-color: var(--shipping-red);
+
+  overflow: hidden;
+
+  position: relative;
 }
+
+
+/* =========================================
+   IMAGE CONTENT
+========================================= */
+
+.shipping-image-content {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  object-position: center;
+}
+
+
+/* =========================================
+   COPY
+========================================= */
 
 .shipping-copy {
   flex: 1 1 0;
+
   padding-top: 30px;
 }
 
+
+/* =========================================
+   COPY TITLE
+========================================= */
+
 .shipping-copy-title {
   margin: 0 0 8px;
-  font-family:'Easy Pixel Regular', sans-serif;
+
+  font-family:
+    'Easy Pixel Regular',
+    sans-serif;
+
   font-weight: 700;
+
   text-transform: uppercase;
+
   color: var(--shipping-purple);
+
   line-height: 1.05;
+
   font-size: clamp(20px, 3vw, 75px);
 }
 
+
+/* =========================================
+   COPY DESCRIPTION
+========================================= */
+
 .shipping-copy-desc {
   margin: 0;
-  font-family:'Easy Pixel Regular', sans-serif;
+
+  font-family:
+    'Easy Pixel Regular',
+    sans-serif;
+
   font-weight: 400;
+
   color: var(--shipping-copy);
+
   font-size: clamp(14px, 1.4vw, 25px);
+
   line-height: 1.4;
+
   max-width: 30ch;
 }
 
+
+/* =========================================
+   CLOSING TEXT
+========================================= */
+
 .shipping-closing {
   margin: 96px auto 0;
+
   padding-top: 40px;
+
   border-top: 1.5px solid var(--shipping-line);
+
   text-align: center;
 }
 
+
+/* =========================================
+   CLOSING LINES
+========================================= */
+
 .shipping-closing-line {
   margin: 0;
-  font-family: 'Sharp Grotesk PE Trial Black', sans-serif;
+
+  font-family:
+    'Sharp Grotesk PE Trial Black',
+    sans-serif;
+
   font-weight: 400;
+
   text-transform: uppercase;
+
   color: var(--shipping-red);
+
   line-height: 0.9;
+
   font-size: clamp(22px, 7vw, 110px);
 }
 
+
+/* =========================================
+   LARGE CLOSING LINE
+========================================= */
+
 .shipping-closing-line--lg {
   font-size: clamp(22px, 7vw, 120px);
+
   margin-bottom: 30px;
 }
 
+
+/* =========================================
+   BLUR EFFECT
+========================================= */
+
 .shipping-closing-blur {
   position: relative;
+
   display: inline-block;
+
   color: var(--shipping-red);
+
   text-shadow:
     0 0 2px rgba(230, 57, 43, 0.5),
     3px 0 8px rgba(230, 57, 43, 0.6),
     -3px 0 8px rgba(230, 57, 43, 0.6);
+
   filter: blur(0.4px);
 }
 
+
+/* =========================================================
+   TABLET
+   Only responsive behavior.
+   Desktop above remains untouched.
+========================================================= */
+
+@media (max-width: 960px) and (min-width: 721px) {
+
+  .shipping {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .shipping-grid {
+    width: 100%;
+    max-width: 1080px;
+  }
+
+  .shipping-row {
+    gap: 24px;
+  }
+
+  .shipping-copy-title {
+    font-size: clamp(22px, 3vw, 42px);
+  }
+
+  .shipping-copy-desc {
+    font-size: clamp(14px, 1.8vw, 20px);
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   Desktop layout is completely preserved above.
+========================================================= */
+
 @media (max-width: 720px) {
+
+  /* -----------------------------------------
+     SECTION
+  ----------------------------------------- */
+
+  .shipping {
+    width: 100%;
+    max-width: 100%;
+
+    box-sizing: border-box;
+
+    padding-left: 18px;
+    padding-right: 18px;
+
+    overflow-x: hidden;
+  }
+
+
+  /* -----------------------------------------
+     TITLE
+  ----------------------------------------- */
+
+  .shipping-title {
+    width: 100%;
+    max-width: 100%;
+
+    margin-bottom: 44px;
+
+    box-sizing: border-box;
+  }
+
+  .shipping-title-line {
+    font-size: clamp(28px, 8vw, 44px);
+
+    line-height: 1.02;
+
+    max-width: 100%;
+
+    overflow-wrap: break-word;
+  }
+
+
+  /* -----------------------------------------
+     GRID
+  ----------------------------------------- */
+
+  .shipping-grid {
+    width: 100%;
+    max-width: 100%;
+
+    margin: 0 auto;
+
+    box-sizing: border-box;
+  }
+
+
+  /* -----------------------------------------
+     ROWS
+  ----------------------------------------- */
+
   .shipping-row,
   .shipping-row--reverse {
+
+    width: 100%;
+    max-width: 100%;
+
     flex-direction: column;
+
+    gap: 0;
+
+    box-sizing: border-box;
   }
+
+
+  /*
+   * Remove desktop negative offset.
+   * This prevents the second image from
+   * overlapping content on mobile.
+   */
 
   .shipping-row--reverse .shipping-image {
     margin-top: 0;
   }
 
-  .shipping-copy-desc {
+
+  /* -----------------------------------------
+     IMAGE CONTAINER
+  ----------------------------------------- */
+
+  .shipping-image {
+
+    width: 100%;
     max-width: 100%;
+
+    flex: none;
+
+    aspect-ratio: 4 / 3;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-sizing: border-box;
   }
+
+
+  /* -----------------------------------------
+     IMAGE
+  ----------------------------------------- */
+
+  .shipping-image-content {
+
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    object-position: center;
+
+    box-sizing: border-box;
+  }
+
+
+  /* -----------------------------------------
+     COPY
+  ----------------------------------------- */
+
+  .shipping-copy {
+
+    width: 100%;
+    max-width: 100%;
+
+    flex: none;
+
+    padding-top: 18px;
+
+    box-sizing: border-box;
+  }
+
+
+  /* -----------------------------------------
+     COPY TITLE
+  ----------------------------------------- */
+
+  .shipping-copy-title {
+
+    width: 100%;
+    max-width: 100%;
+
+    margin: 0 0 8px;
+
+    font-size: clamp(21px, 6vw, 34px);
+
+    line-height: 1.05;
+
+    overflow-wrap: break-word;
+  }
+
+
+  /* -----------------------------------------
+     DESCRIPTION
+  ----------------------------------------- */
+
+  .shipping-copy-desc {
+
+    width: 100%;
+    max-width: 100%;
+
+    margin: 0;
+
+    font-size: clamp(14px, 4vw, 18px);
+
+    line-height: 1.4;
+
+    overflow-wrap: break-word;
+  }
+
+
+  /* -----------------------------------------
+     SPACE BETWEEN ITEMS
+  ----------------------------------------- */
+
+  .shipping-row + .shipping-row {
+    margin-top: 48px;
+  }
+
+
+  /* -----------------------------------------
+     CLOSING
+  ----------------------------------------- */
+
+  .shipping-closing {
+
+    width: 100%;
+    max-width: 100%;
+
+    margin-top: 72px;
+
+    padding-top: 32px;
+
+    box-sizing: border-box;
+  }
+
+
+  /* -----------------------------------------
+     CLOSING TEXT
+  ----------------------------------------- */
+
+  .shipping-closing-line {
+
+    width: 100%;
+    max-width: 100%;
+
+    font-size: clamp(24px, 8vw, 48px);
+
+    line-height: 0.92;
+
+    overflow-wrap: break-word;
+  }
+
+
+  .shipping-closing-line--lg {
+
+    font-size: clamp(25px, 8vw, 52px);
+
+    margin-bottom: 24px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .shipping {
+
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+
+  /* -----------------------------------------
+     TITLE
+  ----------------------------------------- */
+
+  .shipping-title {
+
+    margin-bottom: 38px;
+  }
+
+  .shipping-title-line {
+
+    font-size: clamp(25px, 8.5vw, 38px);
+  }
+
+
+  /* -----------------------------------------
+     ITEM SPACING
+  ----------------------------------------- */
+
+  .shipping-row + .shipping-row {
+
+    margin-top: 42px;
+  }
+
+
+  /* -----------------------------------------
+     IMAGE
+  ----------------------------------------- */
+
+  .shipping-image {
+
+    width: 100%;
+    max-width: 100%;
+
+    aspect-ratio: 4 / 3;
+
+    border-radius: 14px;
+  }
+
+
+  /* -----------------------------------------
+     COPY
+  ----------------------------------------- */
+
+  .shipping-copy {
+
+    padding-top: 16px;
+  }
+
+
+  .shipping-copy-title {
+
+    font-size: clamp(20px, 7vw, 30px);
+
+    line-height: 1.05;
+  }
+
+
+  .shipping-copy-desc {
+
+    font-size: clamp(13px, 4.2vw, 16px);
+
+    line-height: 1.4;
+  }
+
+
+  /* -----------------------------------------
+     CLOSING
+  ----------------------------------------- */
+
+  .shipping-closing {
+
+    margin-top: 60px;
+
+    padding-top: 26px;
+  }
+
+
+  .shipping-closing-line {
+
+    font-size: clamp(22px, 8vw, 40px);
+  }
+
+
+  .shipping-closing-line--lg {
+
+    font-size: clamp(23px, 8.2vw, 43px);
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 360px) {
+
+  .shipping {
+
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+
+  .shipping-title-line {
+
+    font-size: 24px;
+  }
+
+
+  .shipping-copy-title {
+
+    font-size: 20px;
+  }
+
+
+  .shipping-copy-desc {
+
+    font-size: 13px;
+  }
+
+
+  .shipping-closing-line {
+
+    font-size: 21px;
+  }
+
+
+  .shipping-closing-line--lg {
+
+    font-size: 22px;
+  }
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   Respect reduced-motion preference.
+   Does not alter the existing animation system.
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .shipping-image-content {
+
+    transition: none !important;
+    animation: none !important;
+  }
+
 }

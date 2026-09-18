@@ -1,0 +1,1116 @@
+/* ==========================================================
+   FOOTER — CartonBear
+
+   Yellow "billboard" panel + dark blue status bar, matching
+   the site's existing bear-bg / bear-accent design language.
+   ========================================================== */
+
+.bear-footer {
+
+  --footer-yellow: var(--bear-accent, #d3d818);
+
+  --footer-blue: var(--bear-bg, #0506cc);
+
+  --footer-red: #e3241c;
+
+  --footer-ink: #171512;
+
+  position: relative;
+
+  background-color: var(--footer-yellow);
+
+  overflow: hidden;
+
+  isolation: isolate;
+}
+
+
+/* ----------------------------------------------------------
+   MAIN (yellow) AREA
+---------------------------------------------------------- */
+
+.footer-main {
+
+  position: relative;
+
+  display: flex;
+
+  align-items: stretch;
+
+  flex-wrap: wrap;
+
+  gap: clamp(28px, 4vw, 56px);
+
+  padding:
+    clamp(36px, 6vw, 64px)
+    clamp(24px, 5vw, 48px)
+    clamp(56px, 8vw, 96px);
+}
+
+
+/* ---------- Brand block ---------- */
+
+.footer-brand {
+
+  container-name: footer-brand;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  flex: 1 1 340px;
+
+  min-width: 0;
+}
+
+
+.footer-wordmark {
+
+  position: relative;
+
+  font-family:
+    var(--font-sharp),
+    'Sharp Grotesk PE Trial Black',
+    sans-serif;
+
+  font-weight: 900;
+
+  font-size: clamp(32px, 8cqi, 108px);
+
+  line-height: 0.82;
+
+  letter-spacing: -0.01em;
+
+  color: var(--footer-blue);
+
+  text-transform: uppercase;
+
+  margin: 0;
+
+  max-width: 100%;
+
+  white-space: nowrap;
+}
+
+
+.footer-wordmark-reg {
+
+  position: relative;
+
+  top: -1.4em;
+
+  left: 1%;
+
+  font-size: 0.35em;
+
+  font-weight: 700;
+
+  margin-left: 0.05em;
+}
+
+
+.footer-tagline {
+
+  font-family:
+    'Sharp Grotesk PE Trial Black',
+    sans-serif;
+
+  font-weight: 900;
+
+  font-size: clamp(14px, 1.7vw, 22px);
+
+  line-height: 1.35;
+
+  letter-spacing: 0.01em;
+
+  color: var(--footer-red);
+
+  text-transform: uppercase;
+
+  margin:
+    clamp(10px, 2vw, 18px)
+    0
+    0;
+}
+
+
+.footer-social {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  align-items: center;
+
+  gap: clamp(16px, 2.4vw, 28px);
+
+  margin-top: clamp(18px, 3vw, 30px);
+}
+
+
+.footer-social-link {
+
+  font-family:
+    'Sharp Grotesk PE Trial Bold',
+    sans-serif;
+
+  font-weight: 700;
+
+  font-size: clamp(12px, 1.05vw, 15px);
+
+  letter-spacing: 0.04em;
+
+  color: var(--footer-ink);
+
+  text-decoration: none;
+
+  text-transform: uppercase;
+
+  white-space: nowrap;
+}
+
+
+.footer-social-link:hover {
+
+  text-decoration: underline;
+}
+
+
+/* ----------------------------------------------------------
+   LINK COLUMNS
+---------------------------------------------------------- */
+
+.footer-links-group {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  align-items: stretch;
+
+  gap: clamp(28px, 4vw, 56px);
+
+  margin-left: auto;
+}
+
+
+.footer-col {
+
+  flex: 0 0 auto;
+
+  min-width: 160px;
+
+  padding-left: clamp(28px, 4vw, 56px);
+
+  border-left: 1.5px solid var(--footer-ink);
+}
+
+
+.footer-col-title {
+
+  font-family:
+    'Anton',    'Sharp Grotesk Black',    sans-serif;
+
+  font-weight: 900;
+
+  font-size: clamp(18px, 1.7vw, 25px);
+
+  letter-spacing: 0.01em;
+
+  color: var(--footer-red);
+
+  text-transform: uppercase;
+
+  margin:
+    0
+    0
+    clamp(12px, 1.8vw, 20px);
+}
+
+
+.footer-links {
+
+  list-style: none;
+
+  margin: 0;
+
+  padding: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: clamp(10px, 1.4vw, 15px);
+}
+
+
+.footer-links a {
+
+  font-family:
+    'Sharp Grotesk PE Trial Bold',
+    sans-serif;
+
+  font-weight: 700;
+
+  font-size: clamp(14px, 1.15vw, 17px);
+
+  color: var(--footer-ink);
+
+  text-decoration: none;
+
+  white-space: nowrap;
+}
+
+
+.footer-links a:hover {
+
+  text-decoration: underline;
+}
+
+
+/* ----------------------------------------------------------
+   BOX ART
+---------------------------------------------------------- */
+
+.footer-box-art {
+
+  position: absolute;
+
+  right: 0;
+
+  bottom: 0;
+
+  width: clamp(220px, 26vw, 420px);
+
+  height: auto;
+
+  max-height: 78%;
+
+  object-fit: contain;
+
+  object-position: bottom right;
+
+  pointer-events: none;
+
+  user-select: none;
+}
+
+
+/* ----------------------------------------------------------
+   BOTTOM (blue) BAR
+---------------------------------------------------------- */
+
+.footer-bottom {
+
+  position: relative;
+
+  z-index: 1;
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 12px;
+
+  background-color: var(--footer-blue);
+
+  border-top: 2px solid var(--footer-yellow);
+
+  padding:
+    clamp(16px, 2.4vw, 22px)
+    clamp(24px, 5vw, 48px);
+}
+
+
+.footer-copyright {
+
+  margin: 0;
+
+  font-family:
+   'Sharp Grotesk PE Trial Bold',
+    sans-serif;
+
+  font-size: clamp(12px, 1vw, 14px);
+
+  color: #c7c9f2;
+}
+
+
+.footer-status {
+
+  margin: 0;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  font-family:
+    'Sharp Grotesk PE Trial Bold',
+    sans-serif;
+
+  font-weight: 700;
+
+  font-size: clamp(11px, 0.95vw, 14px);
+
+  letter-spacing: 0.06em;
+
+  color: #f2f1fa;
+
+  text-transform: uppercase;
+
+  white-space: nowrap;
+}
+
+
+.footer-status-dot {
+
+  width: 9px;
+
+  height: 9px;
+
+  border-radius: 50%;
+
+  background-color: var(--footer-yellow);
+
+  flex: none;
+}
+
+
+/* ==========================================================
+   DESKTOP QUICK-LINK POSITION FIX
+   ----------------------------------------------------------
+   YOUR DESKTOP VERSION — KEPT AS-IS
+========================================================== */
+
+@media (min-width: 901px) {
+
+  .footer-links-group {
+
+    margin-left: auto;
+
+    margin-right: clamp(120px, 9vw, 190px);
+
+    position: relative;
+
+    z-index: 3;
+
+    gap: clamp(24px, 3vw, 48px);
+  }
+
+
+  .footer-col {
+
+    padding-left: clamp(24px, 3vw, 48px);
+  }
+
+}
+
+@media (max-width: 769px) {
+  /* Break the footer out of any centered/max-width parent
+     so the mobile footer fills the entire phone viewport. */
+
+     .footer-box-art{
+      display: none !important;
+     }
+
+  .bear-footer {
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+
+  .footer-brand {
+    width: 100% !important;
+  }
+}
+
+
+/* ==========================================================
+   LARGE TABLET
+   769px — 900px
+========================================================== */
+
+@media (min-width: 769px) and (max-width: 900px) {
+
+  .footer-main {
+
+    /*
+     * Give the brand and links enough room to breathe.
+     */
+
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(330px, 0.8fr);
+
+    align-items: start;
+
+    gap: 36px;
+
+    padding:
+      48px
+      36px
+      70px;
+  }
+
+
+  .footer-brand {
+
+    min-width: 0;
+
+    width: 100%;
+  }
+
+
+  /*
+   * Prevent the large desktop wordmark from
+   * pushing outside the tablet viewport.
+   */
+
+  .footer-wordmark {
+
+    font-size: clamp(46px, 7vw, 76px);
+
+    max-width: 100%;
+
+    white-space: nowrap;
+  }
+
+
+  .footer-tagline {
+
+    font-size: clamp(14px, 1.8vw, 18px);
+
+    max-width: 600px;
+  }
+
+
+  .footer-social {
+
+    gap: 18px;
+
+    max-width: 100%;
+  }
+
+
+  /*
+   * Keep Services + Company side-by-side.
+   */
+
+  .footer-links-group {
+
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(0, 1fr);
+
+    gap: 24px;
+
+    width: 100%;
+
+    margin: 0;
+
+    position: relative;
+
+    z-index: 3;
+  }
+
+
+  .footer-col {
+
+    min-width: 0;
+
+    padding-left: 22px;
+  }
+
+
+  .footer-col-title {
+
+    font-size: 20px;
+  }
+
+
+  .footer-links {
+
+    gap: 11px;
+  }
+
+
+  .footer-links a {
+
+    font-size: 14px;
+
+    white-space: normal;
+
+    line-height: 1.25;
+  }
+
+
+  /*
+   * Move the artwork behind the lower portion
+   * without allowing it to cover the links.
+   */
+
+  .footer-box-art {
+
+    width: clamp(150px, 24vw, 220px);
+
+    max-height: 45%;
+
+    opacity: 0.85;
+
+    z-index: 0;
+  }
+
+}
+
+
+/* ==========================================================
+   TABLET / MOBILE
+   481px — 768px
+========================================================== */
+
+@media (min-width: 481px) and (max-width: 768px) {
+
+  .footer-main {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 42px;
+
+    padding:
+      46px
+      28px
+      40px;
+  }
+
+
+  .footer-brand {
+
+    width: 100%;
+
+    flex: none;
+
+    min-width: 0;
+  }
+
+
+  .footer-wordmark {
+
+    width: 100%;
+
+    max-width: 100%;
+
+    font-size: clamp(48px, 10vw, 78px);
+
+    line-height: 0.82;
+
+    white-space: nowrap;
+  }
+
+
+  .footer-tagline {
+
+    max-width: 680px;
+
+    font-size: clamp(14px, 2.4vw, 19px);
+
+    line-height: 1.3;
+  }
+
+
+  .footer-social {
+
+    width: 100%;
+
+    gap: 16px 24px;
+
+    margin-top: 24px;
+  }
+
+
+  .footer-social-link {
+
+    font-size: 13px;
+  }
+
+
+  /*
+   * Quick links become a clean 2-column grid.
+   */
+
+  .footer-links-group {
+
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(0, 1fr);
+
+    width: 100%;
+
+    margin: 0;
+
+    gap: 24px;
+
+    position: relative;
+
+    z-index: 3;
+  }
+
+
+  .footer-col {
+
+    min-width: 0;
+
+    padding-left: 20px;
+  }
+
+
+  .footer-col-title {
+
+    font-size: 19px;
+
+    margin-bottom: 16px;
+  }
+
+
+  .footer-links {
+
+    gap: 11px;
+  }
+
+
+  .footer-links a {
+
+    font-size: 14px;
+
+    white-space: normal;
+
+    line-height: 1.25;
+  }
+
+
+  .footer-box-art {
+
+    position: static;
+
+    display: block;
+
+    width: min(55vw, 260px);
+
+    max-height: none;
+
+    margin:
+      0
+      auto;
+
+    opacity: 1;
+  }
+
+
+  .footer-bottom {
+
+    padding:
+      17px
+      28px;
+  }
+
+
+  .footer-status {
+
+    font-size: 11px;
+
+    white-space: normal;
+
+    text-align: right;
+  }
+
+}
+
+
+/* ==========================================================
+   MOBILE
+   361px — 480px
+========================================================== */
+
+@media (max-width: 480px) {
+
+  .footer-main {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 34px;
+
+    padding:
+      40px
+      20px
+      30px;
+  }
+
+
+  .footer-brand {
+
+    width: 100%;
+
+    max-width: 100%;
+
+    flex: none;
+
+    min-width: 0;
+  }
+
+
+  /*
+   * The desktop wordmark uses nowrap.
+   * On phones we allow it to scale safely.
+   */
+
+  .footer-wordmark {
+
+    width: 100%;
+
+    max-width: 100%;
+
+    font-size: clamp(38px, 12vw, 58px);
+
+    line-height: 0.84;
+
+    white-space: nowrap;
+
+    letter-spacing: -0.02em;
+  }
+
+
+  .footer-wordmark-reg {
+
+    top: -1.25em;
+
+    font-size: 0.32em;
+  }
+
+
+  .footer-tagline {
+
+    max-width: 100%;
+
+    font-size: clamp(13px, 3.5vw, 16px);
+
+    line-height: 1.3;
+
+    margin-top: 14px;
+  }
+
+
+  .footer-social {
+
+    width: 100%;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 14px 20px;
+
+    margin-top: 22px;
+  }
+
+
+  .footer-social-link {
+
+    font-size: 12px;
+
+    white-space: nowrap;
+  }
+
+
+  /*
+   * Services + Company remain side-by-side
+   * on normal mobile screens.
+   */
+
+  .footer-links-group {
+
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(0, 1fr);
+
+    width: 100%;
+
+    margin: 0;
+
+    gap: 20px;
+
+    position: relative;
+
+    z-index: 3;
+  }
+
+
+  .footer-col {
+
+    min-width: 0;
+
+    width: 100%;
+
+    padding-left: 0;
+
+    padding-top: 18px;
+
+    border-left: none;
+
+    border-top: 1.5px solid var(--footer-ink);
+  }
+
+
+  .footer-col-title {
+
+    font-size: 16px;
+
+    line-height: 1;
+
+    margin-bottom: 15px;
+  }
+
+
+  .footer-links {
+
+    gap: 11px;
+  }
+
+
+  .footer-links a {
+
+    display: block;
+
+    font-size: 12px;
+
+    line-height: 1.25;
+
+    white-space: normal;
+
+    overflow-wrap: anywhere;
+  }
+
+
+  /*
+   * Decorative box sits below the links
+   * instead of covering them.
+   */
+
+  .footer-box-art {
+
+    position: static;
+
+    display: block;
+
+    width: min(72vw, 280px);
+
+    height: auto;
+
+    max-height: none;
+
+    margin:
+      0
+      auto;
+
+    opacity: 1;
+  }
+
+
+  .footer-bottom {
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    justify-content: flex-start;
+
+    gap: 10px;
+
+    padding:
+      16px
+      20px;
+  }
+
+
+  .footer-copyright {
+
+    font-size: 12px;
+
+    line-height: 1.4;
+  }
+
+
+  .footer-status {
+
+    width: 100%;
+
+    font-size: 10px;
+
+    line-height: 1.3;
+
+    white-space: normal;
+
+    justify-content: flex-start;
+
+    text-align: left;
+  }
+
+
+  .footer-status-dot {
+
+    width: 8px;
+
+    height: 8px;
+  }
+
+}
+
+
+/* ==========================================================
+   VERY SMALL PHONES
+   360px and below
+========================================================== */
+
+@media (max-width: 360px) {
+
+  .footer-main {
+
+    padding:
+      34px
+      16px
+      26px;
+
+    gap: 30px;
+  }
+
+
+  .footer-wordmark {
+
+    font-size: clamp(34px, 11.5vw, 46px);
+
+    letter-spacing: -0.025em;
+  }
+
+
+  .footer-wordmark-reg {
+
+    top: -1.15em;
+
+    font-size: 0.3em;
+  }
+
+
+  .footer-tagline {
+
+    font-size: 12px;
+
+    line-height: 1.35;
+  }
+
+
+  .footer-social {
+
+    gap: 12px 16px;
+  }
+
+
+  .footer-social-link {
+
+    font-size: 10px;
+  }
+
+
+  /*
+   * At extremely narrow widths, stacking the
+   * two link columns prevents cramped text.
+   */
+
+  .footer-links-group {
+
+    grid-template-columns: 1fr;
+
+    gap: 0;
+  }
+
+
+  .footer-col {
+
+    padding-top: 18px;
+  }
+
+
+  .footer-col + .footer-col {
+
+    margin-top: 0;
+  }
+
+
+  .footer-col-title {
+
+    font-size: 17px;
+  }
+
+
+  .footer-links a {
+
+    font-size: 12px;
+  }
+
+
+  .footer-box-art {
+
+    width: min(78vw, 250px);
+  }
+
+
+  .footer-bottom {
+
+    padding:
+      15px
+      16px;
+  }
+
+
+  .footer-status {
+
+    font-size: 9px;
+
+    gap: 8px;
+  }
+
+}
+
+
+/* ==========================================================
+   ACCESSIBILITY
+========================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .bear-footer *,
+  .bear-footer *::before,
+  .bear-footer *::after {
+
+    scroll-behavior: auto !important;
+  }
+
+}
