@@ -1,10 +1,10 @@
 /* SharpGroteskPETrialBlack — used as 'Sharp Grotesk PE Trial Black' */
 @font-face {
   font-family: 'Sharp Grotesk PE Trial Black';
-  src: url('/fonts/SharpGroteskPETrialBlack-22-BF646589efbf4e7.otf') format('opentype'),
-       url('/fonts/SharpGroteskPETrialBlack-21-BF646589df500f7.ttf') format('truetype'),
-       url('/fonts/SharpGroteskPETrialBlack-19-BF646589df73fe4.ttf') format('truetype'),
-       url('/fonts/SharpGroteskPETrialBlack-17-BF646589df032ff.ttf') format('truetype');
+  src: url('/Fonts/SharpGroteskPETrialBlack-22-BF646589efbf4e7.otf') format('opentype'),
+       url('/Fonts/SharpGroteskPETrialBlack-21-BF646589df500f7.ttf') format('truetype'),
+       url('/Fonts/SharpGroteskPETrialBlack-19-BF646589df73fe4.ttf') format('truetype'),
+       url('/Fonts/SharpGroteskPETrialBlack-17-BF646589df032ff.ttf') format('truetype');
   font-weight: 900;
   font-style: normal;
   font-display: swap;
@@ -13,7 +13,7 @@
 /* fallback alias used alongside 'Anton' in a few sections */
 @font-face {
   font-family: 'Sharp Grotesk Black';
-  src: url('/fonts/SharpGroteskPETrialBlack-21-BF646589df500f7.ttf') format('truetype');
+  src: url('/Fonts/SharpGroteskPETrialBlack-21-BF646589df500f7.ttf') format('truetype');
   font-weight: 900;
   font-style: normal;
   font-display: swap;
@@ -23,8 +23,8 @@
    and the typo'd 'Sharp Grotesk triaBold' (DispatchesSection) */
 @font-face {
   font-family: 'Sharp Grotesk PE Trial Bold';
-  src: url('/fonts/SharpGroteskPETrialBold-17-BF646589dd64166.ttf') format('truetype'),
-       url('/fonts/SharpGroteskPETrialBold-07-BF646589d88b903.ttf') format('truetype');
+  src: url('/Fonts/SharpGroteskPETrialBold-17-BF646589dd64166.ttf') format('truetype'),
+       url('/Fonts/SharpGroteskPETrialBold-07-BF646589d88b903.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -32,7 +32,7 @@
 
 @font-face {
   font-family: 'Sharp Grotesk triaBold';
-  src: url('/fonts/SharpGroteskPETrialBold-17-BF646589dd64166.ttf') format('truetype');
+  src: url('/Fonts/SharpGroteskPETrialBold-17-BF646589dd64166.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -43,7 +43,7 @@
    Replace the url() if you get the real file. */
 @font-face {
   font-family: 'Sharp Grotesk PE Trial Bold 20';
-  src: url('/fonts/SharpGroteskPETrialBold-17-BF646589dd64166.ttf') format('truetype');
+  src: url('/Fonts/SharpGroteskPETrialBold-17-BF646589dd64166.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -52,9 +52,9 @@
 /* SharpGroteskPETrialBook — used as fallback 'Sharp Grotesk Book' (DispatchesSection) */
 @font-face {
   font-family: 'Sharp Grotesk Book';
-  src: url('/fonts/SharpGroteskPETrialBook-21-BF646589dc468e0.ttf') format('truetype'),
-       url('/fonts/SharpGroteskPETrialBook-19-BF646589dbd79d8.ttf') format('truetype'),
-       url('/fonts/SharpGroteskPETrialBook-10-BF646589d66a472.ttf') format('truetype');
+  src: url('/Fonts/SharpGroteskPETrialBook-21-BF646589dc468e0.ttf') format('truetype'),
+       url('/Fonts/SharpGroteskPETrialBook-19-BF646589dbd79d8.ttf') format('truetype'),
+       url('/Fonts/SharpGroteskPETrialBook-10-BF646589d66a472.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -63,7 +63,7 @@
 /* SharpGroteskPETrialSmBold — not used anywhere yet, kept for later */
 @font-face {
   font-family: 'Sharp Grotesk PE Trial SmBold';
-  src: url('/fonts/SharpGroteskPETrialSmBold-20-BF646589d7efcd5.ttf') format('truetype');
+  src: url('/Fonts/SharpGroteskPETrialSmBold-20-BF646589d7efcd5.ttf') format('truetype');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -73,7 +73,7 @@
    PackagingSection, and global.css's .font-pixel */
 @font-face {
   font-family: 'Easy Pixel Regular';
-  src: url('/fonts/EasyPixel.ttf') format('truetype');
+  src: url('/Fonts/EasyPixel.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -82,7 +82,7 @@
 /* Myriad Pro — used inline in ServicesSection.jsx */
 @font-face {
   font-family: 'Myriad Pro';
-  src: url('/fonts/MyriadPro-Regular.otf') format('opentype');
+  src: url('/Fonts/MyriadPro-Regular.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -91,12 +91,12 @@
 /* Not referenced by any component yet — kept in case you use them later */
 @font-face {
   font-family: 'Alphakind';
-  src: url('/fonts/Alphakind.ttf') format('truetype');
+  src: url('/Fonts/Alphakind.ttf') format('truetype');
   font-display: swap;
 }
 
 @font-face {
   font-family: 'CS Liona Mono';
-  src: url('/fonts/CSLionaMono-Regular.ttf') format('truetype');
+  src: url('/Fonts/CSLionaMono-Regular.ttf') format('truetype');
   font-display: swap;
 }
