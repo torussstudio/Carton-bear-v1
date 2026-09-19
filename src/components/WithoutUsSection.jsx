@@ -1,4 +1,6 @@
+import { useLayoutEffect, useRef } from 'react';
 import bearHand from '../images/Bear-hand.webp';
+import { gsap, ScrollTrigger, prefersReducedMotion } from '../lib/gsapSetup';
 import './Nav.css';
 import './WithoutUsSection.css';
 
@@ -9,57 +11,211 @@ const PAIN_POINTS = [
   'Production Blind Spots',
 ];
 
+/*
+  NODE / CALLOUT DATA
+  ------------------------------------------------------------------
+  Order below is the exact scroll sequence the section plays through
+  while pinned: Vendor Communication -> Production Management ->
+  Packaging Execution -> Export Readiness -> Dispatch Support.
+
+  `dotX/dotY`  - where the endpoint dot (and label) sit.
+  `path`       - authored from the BOX end to the DOT end so the
+                 stroke-dashoffset draw animation grows bottom -> top,
+                 ending exactly on the dot.
+*/
 const CALLOUTS = [
   {
+    key: 'vendor-communication',
+    label: 'Vendor Communication',
+    labelX: 68,
+    labelY: 90,
+    anchor: 'start',
+    dotX: 186,
+    dotY: 86,
+    path: 'M222,105 C208,98 196,91 186,86',
+  },
+  {
+    key: 'production-management',
     label: 'Production Management',
     labelX: 90,
     labelY: 25,
     anchor: 'start',
-    dotX: 200,
-    dotY: 27,
-    path: 'M200,27 C230,40 250,65 255,85',
+    dotX: 215,
+    dotY: 20,
+    path: 'M255,85 C245,60 230,35 215,20',
   },
   {
+    key: 'packaging-execution',
     label: 'Packaging Execution',
-    labelX: 300,
-    labelY: 28,
+    labelX: 308,
+    labelY: 25,
     anchor: 'start',
-    dotX: 292,
-    dotY: 30,
-    path: 'M292,30 C288,50 283,68 280,82',
+    dotX: 300,
+    dotY: 22,
+    path: 'M280,82 C286,60 294,38 300,22',
   },
   {
+    key: 'export-readiness',
     label: 'Export Readiness',
-    labelX: 356,
-    labelY: 69,
+    labelX: 364,
+    labelY: 60,
     anchor: 'start',
-    dotX: 348,
-    dotY: 69,
-    path: 'M348,69 C335,80 320,90 312,97',
+    dotX: 356,
+    dotY: 60,
+    path: 'M312,97 C328,85 344,72 356,60',
   },
   {
-    label: 'Vendor Communication',
-    labelX: 68,
-    labelY: 96,
-    anchor: 'start',
-    dotX: 134,
-    dotY: 75,
-    path: 'M134,75 C165,80 195,90 222,105',
-  },
-  {
+    key: 'dispatch-support',
     label: 'Dispatch Support',
-    labelX: 380,
-    labelY: 128,
+    labelX: 390,
+    labelY: 124,
     anchor: 'start',
-    dotX: 374,
-    dotY: 124,
-    path: 'M374,124 C360,120 345,118 330,120',
+    dotX: 384,
+    dotY: 120,
+    path: 'M330,120 C348,113 366,113 384,120',
   },
 ];
 
 function WithoutUsSection() {
+  const sectionRef = useRef(null);
+  const handVisualRef = useRef(null);
+  const handImageRef = useRef(null);
+  const pathRefs = useRef([]);
+  const dotRefs = useRef([]);
+  const textRefs = useRef([]);
+
+  useLayoutEffect(() => {
+    if (
+      prefersReducedMotion() ||
+      !sectionRef.current ||
+      !handVisualRef.current ||
+      !handImageRef.current
+    ) {
+      return undefined;
+    }
+
+    const ctx = gsap.context(() => {
+      const paths = pathRefs.current.filter(Boolean);
+      const dots = dotRefs.current.filter(Boolean);
+      const texts = textRefs.current.filter(Boolean);
+
+      if (paths.length !== CALLOUTS.length) return;
+
+      const lengths = paths.map((p) => p.getTotalLength());
+
+      const buildScene = ({
+        handOffsetX,
+        handOffsetY,
+        handRotate,
+        pinDistance,
+      }) => {
+        // ---- initial ("closed") state ---------------------------------
+        gsap.set(handImageRef.current, {
+          x: handOffsetX,
+          y: handOffsetY,
+          rotate: handRotate,
+          transformOrigin: '75% 25%',
+        });
+
+        paths.forEach((p, i) => {
+          gsap.set(p, {
+            strokeDasharray: lengths[i],
+            strokeDashoffset: lengths[i],
+          });
+        });
+        gsap.set(dots, { opacity: 0, scale: 0.4, transformOrigin: '50% 50%' });
+        gsap.set(texts, { opacity: 0, y: '+=6' });
+
+        // ---- 1) hand rises into place as the hand visual enters ---------
+        const entryTrigger = ScrollTrigger.create({
+          trigger: handVisualRef.current,
+          start: 'top bottom',
+          end: 'top top',
+          scrub: 0.6,
+          animation: gsap.to(handImageRef.current, {
+            x: 0,
+            y: 0,
+            rotate: 0,
+            ease: 'none',
+          }),
+        });
+
+        // ---- 2) pin the section and step through the 5 nodes -----------
+        const stepTl = gsap.timeline();
+
+        CALLOUTS.forEach((_, i) => {
+          stepTl
+            .to(
+              paths[i],
+              { strokeDashoffset: 0, duration: 1, ease: 'power2.inOut' },
+              i
+            )
+            .to(
+              dots[i],
+              { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(2)' },
+              i + 0.75
+            )
+            .to(
+              texts[i],
+              { opacity: 1, y: '+=0', duration: 0.45, ease: 'power2.out' },
+              i + 0.8
+            );
+        });
+
+        const pinTrigger = ScrollTrigger.create({
+          // Trigger off the hand visual specifically — not the section's
+          // own top (which is the intro heading/pain-points) — so the pin
+          // engages once the hand/box art reaches the top of the viewport,
+          // not while the intro text is still on screen.
+          trigger: handVisualRef.current,
+          start: 'top top',
+          end: `+=${pinDistance}`,
+          // Pin the whole section (so it fills the screen for the node
+          // sequence) even though the trigger element is the hand visual.
+          pin: sectionRef.current,
+          // IMPORTANT: this app wraps everything in #crtContent, which has
+          // `filter: url(#crtBulge)` for the CRT effect. A CSS `filter` on
+          // an ancestor creates a new containing block for `position: fixed`
+          // descendants, which is what ScrollTrigger's pin uses by default —
+          // so the pin would fix itself relative to #crtContent instead of
+          // the viewport, breaking (or completely mispositioning) the pin.
+          // pinType: 'transform' makes ScrollTrigger pin using a CSS
+          // transform instead, which is unaffected by filtered ancestors.
+          pinType: 'transform',
+          scrub: 0.8,
+          anticipatePin: 1,
+          animation: stepTl,
+        });
+
+        return () => {
+          entryTrigger.kill();
+          pinTrigger.kill();
+        };
+      };
+
+      ScrollTrigger.matchMedia({
+        '(min-width: 601px)': () =>
+          buildScene({
+            handOffsetX: 70,
+            handOffsetY: 60,
+            handRotate: -12,
+            pinDistance: '350%',
+          }),
+        '(max-width: 600px)': () =>
+          buildScene({
+            handOffsetX: 30,
+            handOffsetY: 40,
+            handRotate: -8,
+            pinDistance: '250%',
+          }),
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="without-us">
+    <section className="without-us" ref={sectionRef}>
 
       {/* =========================================
           INTRO
@@ -116,12 +272,15 @@ function WithoutUsSection() {
 
       {/* =========================================
           BEAR HAND VISUAL
+
+          The old data-reveal="hand-lift" global
+          reveal has been removed from this element
+          on purpose — this section now drives its
+          own scroll-pinned sequence directly above,
+          instead of the shared site-wide system.
       ========================================== */}
 
-      <div
-        className="bear-hand-visual"
-        data-reveal="hand-lift"
-      >
+      <div className="bear-hand-visual" ref={handVisualRef}>
 
         {/* =========================================
             SVG POINTER LINES
@@ -137,19 +296,21 @@ function WithoutUsSection() {
           preserveAspectRatio="xMidYMid meet"
           aria-hidden="true"
         >
-          {CALLOUTS.map((callout) => (
+          {CALLOUTS.map((callout, i) => (
             <g
-              key={callout.label}
+              key={callout.key}
               className="bear-callout"
             >
 
-              {/* Pointer line */}
+              {/* Pointer line — drawn box -> dot (bottom to top) */}
 
               <path
+                ref={(el) => (pathRefs.current[i] = el)}
                 d={callout.path}
                 fill="none"
                 stroke="#ffd400"
                 strokeWidth="1"
+                strokeLinecap="round"
                 opacity="0.85"
               />
 
@@ -157,6 +318,7 @@ function WithoutUsSection() {
               {/* Pointer dot */}
 
               <circle
+                ref={(el) => (dotRefs.current[i] = el)}
                 cx={callout.dotX}
                 cy={callout.dotY}
                 r="2.5"
@@ -167,6 +329,7 @@ function WithoutUsSection() {
               {/* Label */}
 
               <text
+                ref={(el) => (textRefs.current[i] = el)}
                 x={callout.labelX}
                 y={callout.labelY}
                 textAnchor={callout.anchor}
@@ -188,6 +351,7 @@ function WithoutUsSection() {
         ========================================== */}
 
         <img
+          ref={handImageRef}
           src={bearHand}
           alt="A furry bear hand holding a glowing packaging box"
           className="bear-hand-image"

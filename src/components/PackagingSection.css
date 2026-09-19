@@ -1,9 +1,15 @@
+/* =========================================
+   PACKAGING
+========================================= */
+
 .packaging {
   --hl-pad-y: 0px;
   --hl-pad-x: 12px;
 
   position: relative;
+
   min-height: 100vh;
+
   padding: 60px 24px 0;
 
   background-color: var(--bear-bg);
@@ -22,19 +28,8 @@
   background-size: 34px 34px;
 
   overflow: hidden;
-}
 
-
-@media (max-width: 640px) {
-  .packaging {
-    padding: 40px 18px 0;
-    min-height:unset;
-  }
-
-  .packaging-desc{
-    max-width: 100% !important;
-    margin:0px !important;
-  }
+  isolation: isolate;
 }
 
 
@@ -44,19 +39,45 @@
 
 .packaging-title {
   position: relative;
+
   z-index: 1;
+
+  margin: 0;
+
   font-family:
     'Sharp Grotesk PE Trial Black',
     sans-serif;
-  font-size: clamp(28px, 9vw, 94px);
-  line-height: 1;
+
+  font-size:
+    clamp(28px, 9vw, 94px);
+
+  line-height: 1.1;
+
   text-transform: uppercase;
+
   letter-spacing: 0.08rem;
+
   color: var(--bear-text);
+
   perspective: 1200px;
-  perspective-origin: 50% 45%;
+
+  perspective-origin:
+    50% 45%;
+
   transform-style: preserve-3d;
+
   isolation: isolate;
+}
+
+
+/* =========================================
+   TITLE LINES
+========================================= */
+
+.title-line {
+  display: block;
+
+  width: 100%;
 }
 
 
@@ -68,38 +89,32 @@
   position: relative;
 
   display: inline-block;
+
   vertical-align: top;
 
   margin-right: 0.12em;
 
   transform-style: preserve-3d;
+
   perspective: 1200px;
 }
 
 
-/*
- * Remove final spacing.
- */
+/* =========================================
+   ACTUALLY → BUILDS GAP
+========================================= */
 
-.word-wrap:last-child {
-  margin-right: 0;
+.word-wrap--builds {
+  margin-left: 0.10em;
 }
 
 
 /* =========================================
-   MIDDLE TITLE GROUP
+   REMOVE FINAL SPACING
 ========================================= */
 
-/*
- * These three words form one animation group.
- *
- * They remain inline so the visual layout stays
- * exactly like the existing design, while GSAP
- * animates them simultaneously.
- */
-
-.title-middle-group {
-  display: inline;
+.word-wrap:last-child {
+  margin-right: 0;
 }
 
 
@@ -131,11 +146,17 @@
 .word-bg {
   position: absolute;
 
-  left: calc(var(--hl-pad-x) * -1);
-  right: calc(var(--hl-pad-x) * -1);
+  left:
+    calc(var(--hl-pad-x) * -1);
 
-  top: var(--hl-pad-y);
-  bottom: var(--hl-pad-y);
+  right:
+    calc(var(--hl-pad-x) * -1);
+
+  top:
+    var(--hl-pad-y);
+
+  bottom:
+    var(--hl-pad-y);
 
   z-index: 1;
 
@@ -143,7 +164,8 @@
 
   transform: scaleX(0);
 
-  transform-origin: left center;
+  transform-origin:
+    left center;
 
   pointer-events: none;
 
@@ -170,26 +192,155 @@
 
 .packaging-desc {
   position: relative;
+
   z-index: 2;
+
+  display: block;
+
+  /*
+   * Desktop width
+   */
+
+  width: 60%;
+
+  max-width: 60%;
+
+  box-sizing: border-box;
+
+  /*
+   * IMPORTANT:
+   *
+   * The description container starts hidden.
+   *
+   * GSAP reveals it instantly (no fade) only
+   * after the BRANDS flip has finished, and each
+   * character inside stays transparent until its
+   * own randomized decode turn.
+   */
+
+  opacity: 0;
 
   font-family:
     'Easy Pixel Regular',
     sans-serif;
 
-  font-size: clamp(16px, 3vw, 34px);
+  font-size:
+    clamp(16px, 3vw, 34px);
 
   line-height: 1.3;
 
   color: var(--bear-text);
 
-  max-width: 46%;
-
   text-transform: uppercase;
 
-  margin: 35px 0 32px;
+  margin:
+    35px 0 32px;
 
   text-shadow:
     0 0 8px rgba(255, 255, 255, 0.8);
+
+  /*
+   * Prevent the decoding text from
+   * expanding the layout.
+   */
+
+  overflow: hidden;
+
+  overflow-wrap: normal;
+
+  word-break: normal;
+
+  white-space: normal;
+
+  /*
+   * Isolate the text rendering.
+   */
+
+  contain: layout paint;
+}
+
+
+/* =========================================
+   DESCRIPTION WORD
+========================================= */
+
+.packaging-desc-word {
+  /*
+   * Inline-block keeps each word together
+   * while still allowing wrapping between words.
+   */
+
+  display: inline-block;
+
+  vertical-align: baseline;
+
+  white-space: pre;
+
+  transform: none;
+
+  opacity: 1;
+}
+
+
+/* =========================================
+   DESCRIPTION CHARACTER (decode states)
+   transparent → line → block → visible
+========================================= */
+
+.packaging-desc-char {
+  position: relative;
+
+  display: inline-block;
+
+  color: transparent;
+
+  /*
+   * Hidden glyphs must not leak the parent's glow.
+   * text-shadow still paints on transparent text.
+   */
+
+  text-shadow: none;
+}
+
+.packaging-desc-char::before {
+  content: '';
+
+  position: absolute;
+
+  top: 50%;
+
+  left: 50%;
+
+  width: 0;
+
+  height: 1.2em;
+
+  background: var(--bear-text);
+
+  transform: translate(-50%, -55%);
+
+  pointer-events: none;
+}
+
+/* Line */
+.packaging-desc-char.state-1::before {
+  width: 1px;
+}
+
+/* Block */
+.packaging-desc-char.state-2::before {
+  width: 0.9em;
+}
+
+/* Visible */
+.packaging-desc-char.state-3 {
+  color: inherit;
+
+  text-shadow: inherit;
+}
+
+.packaging-desc-char.state-3::before {
+  width: 0;
 }
 
 
@@ -197,13 +348,40 @@
    VIDEO
 ========================================= */
 
+/*
+ * The wrapper clips the zoomed-in video so the scale
+ * never spills over the title, description or the
+ * sections around it.
+ */
+
+.packaging-video-wrap {
+  position: relative;
+
+  z-index: 1;
+
+  width: 100%;
+
+  max-width: 1500px;
+
+  margin: 0 auto;
+
+  overflow: hidden;
+}
+
 .packaging-video {
   display: block;
 
   width: 100%;
-  max-width: 1500px;
 
-  margin: 0 auto;
+  height: auto;
+
+  /*
+   * GSAP drives transform (scale) from scroll.
+   */
+
+  backface-visibility: hidden;
+
+  will-change: transform;
 
   mix-blend-mode: luminosity;
 
@@ -217,20 +395,88 @@
 
 @media (max-width: 640px) {
 
+  .packaging {
+    padding:
+      40px 18px 0;
+
+    min-height: unset;
+  }
+
+
   .packaging-title {
     perspective: 900px;
-    perspective-origin: 50% 50%;
+
+    perspective-origin:
+      50% 50%;
 
     margin-bottom: 20px;
   }
+
 
   .word-wrap {
     margin-right: 0.08em;
   }
 
+
+  /*
+   * Keep the ACTUALLY → BUILDS gap
+   */
+
+  .word-wrap--builds {
+    margin-left: 0.08em;
+  }
+
+
   .word-bg {
     left: -8px;
+
     right: -8px;
+  }
+
+
+  /* -----------------------------------------
+     DESCRIPTION
+  ----------------------------------------- */
+
+  .packaging-desc {
+    width: 100%;
+
+    max-width: 100% !important;
+
+    box-sizing: border-box;
+
+    margin:
+      0 0 32px !important;
+
+    overflow: hidden;
+  }
+
+
+  .packaging-desc-word {
+    white-space: pre;
+  }
+
+
+  /* -----------------------------------------
+     VIDEO
+  ----------------------------------------- */
+
+  .packaging-video-wrap {
+    max-width: 100%;
+  }
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (min-width: 641px) and (max-width: 900px) {
+
+  .packaging-desc {
+    width: 65%;
+
+    max-width: 65%;
   }
 }
 
@@ -243,15 +489,57 @@
 
   .packaging-title {
     perspective: none;
+
     transform: none;
   }
 
+
   .word {
     opacity: 1 !important;
+
     transform: none !important;
   }
 
+
   .word-bg {
     transform: none !important;
+  }
+
+
+  .packaging-desc {
+    opacity: 1 !important;
+
+    width: 60%;
+
+    max-width: 60%;
+  }
+
+
+  .packaging-desc-word {
+    opacity: 1;
+
+    transform: none;
+  }
+
+
+  /* Safety net: characters always readable */
+  .packaging-desc-char {
+    color: inherit;
+
+    text-shadow: inherit;
+  }
+}
+
+
+/* =========================================
+   REDUCED MOTION — MOBILE
+========================================= */
+
+@media (max-width: 640px) and (prefers-reduced-motion: reduce) {
+
+  .packaging-desc {
+    width: 100%;
+
+    max-width: 100% !important;
   }
 }

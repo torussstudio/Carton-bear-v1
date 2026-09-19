@@ -1,28 +1,99 @@
 .bear-hero {
+  position: relative;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   background-color: var(--bear-bg);
+  color: var(--bear-text);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.bear-hero-video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.bear-hero-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
   background-size: 34px 34px;
-  color: var(--bear-text);
+}
+
+.bear-hero-layer {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .bear-hero-content {
   padding: 0 40px 56px;
 }
 
-.bear-hero-kicker {
+
+/* =========================================
+   HEADLINE
+
+   "Packaging that actually" sits as a smaller
+   uppercase lead-in line, followed by the two
+   oversized "Understands" / "Branding." lines
+   that carry the visual weight of the hero.
+========================================== */
+
+.bear-hero-title {
+      margin: 0 0 22px;
+    max-width: 52%;
     font-family: 'Sharp Grotesk PE Trial Black', sans-serif;
+    text-transform: uppercase;
+    color: var(--bear-yellow, #d8ff3e);
+    line-height: 0.85;
+}
+
+.bear-hero-title-line {
+  display: block;
+  will-change: transform, filter, opacity;
+}
+
+.bear-hero-title-line--sub {
+  font-size: clamp(18px, 3vw, 32px);
     font-weight: 700;
-    font-size: clamp(20px, 3.6vw, 33px);
-    line-height: 1.15;
+    letter-spacing: 0.06em;
+    margin-bottom: 13px;
+    font-family: 'Sharp Grotesk PE Trial Bold', sans-serif;
+}
+
+.bear-hero-title-line--main {
+  font-size: clamp(42px, 7.2vw, 96px);
+    font-weight: 900;
+    letter-spacing: 0.02em;
+}
+
+.bear-hero-kicker {
+      font-family: 'Sharp Grotesk PE Trial Book', sans-serif;
+    font-weight: 700;
+    font-size: clamp(20px, 3.6vw, 28px);
+    line-height: 1.2;
     letter-spacing: 0.03em;
     text-transform: uppercase;
-    max-width: 65%;
+    max-width: 37%;
     margin-bottom: 24px;
 }
 
@@ -48,13 +119,28 @@
     padding: 0 20px 40px;
   }
 
-  .bear-hero-kicker{
+  .bear-hero-kicker {
     max-width: 100%;
-  } 
+  }
+
+  .bear-hero-title {
+    max-width: 100%;
+    margin-bottom: 16px;
+  }
+
+  .bear-hero-video {
+    object-position: center center;
+  }
 }
 
 @media (min-width: 480px) {
   .bear-hero-ctas .bear-pill {
     width: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bear-hero-video {
+    animation: none;
   }
 }

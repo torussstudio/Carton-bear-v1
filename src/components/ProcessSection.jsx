@@ -71,148 +71,503 @@ function ProcessSection() {
     }
 
     const ctx = gsap.context(() => {
+      const reducedMotion = prefersReducedMotion();
 
-      /*
-       * -----------------------------------------------
-       * MAIN TITLE FLIP
-       * -----------------------------------------------
-       */
-
-      const titleLines =
+      const titleLines = Array.from(
         titleRef.current?.querySelectorAll(
-          '.process-title-line'
-        );
+          '.process-title-line-text'
+        ) || []
+      );
 
-
-      if (
-        titleLines?.length &&
-        !prefersReducedMotion()
-      ) {
-
-        gsap.set(titleLines, {
-          opacity: 0,
-          y: 40,
-          rotationX: -70,
-          transformOrigin: '50% 100%',
-          transformPerspective: 1000,
-        });
-
-
-        gsap.to(titleLines[0], {
-          opacity: 1,
-          y: 0,
-          rotationX: 0,
-          duration: 0.9,
-          ease: 'power3.out',
-        });
-
-
-        if (titleLines[1]) {
-          gsap.to(titleLines[1], {
-            opacity: 1,
-            y: 0,
-            rotationX: 0,
-            duration: 0.9,
-            delay: 0.18,
-            ease: 'power3.out',
-          });
-        }
-
-      } else if (titleLines?.length) {
-
-        gsap.set(titleLines, {
-          opacity: 1,
-          y: 0,
-          rotationX: 0,
-        });
-
-      }
-
-
-      /*
-       * -----------------------------------------------
-       * PROCESS ROW REVEAL
-       * -----------------------------------------------
-       */
-
-      const rows =
+      const rows = Array.from(
         rowsRef.current?.querySelectorAll(
           '.process-row'
-        );
+        ) || []
+      );
 
+      /*
+       * =========================================================
+       * MAIN TITLE
+       * Same entrance language as the Hero headline:
+       * y movement + blur + opacity + stagger.
+       * =========================================================
+       */
 
-      if (!rows?.length) {
-        return;
+      if (titleLines.length) {
+        if (reducedMotion) {
+          gsap.set(titleLines, {
+            opacity: 1,
+            y: 0,
+            filter: 'none',
+            rotationX: 0,
+          });
+        } else {
+          gsap.set(titleLines, {
+            opacity: 0,
+            y: 60,
+            filter: 'blur(28px)',
+            rotationX: 0,
+          });
+        }
       }
 
 
       /*
-       * Reduced-motion users should see everything
-       * immediately.
+       * =========================================================
+       * TEXT DECODER
+       * Same visual language as the Packaging description:
+       *
+       * transparent
+       *      ↓
+       * thin line
+       *      ↓
+       * block
+       *      ↓
+       * original character
+       * =========================================================
        */
 
-      if (prefersReducedMotion()) {
+      const RANDOM_CHARS =
+        'abcdefghijklmnopqrstuvwxyz1234567890!@#$^&*()…æ_+-=;[]/~`';
 
-        gsap.set(rows, {
+      const decodeCleanups = [];
+
+      const randomChar = () =>
+        RANDOM_CHARS[
+          Math.floor(
+            Math.random() * RANDOM_CHARS.length
+          )
+        ];
+
+
+      const decodeElement = (element) => {
+        if (!element || element.dataset.decoded === 'true') {
+          return null;
+        }
+
+        element.dataset.decoded = 'true';
+
+        const originalText =
+          element.textContent || '';
+
+        /*
+         * Build character spans while preserving spaces
+         * as normal text nodes so the original layout stays intact.
+         */
+
+        element.innerHTML = '';
+
+        const chars = [];
+
+        Array.from(originalText).forEach((character) => {
+          if (character === ' ') {
+            element.appendChild(
+              document.createTextNode(' ')
+            );
+            return;
+          }
+
+          const span =
+            document.createElement('span');
+
+          span.className =
+            'process-decode-char';
+
+          span.dataset.original = character;
+
+          span.textContent = randomChar();
+
+          element.appendChild(span);
+
+          chars.push(span);
+        });
+
+        if (!chars.length) {
+          return null;
+        }
+
+        /*
+         * Keep the decoder from changing the width of the title.
+         * Every character keeps the width of its original glyph.
+         */
+
+        const originalWidths = chars.map(
+          (char, index) => {
+            const original =
+              char.dataset.original;
+
+            char.textContent = original;
+
+            const width =
+              char.getBoundingClientRect().width;
+
+            char.textContent = randomChar();
+
+            return width;
+          }
+        );
+
+        chars.forEach((char, index) => {
+          char.style.width =
+            `${originalWidths[index]}px`;
+        });
+
+
+        const state = {
+          progress: 0,
+        };
+
+        const totalCharacters =
+          chars.length;
+
+        const duration = Math.max(
+          0.38,
+          totalCharacters * 0.035
+        );
+
+        let lastStep = -1;
+
+        const timeline = gsap.timeline();
+
+        timeline.to(
+          state,
+          {
+            progress: 1,
+            duration,
+            ease: 'none',
+
+            onUpdate: () => {
+              const currentStep =
+                Math.min(
+                  3,
+                  Math.floor(
+                    state.progress * 4
+                  )
+                );
+
+              if (
+                currentStep === lastStep
+              ) {
+                /*
+                 * Continue changing the random glyphs
+                 * even between state transitions.
+                 */
+
+                chars.forEach((char) => {
+                  if (
+                    !char.classList.contains(
+                      'state-3'
+                    )
+                  ) {
+                    char.textContent =
+                      randomChar();
+                  }
+                });
+
+                return;
+              }
+
+              lastStep = currentStep;
+
+              chars.forEach((char) => {
+                char.classList.remove(
+                  'state-1',
+                  'state-2',
+                  'state-3'
+                );
+
+                if (currentStep >= 1) {
+                  char.classList.add(
+                    'state-1'
+                  );
+                }
+
+                if (currentStep >= 2) {
+                  char.classList.add(
+                    'state-2'
+                  );
+                }
+
+                if (currentStep >= 3) {
+                  char.classList.add(
+                    'state-3'
+                  );
+
+                  char.textContent =
+                    char.dataset.original;
+                }
+              });
+            },
+
+            onComplete: () => {
+              chars.forEach((char) => {
+                char.classList.remove(
+                  'state-1',
+                  'state-2'
+                );
+
+                char.classList.add(
+                  'state-3'
+                );
+
+                char.textContent =
+                  char.dataset.original;
+              });
+            },
+          }
+        );
+
+        decodeCleanups.push(() => {
+          timeline.kill();
+        });
+
+        return timeline;
+      };
+
+
+      /*
+       * =========================================================
+       * DESCRIPTION WIPE
+       * Left -> right, with no fade.
+       * =========================================================
+       */
+
+      const wipeDescription = (element) => {
+        if (!element) {
+          return;
+        }
+
+        gsap.fromTo(
+          element,
+          {
+            clipPath:
+              'inset(0 100% 0 0)',
+            webkitClipPath:
+              'inset(0 100% 0 0)',
+          },
+          {
+            clipPath:
+              'inset(0 0% 0 0)',
+            webkitClipPath:
+              'inset(0 0% 0 0)',
+            duration: 0.9,
+            ease: 'power3.inOut',
+            overwrite: true,
+          }
+        );
+      };
+
+
+      /*
+       * =========================================================
+       * SECTION ENTRY
+       * Trigger the large title once the section enters
+       * the viewport, using the same timing language as Hero.
+       * =========================================================
+       */
+
+      if (reducedMotion) {
+        gsap.set(titleLines, {
           opacity: 1,
           y: 0,
+          filter: 'none',
+        });
+
+        rows.forEach((row) => {
+          gsap.set(row, {
+            opacity: 1,
+            y: 0,
+          });
+
+          const title =
+            row.querySelector(
+              '.process-step-title'
+            );
+
+          const description =
+            row.querySelector(
+              '.process-description'
+            );
+
+          if (title) {
+            title.dataset.decoded = 'true';
+          }
+
+          if (description) {
+            gsap.set(description, {
+              clipPath: 'none',
+              webkitClipPath: 'none',
+            });
+          }
         });
 
         return;
       }
 
 
-      gsap.set(rows, {
-        opacity: 0,
-        y: 24,
-      });
+      const sectionObserver =
+        new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) {
+                return;
+              }
 
+              gsap
+                .timeline({
+                  defaults: {
+                    ease: 'power3.out',
+                  },
+                })
+                .fromTo(
+                  titleLines,
+                  {
+                    y: 60,
+                    opacity: 0,
+                    filter: 'blur(28px)',
+                  },
+                  {
+                    y: 0,
+                    opacity: 1,
+                    filter: 'blur(0px)',
+                    stagger: 0.12,
+                    duration: 0.9,
+                  }
+                );
 
-      /*
-       * IntersectionObserver keeps the original
-       * lightweight reveal behaviour.
-       */
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-
-          entries.forEach((entry) => {
-
-            if (!entry.isIntersecting) {
-              return;
-            }
-
-
-            gsap.to(entry.target, {
-              opacity: 1,
-              y: 0,
-              duration: 0.7,
-              ease: 'power3.out',
+              sectionObserver.unobserve(
+                entry.target
+              );
             });
+          },
+          {
+            threshold: 0.18,
+          }
+        );
 
 
-            observer.unobserve(entry.target);
-
-          });
-
-        },
-        {
-          threshold: 0.08,
-        }
+      sectionObserver.observe(
+        rootRef.current
       );
 
 
+      /*
+       * =========================================================
+       * PROCESS ROWS
+       *
+       * Each row gets its own:
+       * 1. title decoding
+       * 2. description left -> right wipe
+       *
+       * They trigger naturally as each row enters the viewport.
+       * =========================================================
+       */
+
+      const rowObservers = [];
+
       rows.forEach((row) => {
+        const title =
+          row.querySelector(
+            '.process-step-title'
+          );
+
+        const description =
+          row.querySelector(
+            '.process-description'
+          );
+
+        if (!title && !description) {
+          return;
+        }
+
+        if (description) {
+          gsap.set(description, {
+            clipPath:
+              'inset(0 100% 0 0)',
+            webkitClipPath:
+              'inset(0 100% 0 0)',
+          });
+        }
+
+        const observer =
+          new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (!entry.isIntersecting) {
+                  return;
+                }
+
+                /*
+                 * Decode title first.
+                 * The wipe starts immediately after the
+                 * decoder completes, keeping the two effects
+                 * visually connected without a fade.
+                 */
+
+                if (title) {
+                  /*
+                   * Decode using the same effect,
+                   * then wipe the description.
+                   */
+
+                  const decodeTimeline =
+                    decodeElement(title);
+
+                  /*
+                   * Keep the sequence cohesive:
+                   * title decoding completes first,
+                   * then the description wipes in.
+                   */
+
+                  if (decodeTimeline) {
+                    decodeTimeline.call(
+                      () => {
+                        wipeDescription(
+                          description
+                        );
+                      }
+                    );
+                  } else {
+                    wipeDescription(
+                      description
+                    );
+                  }
+                } else {
+                  wipeDescription(
+                    description
+                  );
+                }
+
+                observer.unobserve(
+                  entry.target
+                );
+              });
+            },
+            {
+              threshold: 0.22,
+            }
+          );
+
         observer.observe(row);
+        rowObservers.push(observer);
       });
 
 
-      /*
-       * Cleanup observer when section unmounts.
-       */
-
       return () => {
-        observer.disconnect();
+        sectionObserver.disconnect();
+
+        rowObservers.forEach(
+          (observer) =>
+            observer.disconnect()
+        );
+
+        decodeCleanups.forEach(
+          (cleanup) => cleanup()
+        );
+
+        gsap.killTweensOf(
+          '.process-description'
+        );
       };
 
     }, rootRef);
@@ -659,8 +1014,7 @@ function ProcessSection() {
             Arial,
             sans-serif;
 
-          font-size:
-            clamp(13px, 0.95vw, 17px);
+          font-size: clamp(13px, 1.95vw, 19px);
 
           font-weight: 500;
 
@@ -1271,6 +1625,82 @@ function ProcessSection() {
 
 
         /* =====================================================
+           PROCESS TITLE DECODER
+           Same visual language as PackagingSection
+        ====================================================== */
+
+        .process-step-title {
+          overflow: hidden;
+        }
+
+        .process-decode-char {
+          position: relative;
+
+          display: inline-block;
+
+          color: transparent;
+
+          text-shadow: none;
+
+          vertical-align: baseline;
+
+          white-space: pre;
+
+          overflow: visible;
+        }
+
+        .process-decode-char::before {
+          content: '';
+
+          position: absolute;
+
+          top: 50%;
+          left: 50%;
+
+          width: 0;
+          height: 1.2em;
+
+          background: #17140f;
+
+          transform:
+            translate(-50%, -55%);
+
+          pointer-events: none;
+        }
+
+        .process-decode-char.state-1::before {
+          width: 1px;
+        }
+
+        .process-decode-char.state-2::before {
+          width: 0.9em;
+        }
+
+        .process-decode-char.state-3 {
+          color: inherit;
+
+          text-shadow: inherit;
+        }
+
+        .process-decode-char.state-3::before {
+          width: 0;
+        }
+
+
+        /* =====================================================
+           DESCRIPTION WIPE
+           Initial state is hidden only through clipping.
+           No opacity/fade is used.
+        ====================================================== */
+
+        .process-description {
+          clip-path: inset(0 100% 0 0);
+          -webkit-clip-path: inset(0 100% 0 0);
+          will-change: clip-path;
+        }
+
+
+        /* =====================================================
            REDUCED MOTION
         ====================================================== */
 
@@ -1283,6 +1713,20 @@ function ProcessSection() {
             transition: none !important;
 
             transform: none !important;
+          }
+
+          .process-description {
+            clip-path: none !important;
+            -webkit-clip-path: none !important;
+            will-change: auto;
+          }
+
+          .process-decode-char {
+            color: inherit !important;
+          }
+
+          .process-decode-char::before {
+            width: 0 !important;
           }
 
         }

@@ -15,6 +15,7 @@ import ShippingSection from './components/ShippingSection.jsx';
 import WithoutUsSection from './components/WithoutUsSection.jsx';
 import PreFooterSection from './components/PreFooterSection.jsx';
 import Footer from './components/Footer.jsx';
+// import Preloader from './components/Preloader.jsx';
 
 import './App.css';
 
@@ -25,9 +26,10 @@ const GRAIN = 0.1;
 function App() {
   useLenis();
   useScrollReveal();
-
+  
   return (
     <>
+      {/* <Preloader /> */}
       <CrtFilter bulge={BULGE} />
 
       <div id="crtContent" className="crt-content">
@@ -47,6 +49,7 @@ function App() {
       </div>
 
 
+     
       <CrtOverlay scanOpacity={SCAN} grainOpacity={GRAIN} />
     </>
   );

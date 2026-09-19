@@ -131,7 +131,7 @@ function ShippingSection() {
           <p className="shipping-closing-line shipping-closing-line--lg">
             Good Packaging <br />
             Doesn&apos;t{' '}
-            <span className="shipping-closing-blur">
+            <span>
               Scream
             </span>
           </p>

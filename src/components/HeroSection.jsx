@@ -3,11 +3,14 @@ import Nav from './Nav.jsx';
 import { gsap, SplitText, prefersReducedMotion } from '../lib/gsapSetup';
 import './HeroSection.css';
 import './Nav.css';
+import heroVideo from '../Videos/Hero-bear-video.mp4';
 
 function HeroSection() {
   const rootRef = useRef(null);
   const kickerRef = useRef(null);
+  const videoRef = useRef(null);
 
+  // Existing entrance timeline (unchanged)
   useLayoutEffect(() => {
     if (prefersReducedMotion() || !rootRef.current || !kickerRef.current) {
       return undefined;
@@ -29,23 +32,28 @@ function HeroSection() {
           { opacity: 0, y: -16, stagger: 0.1, duration: 0.6 },
           '-=0.4'
         )
-                .from(
-          split.words,
+        .from(
+          '.bear-hero-title-line',
           {
-            // opacity: 0,
-            // x: 26,
-            // filter: 'blur(28px)',
-            // stagger: 0.05,
-            // duration: 1.5,
-            // ease: 'expo.out',
-            // clearProps: 'filter,transform',
-
-              y: 50, opacity: 0,
-              filter: 'blur(28px)',
-  stagger: 0.03, duration: 1,
-  ease: "back.out(1.7)"
+            y: 60,
+            opacity: 0,
+            filter: 'blur(28px)',
+            stagger: 0.12,
+            duration: 0.9,
           },
           '-=0.2'
+        )
+        .from(
+          split.words,
+          {
+            y: 50,
+            opacity: 0,
+            filter: 'blur(28px)',
+            stagger: 0.03,
+            duration: 1,
+            ease: 'back.out(1.7)',
+          },
+          '-=0.35'
         )
         .from(
           '.bear-hero-ctas .bear-pill',
@@ -60,23 +68,154 @@ function HeroSection() {
     };
   }, []);
 
+  // New: cinematic 3D pointer-reactive video effect
+  useLayoutEffect(() => {
+    const hero = rootRef.current;
+    const video = videoRef.current;
+
+    if (!hero || !video) {
+      return undefined;
+    }
+
+    const supportsFinePointer =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    if (prefersReducedMotion() || !supportsFinePointer) {
+      return undefined;
+    }
+
+    // Subtle, "premium" ranges — never cheap tilt-card territory
+    const MAX_TRANSLATE = 14; // px
+    const MAX_ROTATE = 4; // deg
+    const BASE_SCALE = 1.1; // headroom so cover never shows edges
+    const ACTIVE_SCALE = 1.14; // slight extra "push" while hovered
+
+    const bounds = { left: 0, top: 0, width: 0, height: 0 };
+
+    const updateBounds = () => {
+      const rect = hero.getBoundingClientRect();
+      bounds.left = rect.left;
+      bounds.top = rect.top;
+      bounds.width = rect.width;
+      bounds.height = rect.height;
+    };
+
+    gsap.set(video, {
+      transformPerspective: 1200,
+      transformOrigin: 'center center',
+      scale: BASE_SCALE,
+      force3D: true,
+    });
+
+    const xTo = gsap.quickTo(video, 'x', { duration: 1.1, ease: 'power3.out' });
+    const yTo = gsap.quickTo(video, 'y', { duration: 1.1, ease: 'power3.out' });
+    const rotateXTo = gsap.quickTo(video, 'rotateX', {
+      duration: 1.3,
+      ease: 'power3.out',
+    });
+    const rotateYTo = gsap.quickTo(video, 'rotateY', {
+      duration: 1.3,
+      ease: 'power3.out',
+    });
+    const scaleTo = gsap.quickTo(video, 'scale', {
+      duration: 1.4,
+      ease: 'power3.out',
+    });
+
+    const handlePointerMove = (event) => {
+      if (!bounds.width || !bounds.height) return;
+
+      const relX = (event.clientX - bounds.left) / bounds.width;
+      const relY = (event.clientY - bounds.top) / bounds.height;
+      const normX = gsap.utils.clamp(-1, 1, relX * 2 - 1);
+      const normY = gsap.utils.clamp(-1, 1, relY * 2 - 1);
+
+      xTo(normX * MAX_TRANSLATE);
+      yTo(normY * MAX_TRANSLATE);
+      rotateYTo(normX * MAX_ROTATE);
+      rotateXTo(-normY * MAX_ROTATE);
+      scaleTo(ACTIVE_SCALE);
+    };
+
+    const handlePointerEnter = () => {
+      updateBounds();
+    };
+
+    const handlePointerLeave = () => {
+      xTo(0);
+      yTo(0);
+      rotateXTo(0);
+      rotateYTo(0);
+      scaleTo(BASE_SCALE);
+    };
+
+    updateBounds();
+
+    window.addEventListener('resize', updateBounds);
+    hero.addEventListener('mouseenter', handlePointerEnter);
+    hero.addEventListener('mousemove', handlePointerMove);
+    hero.addEventListener('mouseleave', handlePointerLeave);
+
+    return () => {
+      window.removeEventListener('resize', updateBounds);
+      hero.removeEventListener('mouseenter', handlePointerEnter);
+      hero.removeEventListener('mousemove', handlePointerMove);
+      hero.removeEventListener('mouseleave', handlePointerLeave);
+      xTo.tween?.kill();
+      yTo.tween?.kill();
+      rotateXTo.tween?.kill();
+      rotateYTo.tween?.kill();
+      scaleTo.tween?.kill();
+      gsap.set(video, { clearProps: 'transform' });
+    };
+  }, []);
+
   return (
     <div className="bear-hero" ref={rootRef}>
-      <Nav />
+      <video
+        ref={videoRef}
+        className="bear-hero-video"
+        src={heroVideo}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        aria-hidden="true"
+      />
 
-      <div className="bear-hero-content">
-        <p className="bear-hero-kicker" ref={kickerRef}>
-          For D2C brands, ecommerce businesses, agencies, and growing
-          consumer brands. From dieline to doorstep.
-        </p>
+      <div className="bear-hero-grid" aria-hidden="true" />
 
-        <div className="bear-hero-ctas">
-          <button type="button" className="bear-pill bear-pill--solid">
-           GOT A PACK IDEA ?
-          </button>
-          <button type="button" className="bear-pill bear-pill--outline">
-            MAKE YOUR MOVE
-          </button>
+      <div className="bear-hero-layer">
+        <Nav />
+
+        <div className="bear-hero-content">
+          <h1 className="bear-hero-title">
+            <span className="bear-hero-title-line bear-hero-title-line--sub">
+              Packaging that actually
+            </span>
+            <span className="bear-hero-title-line bear-hero-title-line--main">
+              Understands
+            </span>
+            <span className="bear-hero-title-line bear-hero-title-line--main">
+              Branding.
+            </span>
+          </h1>
+
+          <p className="bear-hero-kicker" ref={kickerRef}>
+            For D2C brands, ecommerce businesses, agencies, and growing
+            consumer brands. From dieline to doorstep.
+          </p>
+
+          <div className="bear-hero-ctas">
+            <button type="button" className="bear-pill bear-pill--solid">
+              GOT A PACK IDEA ?
+            </button>
+            <button type="button" className="bear-pill bear-pill--outline">
+              MAKE YOUR MOVE
+            </button>
+          </div>
         </div>
       </div>
     </div>

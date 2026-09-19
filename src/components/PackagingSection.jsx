@@ -1,62 +1,179 @@
 import { useLayoutEffect, useRef } from 'react';
 import girlVideo from '../Videos/Eye Closing Video Animation.mp4';
 import './PackagingSection.css';
+
 import {
   gsap,
   ScrollTrigger,
-  SplitText,
   prefersReducedMotion,
 } from '../lib/gsapSetup';
 
+const DESCRIPTION =
+  "BECAUSE PACKAGING ISN'T JUST PROTECTION. IT'S PERCEPTION. IT'S RECALL. IT'S RETENTION. IT'S ONE OF THE BIGGEST BRAND TOUCHPOINTS YOU HAVE>>";
+
+/*
+ * Decode timing knobs.
+ *
+ * CHAR_INTERVAL - delay between one character starting its
+ *                 decode and the next (in shuffled order).
+ *                 0.02 = 50 chars/sec (~2.3s total).
+ *
+ * STAGE_GAP     - time between line -> block -> visible
+ *                 for a single character (demo used 100ms).
+ */
+
+const CHAR_INTERVAL = 0.02;
+const STAGE_GAP = 0.06;
+
+const STATE_CLASSES = ['state-1', 'state-2', 'state-3'];
+
+/*
+ * Scroll-scrubbed video zoom.
+ *
+ * The video starts at this scale and eases down to 1
+ * (fully zoomed out) by the time it is completely on screen.
+ * 1.1 = subtle zoom. Raise for a stronger zoom.
+ */
+
+const VIDEO_START_SCALE = 1.1;
+
+function shuffle(array) {
+  const result = array.slice();
+
+  for (let i = result.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+
+  return result;
+}
+
 function PackagingSection() {
+  const rootRef = useRef(null);
   const titleRef = useRef(null);
   const descriptionRef = useRef(null);
+  const videoWrapRef = useRef(null);
   const videoRef = useRef(null);
 
   useLayoutEffect(() => {
+    const root = rootRef.current;
     const title = titleRef.current;
     const description = descriptionRef.current;
-    const video = videoRef.current;
 
-    if (!title) return;
+    if (!root || !title || !description) {
+      return undefined;
+    }
 
-    const ctx = gsap.context(() => {
-      const words = title.querySelectorAll('.word');
-      const backgrounds = title.querySelectorAll('.word-bg');
+    let ctx;
 
-      if (!words.length) return;
+    /*
+     * Hoisted so the cleanup function can kill it.
+     */
+
+    let decodeTimeline = null;
+
+    ctx = gsap.context(() => {
+      const words =
+        title.querySelectorAll('.word');
+
+      const backgrounds =
+        title.querySelectorAll('.word-bg');
 
       /*
-       * ==========================================================
-       * REDUCED MOTION
-       * ==========================================================
+       * ========================================================
+       * DESCRIPTION CHARACTERS
+       * ========================================================
+       *
+       * Words stay inline-block so wrapping is identical to
+       * before. Every character inside a word is its own span,
+       * which is the unit that decodes:
+       *
+       * Transparent -> Line -> Block -> Visible
        */
 
-      if (prefersReducedMotion()) {
-        gsap.set(words, {
-          clearProps: 'all',
-          opacity: 1,
-        });
+      const descriptionWords =
+        DESCRIPTION.split(' ');
 
-        gsap.set(backgrounds, {
-          clearProps: 'all',
-          scaleX: 1,
-        });
-
-        if (description) {
-          gsap.set(description, {
-            clearProps: 'all',
-            opacity: 1,
-          });
-        }
-
-        return;
-      }
+      description.innerHTML = '';
 
       /*
-       * ==========================================================
+       * Every animated character, in reading order.
+       */
+
+      const charElements = [];
+
+      descriptionWords.forEach(
+        (word, index) => {
+          const wordEl =
+            document.createElement('span');
+
+          wordEl.className =
+            'packaging-desc-word';
+
+          wordEl.setAttribute(
+            'aria-hidden',
+            'true'
+          );
+
+          Array.from(word).forEach(
+            (character) => {
+              const charEl =
+                document.createElement('span');
+
+              charEl.className =
+                'packaging-desc-char';
+
+              charEl.textContent = character;
+
+              wordEl.appendChild(charEl);
+
+              charElements.push(charEl);
+            }
+          );
+
+          /*
+           * Trailing space stays a plain text node
+           * (the word is white-space: pre), so the
+           * gap between words never animates and
+           * layout is unchanged.
+           */
+
+          if (
+            index <
+            descriptionWords.length - 1
+          ) {
+            wordEl.appendChild(
+              document.createTextNode(' ')
+            );
+          }
+
+          description.appendChild(wordEl);
+        }
+      );
+
+      /*
+       * ========================================================
+       * INITIAL DESCRIPTION STATE
+       * ========================================================
+       *
+       * The ENTIRE description is hidden.
+       *
+       * It does not decode or reveal until the
+       * BRANDS animation has completely finished.
+       *
+       * Individual characters are transparent via CSS
+       * until their own decode turn.
+       */
+
+      gsap.set(description, {
+        opacity: 0,
+      });
+
+      /*
+       * ========================================================
        * TITLE INITIAL STATE
-       * ==========================================================
+       * ========================================================
        */
 
       gsap.set(words, {
@@ -65,14 +182,9 @@ function PackagingSection() {
         rotationX: -72,
         rotationY: 7,
         z: -100,
-
         transformOrigin: '50% 100%',
         transformStyle: 'preserve-3d',
       });
-
-      /*
-       * White backgrounds start closed.
-       */
 
       gsap.set(backgrounds, {
         scaleX: 0,
@@ -80,50 +192,130 @@ function PackagingSection() {
       });
 
       /*
-       * ==========================================================
-       * DESCRIPTION SPLIT
-       * ==========================================================
+       * ========================================================
+       * REDUCED MOTION
+       * ========================================================
        */
 
-      let descriptionSplit = null;
-
-      if (description && SplitText) {
-        descriptionSplit = SplitText.create(description, {
-          type: 'chars',
+      if (prefersReducedMotion()) {
+        gsap.set(words, {
+          opacity: 1,
+          y: 0,
+          rotationX: 0,
+          rotationY: 0,
+          z: 0,
         });
 
-        gsap.set(descriptionSplit.chars, {
-          y: 22,
-          opacity: 0,
+        gsap.set(backgrounds, {
+          scaleX: 1,
         });
+
+        gsap.set(description, {
+          opacity: 1,
+        });
+
+        charElements.forEach((el) =>
+          el.classList.add('state-3')
+        );
+
+        return;
       }
 
       /*
-       * ==========================================================
-       * TITLE MASTER TIMELINE
-       * ==========================================================
+       * ========================================================
+       * DESCRIPTION DECODING
+       * ========================================================
+       *
+       * Ported from the demo: each character steps through
+       * state-1 (line), state-2 (block), state-3 (visible),
+       * in a shuffled order. Driven by one GSAP timeline
+       * instead of setTimeout, so it can be killed cleanly.
+       *
+       * No hover trigger, no refresh button, no setInterval.
        */
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: title,
-          start: 'top 90%',
-          toggleActions: 'play none none reverse',
-          invalidateOnRefresh: true,
-        },
-      });
+      function resetDescription() {
+        decodeTimeline?.kill();
+
+        decodeTimeline = null;
+
+        charElements.forEach((el) =>
+          el.classList.remove(...STATE_CLASSES)
+        );
+      }
+
+      function decodeDescription() {
+        resetDescription();
+
+        decodeTimeline = gsap.timeline();
+
+        shuffle(charElements).forEach(
+          (el, order) => {
+            const start =
+              order * CHAR_INTERVAL;
+
+            decodeTimeline
+              .call(
+                () =>
+                  el.classList.add('state-1'),
+                null,
+                start
+              )
+              .call(
+                () =>
+                  el.classList.add('state-2'),
+                null,
+                start + STAGE_GAP
+              )
+              .call(
+                () =>
+                  el.classList.add('state-3'),
+                null,
+                start + STAGE_GAP * 2
+              );
+          }
+        );
+      }
 
       /*
-       * ==========================================================
-       * 1. PACKAGING
-       * ==========================================================
+       * ========================================================
+       * MASTER TITLE TIMELINE
+       * ========================================================
        */
 
-      tl.to(words[0], {
+      const masterTimeline =
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: title,
+
+            start: 'top 90%',
+
+            toggleActions:
+              'play none none reverse',
+
+            invalidateOnRefresh: true,
+          },
+
+          defaults: {
+            ease: 'power3.out',
+          },
+        });
+
+      /*
+       * ========================================================
+       * PACKAGING
+       * ========================================================
+       */
+
+      masterTimeline.to(words[0], {
         opacity: 1,
+
         y: 0,
+
         rotationX: 0,
+
         rotationY: 0,
+
         z: 0,
 
         duration: 0.55,
@@ -132,10 +324,12 @@ function PackagingSection() {
       });
 
       /*
-       * Packaging white wipe
+       * ========================================================
+       * PACKAGING WIPE
+       * ========================================================
        */
 
-      tl.to(
+      masterTimeline.to(
         backgrounds[0],
         {
           scaleX: 1,
@@ -148,20 +342,28 @@ function PackagingSection() {
       );
 
       /*
-       * ==========================================================
-       * 2. THAT + ACTUALLY + BUILDS
-       * ==========================================================
+       * ========================================================
+       * THAT / ACTUALLY / BUILDS
+       * ========================================================
        *
-       * All three words flip together.
+       * No stagger.
        */
 
-      tl.to(
-        [words[1], words[2], words[3]],
+      masterTimeline.to(
+        [
+          words[1],
+          words[2],
+          words[3],
+        ],
         {
           opacity: 1,
+
           y: 0,
+
           rotationX: 0,
+
           rotationY: 0,
+
           z: 0,
 
           duration: 0.55,
@@ -174,12 +376,12 @@ function PackagingSection() {
       );
 
       /*
-       * ==========================================================
-       * 3. BUILDS WHITE WIPE
-       * ==========================================================
+       * ========================================================
+       * BUILDS WIPE
+       * ========================================================
        */
 
-      tl.to(
+      masterTimeline.to(
         backgrounds[1],
         {
           scaleX: 1,
@@ -192,34 +394,59 @@ function PackagingSection() {
       );
 
       /*
-       * ==========================================================
-       * 4. BRANDS
-       * ==========================================================
+       * ========================================================
+       * BRANDS FLIP
+       * ========================================================
        */
 
-      tl.to(
+      masterTimeline.to(
         words[4],
         {
           opacity: 1,
+
           y: 0,
+
           rotationX: 0,
+
           rotationY: 0,
+
           z: 0,
 
           duration: 0.55,
 
           ease: 'power3.out',
+
+          /*
+           * Start decoding the moment the BRANDS flip
+           * lands, without waiting for the white wipe
+           * behind it. The container appears instantly;
+           * every character is still transparent until
+           * its own randomized turn.
+           */
+
+          onComplete: () => {
+            gsap.set(description, {
+              opacity: 1,
+            });
+
+            decodeDescription();
+          },
         },
         '<'
       );
 
       /*
-       * ==========================================================
-       * 5. BRANDS WHITE WIPE
-       * ==========================================================
+       * ========================================================
+       * BRANDS WIPE
+       * ========================================================
+       *
+       * The master timeline DOES NOT finish until
+       * this wipe is completely finished.
+       *
+       * Only then does onComplete() run.
        */
 
-      tl.to(
+      masterTimeline.to(
         backgrounds[2],
         {
           scaleX: 1,
@@ -232,195 +459,73 @@ function PackagingSection() {
       );
 
       /*
-       * ==========================================================
-       * 6. DESCRIPTION
-       * ==========================================================
+       * ========================================================
+       * VIDEO SCROLL ZOOM
+       * ========================================================
+       *
+       * Fully scroll-driven (scrub): scrolling down zooms the
+       * video out, scrolling up zooms it back in.
+       *
+       * start: wrapper top touches the bottom of the viewport
+       * end:   wrapper bottom reaches the bottom of the viewport
+       *        (video fully on screen) -> scale is exactly 1.
        */
 
-      if (descriptionSplit) {
-        tl.to(
-          descriptionSplit.chars,
+      const videoWrap = videoWrapRef.current;
+      const video = videoRef.current;
+
+      if (videoWrap && video) {
+        gsap.fromTo(
+          video,
           {
-            y: 0,
-            opacity: 1,
-
-            stagger: 0.03,
-
-            duration: 0.6,
-
-            ease: 'back.out(1.7)',
+            scale: VIDEO_START_SCALE,
+            transformOrigin: '50% 50%',
           },
-          '<'
-        );
-      }
-
-      /*
-       * ==========================================================
-       * VIDEO CURSOR INTERACTION
-       * ==========================================================
-       */
-
-      if (video) {
-        const videoX = gsap.quickTo(video, 'x', {
-          duration: 0.55,
-          ease: 'power3.out',
-        });
-
-        const videoY = gsap.quickTo(video, 'y', {
-          duration: 0.55,
-          ease: 'power3.out',
-        });
-
-        const videoRotationX = gsap.quickTo(
-          video,
-          'rotationX',
           {
-            duration: 0.65,
-            ease: 'power3.out',
+            scale: 1,
+
+            ease: 'none',
+
+            force3D: true,
+
+            scrollTrigger: {
+              trigger: videoWrap,
+
+              start: 'top bottom',
+
+              end: 'bottom bottom',
+
+              scrub: 0.5,
+
+              invalidateOnRefresh: true,
+            },
           }
         );
-
-        const videoRotationY = gsap.quickTo(
-          video,
-          'rotationY',
-          {
-            duration: 0.65,
-            ease: 'power3.out',
-          }
-        );
-
-        const handlePointerMove = (event) => {
-          if (event.pointerType === 'touch') return;
-
-          const rect = video.getBoundingClientRect();
-
-          if (!rect.width || !rect.height) return;
-
-          const relativeX =
-            ((event.clientX - rect.left) / rect.width) * 2 - 1;
-
-          const relativeY =
-            ((event.clientY - rect.top) / rect.height) * 2 - 1;
-
-          const x = gsap.utils.clamp(
-            -1,
-            1,
-            relativeX
-          );
-
-          const y = gsap.utils.clamp(
-            -1,
-            1,
-            relativeY
-          );
-
-          videoX(x * 10);
-          videoY(y * 8);
-
-          videoRotationX(y * -5);
-          videoRotationY(x * 7);
-        };
-
-        const handlePointerLeave = () => {
-          videoX(0);
-          videoY(0);
-          videoRotationX(0);
-          videoRotationY(0);
-        };
-
-        video.addEventListener(
-          'pointermove',
-          handlePointerMove,
-          { passive: true }
-        );
-
-        video.addEventListener(
-          'pointerleave',
-          handlePointerLeave
-        );
-
-        video._packagingCursorCleanup = () => {
-          video.removeEventListener(
-            'pointermove',
-            handlePointerMove
-          );
-
-          video.removeEventListener(
-            'pointerleave',
-            handlePointerLeave
-          );
-        };
       }
-
-      /*
-       * ==========================================================
-       * CLEANUP
-       * ==========================================================
-       */
-
-      return () => {
-        if (descriptionSplit) {
-          descriptionSplit.revert();
-        }
-
-        if (
-          video &&
-          video._packagingCursorCleanup
-        ) {
-          video._packagingCursorCleanup();
-
-          delete video._packagingCursorCleanup;
-        }
-      };
-    }, title);
+    }, root);
 
     return () => {
-      ctx.revert();
+      decodeTimeline?.kill();
 
-      if (
-        video &&
-        video._packagingCursorCleanup
-      ) {
-        video._packagingCursorCleanup();
-
-        delete video._packagingCursorCleanup;
-      }
+      ctx?.revert();
     };
   }, []);
 
   return (
-    <div className="packaging">
-
+    <section
+      className="packaging"
+      ref={rootRef}
+    >
       {/* ======================================================
-          MAIN TITLE
+          TITLE
           ====================================================== */}
 
       <h2
         ref={titleRef}
         className="packaging-title"
-        style={{
-          textAlign: 'left',
-        }}
       >
-
-        {/* ====================================================
-            LINE 1 — PACKAGING
-            ==================================================== */}
-
-        <span
-          className="title-line"
-          style={{
-            display: 'block',
-            width: '100%',
-            textAlign: 'left',
-          }}
-        >
-          <span
-            className="word-wrap"
-            style={{
-              display: 'inline-block',
-            }}
-          >
+        <span className="title-line">
+          <span className="word-wrap">
             <span className="word-bg" />
 
             <span className="word word-blue">
@@ -429,47 +534,20 @@ function PackagingSection() {
           </span>
         </span>
 
-
-        {/* ====================================================
-            LINE 2 — THAT ACTUALLY BUILDS
-            ==================================================== */}
-
-        <span
-          className="title-line"
-          style={{
-            display: 'block',
-            width: '100%',
-            textAlign: 'left',
-          }}
-        >
-          <span
-            className="word-wrap"
-            style={{
-              display: 'inline-block',
-            }}
-          >
+        <span className="title-line">
+          <span className="word-wrap">
             <span className="word">
               That
             </span>
           </span>
 
-          <span
-            className="word-wrap"
-            style={{
-              display: 'inline-block',
-            }}
-          >
+          <span className="word-wrap">
             <span className="word">
               Actually
             </span>
           </span>
 
-          <span
-            className="word-wrap"
-            style={{
-              display: 'inline-block',
-            }}
-          >
+          <span className="word-wrap word-wrap--builds">
             <span className="word word-gold">
               Builds
             </span>
@@ -478,25 +556,8 @@ function PackagingSection() {
           </span>
         </span>
 
-
-        {/* ====================================================
-            LINE 3 — BRANDS.
-            ==================================================== */}
-
-        <span
-          className="title-line"
-          style={{
-            display: 'block',
-            width: '100%',
-            textAlign: 'left',
-          }}
-        >
-          <span
-            className="word-wrap"
-            style={{
-              display: 'inline-block',
-            }}
-          >
+        <span className="title-line">
+          <span className="word-wrap">
             <span className="word word-gold">
               Brands.
             </span>
@@ -504,9 +565,7 @@ function PackagingSection() {
             <span className="word-bg" />
           </span>
         </span>
-
       </h2>
-
 
       {/* ======================================================
           DESCRIPTION
@@ -515,28 +574,29 @@ function PackagingSection() {
       <p
         ref={descriptionRef}
         className="packaging-desc"
-      >
-        Because packaging isn&apos;t just protection. It&apos;s perception.
-        It&apos;s recall. It&apos;s retention. It&apos;s one of the biggest
-        brand touchpoints you have&gt;&gt;
-      </p>
-
+        aria-label={DESCRIPTION}
+      />
 
       {/* ======================================================
           VIDEO
           ====================================================== */}
 
-      <video
-        ref={videoRef}
-        className="packaging-video"
-        src={girlVideo}
-        autoPlay
-        muted
-        loop
-        playsInline
-      />
-
-    </div>
+      <div
+        ref={videoWrapRef}
+        className="packaging-video-wrap"
+      >
+        <video
+          ref={videoRef}
+          className="packaging-video"
+          src={girlVideo}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+        />
+      </div>
+    </section>
   );
 }
 

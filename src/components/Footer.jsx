@@ -100,12 +100,7 @@ function Footer() {
 
       <div className="footer-bottom">
         <p className="footer-copyright">
-          &copy; 2025 Cartonbear. All rights reserved.
-        </p>
-
-        <p className="footer-status">
-          <span className="footer-status-dot" aria-hidden="true" />
-          STATUS &mdash; CURRENTLY SHIPPING THINGS.
+          &copy; 2026 Cartonbear. All rights reserved.
         </p>
       </div>
     </footer>
