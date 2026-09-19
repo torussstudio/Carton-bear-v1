@@ -10,60 +10,93 @@ function HeroSection() {
   const kickerRef = useRef(null);
   const videoRef = useRef(null);
 
-  // Existing entrance timeline (unchanged)
+  // Existing entrance timeline — now held until the preloader signals it's
+  // actually done, so it can't play out underneath the overlay unseen.
   useLayoutEffect(() => {
     if (prefersReducedMotion() || !rootRef.current || !kickerRef.current) {
       return undefined;
     }
 
     let split;
+    let ctx;
+    let hasRun = false;
 
-    const ctx = gsap.context(() => {
-      split = new SplitText(kickerRef.current, {
-        type: 'words',
-        wordsClass: 'bear-hero-kicker__word',
-      });
+    const runTimeline = () => {
+      if (hasRun) return;
+      hasRun = true;
 
-      gsap
-        .timeline({ defaults: { ease: 'power3.out' }, delay: 0.15 })
-        .from('.bear-nav-logo', { opacity: 0, y: -18, duration: 0.7 })
-        .from(
-          '.bear-nav-links .bear-pill',
-          { opacity: 0, y: -16, stagger: 0.1, duration: 0.6 },
-          '-=0.4'
-        )
-        .from(
-          '.bear-hero-title-line',
-          {
-            y: 60,
-            opacity: 0,
-            filter: 'blur(28px)',
-            stagger: 0.12,
-            duration: 0.9,
-          },
-          '-=0.2'
-        )
-        .from(
-          split.words,
-          {
-            y: 50,
-            opacity: 0,
-            filter: 'blur(28px)',
-            stagger: 0.03,
-            duration: 1,
-            ease: 'back.out(1.7)',
-          },
-          '-=0.35'
-        )
-        .from(
-          '.bear-hero-ctas .bear-pill',
-          { opacity: 0, y: 24, stagger: 0.12, duration: 0.7 },
-          '-=0.55'
-        );
-    }, rootRef);
+      ctx = gsap.context(() => {
+        split = new SplitText(kickerRef.current, {
+          type: 'words',
+          wordsClass: 'bear-hero-kicker__word',
+        });
+
+        gsap
+          .timeline({ defaults: { ease: 'power3.out' }, delay: 0.15 })
+          .from('.bear-nav-logo', { opacity: 0, y: -18, duration: 0.7 })
+          .from(
+            '.bear-nav-links .bear-pill',
+            { opacity: 0, y: -16, stagger: 0.1, duration: 0.6 },
+            '-=0.4'
+          )
+          .from(
+            '.bear-hero-title-line',
+            {
+              y: 60,
+              opacity: 0,
+              filter: 'blur(28px)',
+              stagger: 0.12,
+              duration: 0.9,
+            },
+            '-=0.2'
+          )
+          .from(
+            split.words,
+            {
+              y: 50,
+              opacity: 0,
+              filter: 'blur(28px)',
+              stagger: 0.03,
+              duration: 1,
+              ease: 'back.out(1.7)',
+            },
+            '-=0.35'
+          )
+          .from(
+            '.bear-hero-ctas .bear-pill',
+            { opacity: 0, y: 24, stagger: 0.12, duration: 0.7 },
+            '-=0.55'
+          );
+      }, rootRef);
+    };
+
+    // If the preloader already finished (or isn't in the tree at all by the
+    // time this mounts), go immediately. Otherwise wait for its signal.
+    if (typeof window !== 'undefined' && window.__preloaderDone) {
+      runTimeline();
+      return () => {
+        ctx?.revert();
+        split?.revert();
+      };
+    }
+
+    const handlePreloaderDone = () => {
+      clearTimeout(fallback);
+      runTimeline();
+    };
+    window.addEventListener('preloader:done', handlePreloaderDone, { once: true });
+
+    // Safety net: if a page ever renders HeroSection without a Preloader,
+    // don't leave the entrance stuck waiting forever.
+    const fallback = window.setTimeout(() => {
+      window.removeEventListener('preloader:done', handlePreloaderDone);
+      runTimeline();
+    }, 4000);
 
     return () => {
-      ctx.revert();
+      window.removeEventListener('preloader:done', handlePreloaderDone);
+      clearTimeout(fallback);
+      ctx?.revert();
       split?.revert();
     };
   }, []);

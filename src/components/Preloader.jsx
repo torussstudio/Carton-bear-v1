@@ -158,6 +158,11 @@ function Preloader({ onComplete }) {
       if (finished && !doneFiredRef.current) {
         doneFiredRef.current = true;
         setPhase('exiting');
+        // Signal the rest of the app the instant loading is truly done, so
+        // things like the hero entrance timeline can start right on cue
+        // instead of racing the preloader underneath it.
+        window.__preloaderDone = true;
+        window.dispatchEvent(new Event('preloader:done'));
         window.setTimeout(() => {
           setPhase('done');
           if (typeof onComplete === 'function') onComplete();
