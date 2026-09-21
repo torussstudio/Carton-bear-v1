@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { prefersReducedMotion } from '../lib/gsapSetup';
 import logo from '../logo/carton-bear-logo.png';
 import preloaderBg from '../images/preloader-bg.webp';
-import preloaderBox from '../images/preloader-box.webp';
+import preloaderBox from '../images/preloader-box.png';
 import './Preloader.css';
 
 const TICKER_ITEMS = new Array(6).fill(null);
@@ -32,7 +32,20 @@ function Preloader({ onComplete }) {
   const doneFiredRef = useRef(false);
 
   // Lock page scroll while the preloader is up.
+  //
+  // IMPORTANT: this component is never unmounted — once it finishes it just
+  // renders `null` but stays mounted in <App />. So an effect cleanup tied to
+  // unmount would NEVER run, and `overflow: hidden` would stay on <html>/<body>
+  // forever. That silently kills native touch scrolling on real phones (Lenis
+  // hands touch input to the browser), while desktop and DevTools still scroll
+  // because Lenis drives wheel scrolling via window.scrollTo(), which works
+  // even under `overflow: hidden`. So the lock is released when the preloader
+  // reaches its 'done' phase (effect re-runs when `isDone` flips), and also on
+  // real unmount.
+  const isDone = phase === 'done';
   useEffect(() => {
+    if (isDone) return undefined;
+
     const { documentElement: html, body } = document;
     const prevHtmlOverflow = html.style.overflow;
     const prevBodyOverflow = body.style.overflow;
@@ -43,7 +56,7 @@ function Preloader({ onComplete }) {
       html.style.overflow = prevHtmlOverflow;
       body.style.overflow = prevBodyOverflow;
     };
-  }, []);
+  }, [isDone]);
 
   // Real-progress tracking: images + fonts + window load, blended with a
   // gentle trickle so the bar always feels alive, never fake-perfect.
