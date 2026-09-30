@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef } from 'react';
-import { gsap, prefersReducedMotion } from '../lib/gsapSetup';
+import { gsap, prefersReducedMotion, SplitText } from '../lib/gsapSetup';
 
 
 /*
@@ -93,6 +93,9 @@ function ProcessSection() {
        * =========================================================
        */
 
+      let titleSplits = [];
+      let titleChars = [];
+
       if (titleLines.length) {
         if (reducedMotion) {
           gsap.set(titleLines, {
@@ -102,220 +105,49 @@ function ProcessSection() {
             rotationX: 0,
           });
         } else {
-          gsap.set(titleLines, {
-            opacity: 0,
-            y: 60,
-            filter: 'blur(28px)',
-            rotationX: 0,
-          });
+          titleSplits = titleLines.map((line) =>
+            SplitText.create(line, { type: 'words,chars' })
+          );
+
+          titleChars = titleSplits.flatMap((split) => split.chars);
+
+          gsap.set(titleChars, { opacity: 0, y: 50 });
         }
       }
 
 
       /*
        * =========================================================
-       * TEXT DECODER
-       * Same visual language as the Packaging description:
-       *
-       * transparent
-       *      ↓
-       * thin line
-       *      ↓
-       * block
-       *      ↓
-       * original character
+       * TITLE STAGGER
+       * Same character stagger as the Services headings
+       * (replaces the old decode effect).
        * =========================================================
        */
 
-      const RANDOM_CHARS =
-        'abcdefghijklmnopqrstuvwxyz1234567890!@#$^&*()…æ_+-=;[]/~`';
-
       const decodeCleanups = [];
 
-      const randomChar = () =>
-        RANDOM_CHARS[
-          Math.floor(
-            Math.random() * RANDOM_CHARS.length
-          )
-        ];
-
-
-      const decodeElement = (element) => {
+      const staggerTitle = (element) => {
         if (!element || element.dataset.decoded === 'true') {
           return null;
         }
 
         element.dataset.decoded = 'true';
 
-        const originalText =
-          element.textContent || '';
-
-        /*
-         * Build character spans while preserving spaces
-         * as normal text nodes so the original layout stays intact.
-         */
-
-        element.innerHTML = '';
-
-        const chars = [];
-
-        Array.from(originalText).forEach((character) => {
-          if (character === ' ') {
-            element.appendChild(
-              document.createTextNode(' ')
-            );
-            return;
-          }
-
-          const span =
-            document.createElement('span');
-
-          span.className =
-            'process-decode-char';
-
-          span.dataset.original = character;
-
-          span.textContent = randomChar();
-
-          element.appendChild(span);
-
-          chars.push(span);
+        const split = SplitText.create(element, {
+          type: 'words,chars',
         });
 
-        if (!chars.length) {
-          return null;
-        }
-
-        /*
-         * Keep the decoder from changing the width of the title.
-         * Every character keeps the width of its original glyph.
-         */
-
-        const originalWidths = chars.map(
-          (char, index) => {
-            const original =
-              char.dataset.original;
-
-            char.textContent = original;
-
-            const width =
-              char.getBoundingClientRect().width;
-
-            char.textContent = randomChar();
-
-            return width;
-          }
-        );
-
-        chars.forEach((char, index) => {
-          char.style.width =
-            `${originalWidths[index]}px`;
-        });
-
-
-        const state = {
-          progress: 0,
-        };
-
-        const totalCharacters =
-          chars.length;
-
-        const duration = Math.max(
-          0.38,
-          totalCharacters * 0.035
-        );
-
-        let lastStep = -1;
+        gsap.set(split.chars, { y: 18, opacity: 0 });
 
         const timeline = gsap.timeline();
 
-        timeline.to(
-          state,
-          {
-            progress: 1,
-            duration,
-            ease: 'none',
-
-            onUpdate: () => {
-              const currentStep =
-                Math.min(
-                  3,
-                  Math.floor(
-                    state.progress * 4
-                  )
-                );
-
-              if (
-                currentStep === lastStep
-              ) {
-                /*
-                 * Continue changing the random glyphs
-                 * even between state transitions.
-                 */
-
-                chars.forEach((char) => {
-                  if (
-                    !char.classList.contains(
-                      'state-3'
-                    )
-                  ) {
-                    char.textContent =
-                      randomChar();
-                  }
-                });
-
-                return;
-              }
-
-              lastStep = currentStep;
-
-              chars.forEach((char) => {
-                char.classList.remove(
-                  'state-1',
-                  'state-2',
-                  'state-3'
-                );
-
-                if (currentStep >= 1) {
-                  char.classList.add(
-                    'state-1'
-                  );
-                }
-
-                if (currentStep >= 2) {
-                  char.classList.add(
-                    'state-2'
-                  );
-                }
-
-                if (currentStep >= 3) {
-                  char.classList.add(
-                    'state-3'
-                  );
-
-                  char.textContent =
-                    char.dataset.original;
-                }
-              });
-            },
-
-            onComplete: () => {
-              chars.forEach((char) => {
-                char.classList.remove(
-                  'state-1',
-                  'state-2'
-                );
-
-                char.classList.add(
-                  'state-3'
-                );
-
-                char.textContent =
-                  char.dataset.original;
-              });
-            },
-          }
-        );
+        timeline.to(split.chars, {
+          y: 0,
+          opacity: 1,
+          stagger: 0.025,
+          duration: 0.55,
+          ease: 'back.out(1.7)',
+        });
 
         decodeCleanups.push(() => {
           timeline.kill();
@@ -419,21 +251,13 @@ function ProcessSection() {
                     ease: 'power3.out',
                   },
                 })
-                .fromTo(
-                  titleLines,
-                  {
-                    y: 60,
-                    opacity: 0,
-                    filter: 'blur(28px)',
-                  },
-                  {
-                    y: 0,
-                    opacity: 1,
-                    filter: 'blur(0px)',
-                    stagger: 0.12,
-                    duration: 0.9,
-                  }
-                );
+                .to(titleChars, {
+                  y: 0,
+                  opacity: 1,
+                  stagger: 0.03,
+                  duration: 0.8,
+                  ease: 'power3.out',
+                });
 
               sectionObserver.unobserve(
                 entry.target
@@ -505,37 +329,20 @@ function ProcessSection() {
                  */
 
                 if (title) {
-                  /*
-                   * Decode using the same effect,
-                   * then wipe the description.
-                   */
+                  const staggerTimeline = staggerTitle(title);
 
-                  const decodeTimeline =
-                    decodeElement(title);
-
-                  /*
-                   * Keep the sequence cohesive:
-                   * title decoding completes first,
-                   * then the description wipes in.
-                   */
-
-                  if (decodeTimeline) {
-                    decodeTimeline.call(
-                      () => {
-                        wipeDescription(
-                          description
-                        );
-                      }
+                  if (staggerTimeline) {
+                    /* description wipe starts while the title is still landing */
+                    staggerTimeline.call(
+                      () => wipeDescription(description),
+                      null,
+                      0.35
                     );
                   } else {
-                    wipeDescription(
-                      description
-                    );
+                    wipeDescription(description);
                   }
                 } else {
-                  wipeDescription(
-                    description
-                  );
+                  wipeDescription(description);
                 }
 
                 observer.unobserve(
