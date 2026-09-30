@@ -172,12 +172,21 @@
   overflow-wrap: normal;
 }
 
+.built-title-row {
+  display: block;
+}
+
 .built-title-line {
   display: block;
 
   width: max-content;
 
   max-width: 100%;
+
+  will-change:
+    transform,
+    filter,
+    opacity;
 }
 
 .built-title-line--blue {

@@ -1,5 +1,9 @@
+import { useLayoutEffect, useRef } from 'react';
+
 import heroImage from '../images/Carton.webp';
 import './BuiltForBrandsSection.css';
+
+import { gsap, prefersReducedMotion } from '../lib/gsapSetup';
 
 /*
  * ---------------------------------------------------------
@@ -154,6 +158,42 @@ const AUDIENCE_CARDS = [
 
 
 function BuiltForBrandsSection() {
+  const titleRef = useRef(null);
+
+  /*
+   * Title reveal — the SAME animation as the Hero title
+   * ("Understands Branding", see HeroSection.jsx):
+   *
+   *   each line: y 60 → 0, opacity 0 → 1, blur(28px) → none
+   *   duration 0.9s, stagger 0.12s, ease power3.out
+   *
+   * Runs once when the title scrolls into view, then stays.
+   */
+
+  useLayoutEffect(() => {
+    const title = titleRef.current;
+
+    if (!title || prefersReducedMotion()) return undefined;
+
+    const ctx = gsap.context(() => {
+      gsap.from(title.querySelectorAll('.built-title-line'), {
+        y: 60,
+        opacity: 0,
+        filter: 'blur(28px)',
+        stagger: 0.12,
+        duration: 0.9,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: title,
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+        },
+      });
+    }, title);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <section className="built">
 
@@ -183,22 +223,22 @@ function BuiltForBrandsSection() {
 
           <h2
             className="built-title"
-            data-reveal="lines"
+            ref={titleRef}
           >
 
-            <span className="reveal-mask">
+            <span className="built-title-row">
               <span className="built-title-line built-title-line--blue">
                 Built For
               </span>
             </span>
 
-            <span className="reveal-mask">
+            <span className="built-title-row">
               <span className="built-title-line built-title-line--accent">
                 Modern
               </span>
             </span>
 
-            <span className="reveal-mask">
+            <span className="built-title-row">
               <span className="built-title-line built-title-line--blue">
                 Brands
               </span>
