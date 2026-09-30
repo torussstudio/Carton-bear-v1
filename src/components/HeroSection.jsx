@@ -132,14 +132,35 @@ function HeroSection() {
 
     // Safety net: if a page ever renders HeroSection without a Preloader,
     // don't leave the entrance stuck waiting forever.
-    const fallback = window.setTimeout(() => {
-      window.removeEventListener(
-        'preloader:done',
-        handlePreloaderDone
-      );
-
-      runTimeline();
-    }, 4000);
+    // It must NOT fire while a preloader is still on screen (a slow load —
+    // dev server, big videos, slow network — can easily exceed 4s), or the
+    // entrance would play out unseen underneath the overlay. So while a
+    // `.preloader` element exists we keep waiting for 'preloader:done', and
+    // only give up after a hard cap.
+    const FALLBACK_MS = 4000;
+    const HARD_CAP_MS = 30000;
+    const startedAt = performance.now();
+    let fallback;
+    const armFallback = (ms) => {
+      fallback = window.setTimeout(() => {
+        const preloaderStillUp =
+          !window.__preloaderDone &&
+          document.querySelector('.preloader');
+        if (
+          preloaderStillUp &&
+          performance.now() - startedAt < HARD_CAP_MS
+        ) {
+          armFallback(500);
+          return;
+        }
+        window.removeEventListener(
+          'preloader:done',
+          handlePreloaderDone
+        );
+        runTimeline();
+      }, ms);
+    };
+    armFallback(FALLBACK_MS);
 
     return () => {
       window.removeEventListener(
