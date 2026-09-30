@@ -57,13 +57,14 @@ const SERVICES = [
 
 
 /*
- * Cards from this index onward (0-based) are the "bottom row".
- * Their heading + tag reveal plays once on the way down and then
- * stays revealed: scrolling back up does NOT reverse it.
- * (Set to 0 to make every row behave this way.)
+ * Cards from this index onward (0-based) get a one-way text reveal:
+ * heading + tags play once on the way down and then stay revealed;
+ * scrolling back up does NOT reverse them.
+ *
+ * 0 = every row (current). Use 3 to limit it to the bottom row only.
  */
 
-const PLAY_ONCE_FROM_CARD = 3;
+const PLAY_ONCE_FROM_CARD = 0;
 
 /*
  * Intrinsic size of the service artwork. Gives the <img> a reserved
