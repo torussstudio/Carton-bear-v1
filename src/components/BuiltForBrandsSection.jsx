@@ -3,7 +3,14 @@ import { useLayoutEffect, useRef } from 'react';
 import heroImage from '../images/Carton.webp';
 import './BuiltForBrandsSection.css';
 
-import { gsap, prefersReducedMotion } from '../lib/gsapSetup';
+import d2cIcon from '../icons/optimized/d2c-founders-icon.png';
+import ecommerceIcon from '../icons/optimized/ecommerce-icon.png';
+import consumerIcon from '../icons/optimized/consumer-brands-icon.png';
+import exportIcon from '../icons/optimized/export-icon.png';
+import creativeIcon from '../icons/optimized/creative-agency-icon.png';
+import fastIcon from '../icons/optimized/fast-moving-icon.png';
+
+import { gsap, prefersReducedMotion, SplitText } from '../lib/gsapSetup';
 
 /*
  * ---------------------------------------------------------
@@ -12,90 +19,12 @@ import { gsap, prefersReducedMotion } from '../lib/gsapSetup';
  */
 
 const ICONS = {
-  box: (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M12 3.2 20 7.5v9L12 20.8 4 16.5v-9L12 3.2Z"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M12 12 4 7.5M12 12l8-4.5M12 12v8.8"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  ),
-
-  cart: (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M3.5 4h2l2.1 11.1a2 2 0 0 0 2 1.6h7.4a2 2 0 0 0 2-1.6L20.5 8H6"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <circle cx="9.3" cy="20" r="1.3" fill="currentColor" />
-      <circle cx="17.3" cy="20" r="1.3" fill="currentColor" />
-    </svg>
-  ),
-
-  tag: (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M20.6 13.1 13 20.7a1.8 1.8 0 0 1-2.5 0L3 13.2V3h10.2l7.4 7.4a1.8 1.8 0 0 1 0 2.7Z"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinejoin="round"
-      />
-      <circle cx="8" cy="8" r="1.4" fill="currentColor" />
-    </svg>
-  ),
-
-  globe: (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <circle
-        cx="12"
-        cy="12"
-        r="8.6"
-        stroke="currentColor"
-        strokeWidth="1.6"
-      />
-      <path
-        d="M3.4 12h17.2M12 3.4c2.3 2.3 3.6 5.3 3.6 8.6s-1.3 6.3-3.6 8.6c-2.3-2.3-3.6-5.3-3.6-8.6S9.7 5.7 12 3.4Z"
-        stroke="currentColor"
-        strokeWidth="1.4"
-      />
-    </svg>
-  ),
-
-  palette: (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M12 3.2c-4.9 0-8.8 3.7-8.8 8.2 0 4 3 7.2 6.6 7.9.7.1 1.1-.5.8-1.1-.2-.5-.3-1.1.1-1.5.4-.4.9-.4 1.5-.4h1.6c2.9 0 5.9-2.2 5.9-5.7 0-4.2-3.8-7.4-7.7-7.4Z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-      <circle cx="7.7" cy="10.6" r="1" fill="currentColor" />
-      <circle cx="9.8" cy="7" r="1" fill="currentColor" />
-      <circle cx="14.3" cy="7" r="1" fill="currentColor" />
-      <circle cx="16.4" cy="10.6" r="1" fill="currentColor" />
-    </svg>
-  ),
-
-  bolt: (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M13.2 2.4 4.6 14h5.8l-1 8.2 9.2-12h-5.8l.4-7.8Z"
-        fill="currentColor"
-      />
-    </svg>
-  ),
+  box: d2cIcon,
+  cart: ecommerceIcon,
+  tag: consumerIcon,
+  globe: exportIcon,
+  palette: creativeIcon,
+  bolt: fastIcon,
 };
 
 
@@ -168,6 +97,7 @@ const IMAGE_START_SCALE = 1.12;
 function BuiltForBrandsSection() {
   const titleRef = useRef(null);
   const imageRef = useRef(null);
+  const gridRef = useRef(null);
 
   /*
    * Title reveal — the SAME animation as the Hero title
@@ -254,6 +184,116 @@ function BuiltForBrandsSection() {
     return () => ctx.revert();
   }, []);
 
+  /*
+   * Audience cards — every part of each card animates in once, as the card
+   * scrolls into view (never reverses):
+   *
+   *   number      fades up
+   *   red square  slides down (clip-path reveal, same as the Services images)
+   *   icon        pops in after the square
+   *   title       char stagger (same as the Services headings)
+   *   description left-to-right wipe (same as the Services tags)
+   *   badge       wipe, right after the description
+   */
+
+  useLayoutEffect(() => {
+    const grid = gridRef.current;
+
+    if (!grid || prefersReducedMotion()) return undefined;
+
+    const ctx = gsap.context(() => {
+      grid.querySelectorAll('.built-card').forEach((card) => {
+        const number = card.querySelector('.built-card-number');
+        const box = card.querySelector('.built-card-icon');
+        const glyph = card.querySelector('.built-card-icon img');
+        const lines = card.querySelectorAll('.built-card-title-line');
+        const desc = card.querySelector('.built-card-desc');
+        const badge = card.querySelector('.built-card-badge');
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 88%',
+            toggleActions: 'play none none none',
+          },
+        });
+
+        if (number) {
+          gsap.set(number, { y: 12, opacity: 0 });
+          tl.to(number, { y: 0, opacity: 0.65, duration: 0.5, ease: 'power3.out' }, 0);
+        }
+
+        if (box) {
+          gsap.set(box, { clipPath: 'inset(0% 0% 100% 0%)' });
+          tl.to(
+            box,
+            { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.9, ease: 'power3.inOut' },
+            0.05
+          );
+        }
+
+        if (glyph) {
+          gsap.set(glyph, { scale: 0.6, opacity: 0 });
+          tl.to(
+            glyph,
+            { scale: 1, opacity: 1, duration: 0.6, ease: 'back.out(1.7)' },
+            0.55
+          );
+        }
+
+        let at = 0.35;
+
+        lines.forEach((line) => {
+          const split = SplitText.create(line, { type: 'chars' });
+
+          gsap.set(split.chars, { y: 18, opacity: 0 });
+          tl.to(
+            split.chars,
+            {
+              y: 0,
+              opacity: 1,
+              stagger: 0.025,
+              duration: 0.55,
+              ease: 'back.out(1.7)',
+            },
+            at
+          );
+          at += 0.12;
+        });
+
+        if (desc) {
+          gsap.set(desc, { clipPath: 'inset(0 100% 0 0)', opacity: 0 });
+          tl.to(
+            desc,
+            {
+              clipPath: 'inset(0 0% 0 0)',
+              opacity: 1,
+              duration: 0.8,
+              ease: 'power3.out',
+            },
+            0.75
+          );
+        }
+
+        if (badge) {
+          gsap.set(badge, { clipPath: 'inset(0 100% 0 0)', opacity: 0 });
+          tl.to(
+            badge,
+            {
+              clipPath: 'inset(0 0% 0 0)',
+              opacity: 1,
+              duration: 0.55,
+              ease: 'power3.out',
+            },
+            1.15
+          );
+        }
+      });
+    }, grid);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <section className="built">
 
@@ -327,13 +367,12 @@ function BuiltForBrandsSection() {
           AUDIENCE GRID
       ========================================== */}
 
-      <div className="built-grid">
+      <div className="built-grid" ref={gridRef}>
 
         {AUDIENCE_CARDS.map((card, index) => (
           <div
             className={`built-card built-card--${card.tone}`}
             key={card.title.join(' ')}
-            data-reveal="fade"
           >
 
             <span className="built-card-number">
@@ -345,7 +384,7 @@ function BuiltForBrandsSection() {
               className="built-card-icon"
               aria-hidden="true"
             >
-              {ICONS[card.icon]}
+              <img src={ICONS[card.icon]} alt="" draggable="false" />
             </span>
 
 

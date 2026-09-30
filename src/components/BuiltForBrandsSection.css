@@ -328,9 +328,12 @@
   color: var(--built-icon);
 }
 
-.built-card-icon svg {
-  width: 30px;
-  height: 30px;
+.built-card-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  user-select: none;
 }
 
 
@@ -751,11 +754,6 @@
     height: 52px;
 
     margin-bottom: 18px;
-  }
-
-  .built-card-icon svg {
-    width: 28px;
-    height: 28px;
   }
 
   .built-card-title {
