@@ -157,8 +157,17 @@ const AUDIENCE_CARDS = [
 ];
 
 
+/*
+ * Girl image zoom-out: starting scale (1 = no zoom).
+ * 1.12 = subtle. Raise for a stronger zoom, lower for a gentler one.
+ */
+
+const IMAGE_START_SCALE = 1.12;
+
+
 function BuiltForBrandsSection() {
   const titleRef = useRef(null);
+  const imageRef = useRef(null);
 
   /*
    * Title reveal — the SAME animation as the Hero title
@@ -190,6 +199,57 @@ function BuiltForBrandsSection() {
         },
       });
     }, title);
+
+    return () => ctx.revert();
+  }, []);
+
+  /*
+   * Girl image — scroll-linked zoom-out.
+   *
+   * She starts slightly zoomed in (1.12, same start scale the old reveal
+   * used) and eases down to 1 as you scroll, fully driven by scroll
+   * position (scrub) so it moves with your scrolling and can be scrubbed
+   * back up too. The fade-in keeps its original timing (1.3s power3.out
+   * when she reaches the viewport); only the scale is now scroll-driven.
+   */
+
+  useLayoutEffect(() => {
+    const image = imageRef.current;
+    const wrap = image ? image.parentElement : null;
+
+    if (!image || !wrap || prefersReducedMotion()) return undefined;
+
+    const ctx = gsap.context(() => {
+      gsap.set(image, {
+        opacity: 0,
+        scale: IMAGE_START_SCALE,
+        transformOrigin: '50% 50%',
+      });
+
+      gsap.to(image, {
+        opacity: 1,
+        duration: 1.3,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: wrap,
+          start: 'top 92%',
+          toggleActions: 'play none none reverse',
+        },
+      });
+
+      gsap.to(image, {
+        scale: 1,
+        ease: 'none',
+        force3D: true,
+        scrollTrigger: {
+          trigger: wrap,
+          start: 'top bottom',
+          end: 'bottom bottom',
+          scrub: 0.5,
+          invalidateOnRefresh: true,
+        },
+      });
+    }, wrap);
 
     return () => ctx.revert();
   }, []);
@@ -255,7 +315,7 @@ function BuiltForBrandsSection() {
             src={heroImage}
             alt="Retro illustration of a woman in a red dress holding a vintage TV showing the Carton Bear logo"
             className="built-image"
-            data-reveal="image"
+            ref={imageRef}
           />
 
         </div>
