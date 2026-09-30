@@ -36,7 +36,9 @@ const MAGNIFY_MOBILE = 0.06; // gentler + cheaper on small screens
 const VELOCITY_SOFT = 1400; // px/s at which the bulge reaches ~63% (it saturates, so
                             // speed jitter during a steady scroll doesn't pulse it)
 const RISE = 4.5; // how fast the bulge builds   (1/s)
-const FALL = 3.5; // how slowly it relaxes back  (1/s)
+const FALL = 3.5; // release speed (1/s): bigger = drops back faster. Must be > 0.
+                  // (0 used to freeze the bulge on permanently.)
+                // back down with your scroll speed. Higher = floatier release.
 const SHAPE = 1.0; // falloff exponent: higher = tighter bulge in the middle
 const MAP_SIZE = 256; // displacement map resolution (bilinear-scaled up)
 const OFF_EPS = 0.004; // below this strength the filter is switched off
@@ -163,6 +165,18 @@ function PageBulge() {
     let active = false;
     let lastScale = -1;
 
+    // Stay completely off until the preloader has finished, so the hero
+    // entrance (SplitText / blur reveal) never plays under the lens and a
+    // scroll jump during page load can't kick the bulge on.
+    let ready = !!window.__preloaderDone;
+    const onReady = () => {
+      ready = true;
+      lastY = lenisRef.current ? lenisRef.current.scroll : window.scrollY;
+      vel = 0;
+      amt = 0;
+    };
+    if (!ready) window.addEventListener('preloader:done', onReady, { once: true });
+
     const setActive = (on) => {
       if (on === active) return;
       active = on;
@@ -177,15 +191,25 @@ function PageBulge() {
       lastT = now;
 
       const y = lenisRef.current ? lenisRef.current.scroll : window.scrollY;
-      const instant = Math.abs(y - lastY) / dt;
+      if (!ready) {
+        lastY = y;
+        return;
+      }
+      // cap so a programmatic jump (anchor link, scroll restoration) is just
+      // "fast", not a huge spike
+      const instant = Math.min(Math.abs(y - lastY) / dt, VELOCITY_SOFT * 3);
       lastY = y;
       // heavy smoothing on the measured speed: removes per-frame/wheel-tick
       // jitter, which is what made the bulge pulse ("wave") while scrolling
       vel += (instant - vel) * (1 - Math.exp(-dt * 7));
 
       const target = 1 - Math.exp(-vel / VELOCITY_SOFT); // saturating, 0..1
-      const rate = target > amt ? RISE : FALL;
-      amt += (target - amt) * (1 - Math.exp(-dt * rate));
+      if (target >= amt) {
+        amt += (target - amt) * (1 - Math.exp(-dt * RISE));
+      } else {
+        // FALL is floored so a 0 in the config can never freeze the lens on
+        amt += (target - amt) * (1 - Math.exp(-dt * Math.max(FALL, 1)));
+      }
 
       if (amt < OFF_EPS) {
         amt = 0;
@@ -207,6 +231,7 @@ function PageBulge() {
     return () => {
       gsap.ticker.remove(tick);
       window.removeEventListener('resize', onResize);
+      window.removeEventListener('preloader:done', onReady);
       clearTimeout(resizeT);
       lens.style.backdropFilter = 'none';
       lens.style.webkitBackdropFilter = 'none';
