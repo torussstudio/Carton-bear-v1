@@ -61,7 +61,3 @@ button, input, select, textarea {
 .font-pixel{
   font-family: 'Easy Pixel Regular', sans-serif;
 }
-
-#crtContent {
-  will-change: filter;
-}

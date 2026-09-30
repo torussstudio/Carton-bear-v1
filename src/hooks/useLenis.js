@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import Lenis from 'lenis';
 import { gsap, ScrollTrigger } from '../lib/gsapSetup';
+import { lenisRef } from '../lib/lenisInstance';
 
 export function useLenis() {
   useEffect(() => {
@@ -8,6 +9,8 @@ export function useLenis() {
       duration: 3,
       smoothWheel: true,
     });
+
+    lenisRef.current = lenis;
 
     // Keep ScrollTrigger's internal scroll position in sync with Lenis,
     // and let GSAP's ticker drive Lenis's raf loop so both stay
@@ -22,6 +25,7 @@ export function useLenis() {
 
     return () => {
       gsap.ticker.remove(tick);
+      if (lenisRef.current === lenis) lenisRef.current = null;
       lenis.destroy();
     };
   }, []);
