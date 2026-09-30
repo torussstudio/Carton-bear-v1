@@ -42,6 +42,14 @@ function HeroSection() {
           wordsClass: 'bear-hero-kicker__word',
         });
 
+        // NOTE on timing: the preloader exits by sliding UP over ~0.8s, so
+        // the very top of the screen (where the nav lives) is the LAST part
+        // to be uncovered. The nav tweens are therefore placed at absolute
+        // times (NAV_AT) so they start as the overlay clears the top edge,
+        // instead of playing out unseen underneath it. Everything else keeps
+        // its original relative timing.
+        const NAV_AT = 0.6;
+
         gsap
           .timeline({
             defaults: {
@@ -49,23 +57,6 @@ function HeroSection() {
             },
             delay: 0.15,
           })
-
-          .from('.bear-nav-logo', {
-            opacity: 0,
-            y: -18,
-            duration: 0.7,
-          })
-
-          .from(
-            '.bear-nav-links .bear-pill',
-            {
-              opacity: 0,
-              y: -16,
-              stagger: 0.1,
-              duration: 0.6,
-            },
-            '-=0.4'
-          )
 
           .from(
             '.bear-hero-title-line',
@@ -76,7 +67,7 @@ function HeroSection() {
               stagger: 0.12,
               duration: 0.9,
             },
-            '-=0.2'
+            0.8
           )
 
           .from(
@@ -101,6 +92,27 @@ function HeroSection() {
               duration: 0.7,
             },
             '-=0.55'
+          )
+
+          .from(
+            '.bear-nav-logo',
+            {
+              opacity: 0,
+              y: -18,
+              duration: 0.7,
+            },
+            NAV_AT
+          )
+
+          .from(
+            '.bear-nav-links .bear-pill',
+            {
+              opacity: 0,
+              y: -16,
+              stagger: 0.1,
+              duration: 0.6,
+            },
+            NAV_AT + 0.3
           );
       }, rootRef);
     };
@@ -132,14 +144,35 @@ function HeroSection() {
 
     // Safety net: if a page ever renders HeroSection without a Preloader,
     // don't leave the entrance stuck waiting forever.
-    const fallback = window.setTimeout(() => {
-      window.removeEventListener(
-        'preloader:done',
-        handlePreloaderDone
-      );
-
-      runTimeline();
-    }, 4000);
+    // It must NOT fire while a preloader is still on screen (a slow load —
+    // dev server, big videos, slow network — can easily exceed 4s), or the
+    // entrance would play out unseen underneath the overlay. So while a
+    // `.preloader` element exists we keep waiting for 'preloader:done', and
+    // only give up after a hard cap.
+    const FALLBACK_MS = 4000;
+    const HARD_CAP_MS = 30000;
+    const startedAt = performance.now();
+    let fallback;
+    const armFallback = (ms) => {
+      fallback = window.setTimeout(() => {
+        const preloaderStillUp =
+          !window.__preloaderDone &&
+          document.querySelector('.preloader');
+        if (
+          preloaderStillUp &&
+          performance.now() - startedAt < HARD_CAP_MS
+        ) {
+          armFallback(500);
+          return;
+        }
+        window.removeEventListener(
+          'preloader:done',
+          handlePreloaderDone
+        );
+        runTimeline();
+      }, ms);
+    };
+    armFallback(FALLBACK_MS);
 
     return () => {
       window.removeEventListener(

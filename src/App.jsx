@@ -1,6 +1,6 @@
 import { useLenis } from './hooks/useLenis.js';
 import { useScrollReveal } from './hooks/useScrollReveal.js';
-import CrtFilter from './components/CrtFilter.jsx';
+import PageBulge from './components/PageBulge.jsx';
 import CrtOverlay from './components/CrtOverlay.jsx';
 import HeroSection from './components/HeroSection.jsx';
 import Marquee from './components/Marquee.jsx';
@@ -19,7 +19,6 @@ import Preloader from './components/Preloader.jsx';
 
 import './App.css';
 
-const BULGE = 0;
 const SCAN = 0.55;
 const GRAIN = 0.1;
 
@@ -30,7 +29,7 @@ function App() {
   return (
     <>
       <Preloader />
-      <CrtFilter bulge={BULGE} />
+      <PageBulge />
 
       <div id="crtContent" className="crt-content">
         <HeroSection />

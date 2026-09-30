@@ -5,27 +5,12 @@ import './PackagingSection.css';
 import {
   gsap,
   ScrollTrigger,
+  SplitText,
   prefersReducedMotion,
 } from '../lib/gsapSetup';
 
 const DESCRIPTION =
   "BECAUSE PACKAGING ISN'T JUST PROTECTION. IT'S PERCEPTION. IT'S RECALL. IT'S RETENTION. IT'S ONE OF THE BIGGEST BRAND TOUCHPOINTS YOU HAVE>>";
-
-/*
- * Decode timing knobs.
- *
- * CHAR_INTERVAL - delay between one character starting its
- *                 decode and the next (in shuffled order).
- *                 0.02 = 50 chars/sec (~2.3s total).
- *
- * STAGE_GAP     - time between line -> block -> visible
- *                 for a single character (demo used 100ms).
- */
-
-const CHAR_INTERVAL = 0.02;
-const STAGE_GAP = 0.06;
-
-const STATE_CLASSES = ['state-1', 'state-2', 'state-3'];
 
 /*
  * Scroll-scrubbed video zoom.
@@ -36,18 +21,6 @@ const STATE_CLASSES = ['state-1', 'state-2', 'state-3'];
  */
 
 const VIDEO_START_SCALE = 1.1;
-
-function shuffle(array) {
-  const result = array.slice();
-
-  for (let i = result.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
-
-    [result[i], result[j]] = [result[j], result[i]];
-  }
-
-  return result;
-}
 
 function PackagingSection() {
   const rootRef = useRef(null);
@@ -68,10 +41,11 @@ function PackagingSection() {
     let ctx;
 
     /*
-     * Hoisted so the cleanup function can kill it.
+     * Hoisted so the cleanup function can revert / kill them.
      */
 
-    let decodeTimeline = null;
+    let split = null;
+    let revealTween = null;
 
     ctx = gsap.context(() => {
       const words =
@@ -82,92 +56,42 @@ function PackagingSection() {
 
       /*
        * ========================================================
-       * DESCRIPTION CHARACTERS
+       * DESCRIPTION WORDS  (same staggering reveal as the Hero)
        * ========================================================
        *
-       * Words stay inline-block so wrapping is identical to
-       * before. Every character inside a word is its own span,
-       * which is the unit that decodes:
+       * Reuses the Hero kicker animation exactly: SplitText into
+       * words, then words rise 50px from below with a 28px blur,
+       * fading in with a 0.03s stagger and a back.out(1.7) ease
+       * (see HeroSection.jsx).
        *
-       * Transparent -> Line -> Block -> Visible
+       * The tween is created paused. `gsap.from` renders the
+       * hidden start state immediately, so the words stay hidden
+       * until the BRANDS flip lands and we play it.
        */
 
-      const descriptionWords =
-        DESCRIPTION.split(' ');
+      description.textContent = DESCRIPTION;
 
-      description.innerHTML = '';
-
-      /*
-       * Every animated character, in reading order.
-       */
-
-      const charElements = [];
-
-      descriptionWords.forEach(
-        (word, index) => {
-          const wordEl =
-            document.createElement('span');
-
-          wordEl.className =
-            'packaging-desc-word';
-
-          wordEl.setAttribute(
-            'aria-hidden',
-            'true'
-          );
-
-          Array.from(word).forEach(
-            (character) => {
-              const charEl =
-                document.createElement('span');
-
-              charEl.className =
-                'packaging-desc-char';
-
-              charEl.textContent = character;
-
-              wordEl.appendChild(charEl);
-
-              charElements.push(charEl);
-            }
-          );
-
-          /*
-           * Trailing space stays a plain text node
-           * (the word is white-space: pre), so the
-           * gap between words never animates and
-           * layout is unchanged.
-           */
-
-          if (
-            index <
-            descriptionWords.length - 1
-          ) {
-            wordEl.appendChild(
-              document.createTextNode(' ')
-            );
-          }
-
-          description.appendChild(wordEl);
-        }
-      );
+      split = new SplitText(description, {
+        type: 'words',
+        wordsClass: 'packaging-desc-word',
+      });
 
       /*
-       * ========================================================
-       * INITIAL DESCRIPTION STATE
-       * ========================================================
-       *
-       * The ENTIRE description is hidden.
-       *
-       * It does not decode or reveal until the
-       * BRANDS animation has completely finished.
-       *
-       * Individual characters are transparent via CSS
-       * until their own decode turn.
+       * The paragraph itself is visible; each word hides itself.
        */
 
       gsap.set(description, {
+        opacity: 1,
+      });
+
+      revealTween = gsap.from(split.words, {
+        y: 50,
         opacity: 0,
+        filter: 'blur(28px)',
+        stagger: 0.03,
+        duration: 1,
+        ease: 'back.out(1.7)',
+        paused: true,
       });
 
       /*
@@ -210,71 +134,9 @@ function PackagingSection() {
           scaleX: 1,
         });
 
-        gsap.set(description, {
-          opacity: 1,
-        });
-
-        charElements.forEach((el) =>
-          el.classList.add('state-3')
-        );
+        revealTween.progress(1).pause();
 
         return;
-      }
-
-      /*
-       * ========================================================
-       * DESCRIPTION DECODING
-       * ========================================================
-       *
-       * Ported from the demo: each character steps through
-       * state-1 (line), state-2 (block), state-3 (visible),
-       * in a shuffled order. Driven by one GSAP timeline
-       * instead of setTimeout, so it can be killed cleanly.
-       *
-       * No hover trigger, no refresh button, no setInterval.
-       */
-
-      function resetDescription() {
-        decodeTimeline?.kill();
-
-        decodeTimeline = null;
-
-        charElements.forEach((el) =>
-          el.classList.remove(...STATE_CLASSES)
-        );
-      }
-
-      function decodeDescription() {
-        resetDescription();
-
-        decodeTimeline = gsap.timeline();
-
-        shuffle(charElements).forEach(
-          (el, order) => {
-            const start =
-              order * CHAR_INTERVAL;
-
-            decodeTimeline
-              .call(
-                () =>
-                  el.classList.add('state-1'),
-                null,
-                start
-              )
-              .call(
-                () =>
-                  el.classList.add('state-2'),
-                null,
-                start + STAGE_GAP
-              )
-              .call(
-                () =>
-                  el.classList.add('state-3'),
-                null,
-                start + STAGE_GAP * 2
-              );
-          }
-        );
       }
 
       /*
@@ -298,6 +160,16 @@ function PackagingSection() {
 
           defaults: {
             ease: 'power3.out',
+          },
+
+          /*
+           * Scrolling back above the section rewinds the title;
+           * re-hide the description words so the stagger can
+           * play again next time.
+           */
+
+          onReverseComplete: () => {
+            revealTween.pause(0);
           },
         });
 
@@ -417,19 +289,13 @@ function PackagingSection() {
           ease: 'power3.out',
 
           /*
-           * Start decoding the moment the BRANDS flip
-           * lands, without waiting for the white wipe
-           * behind it. The container appears instantly;
-           * every character is still transparent until
-           * its own randomized turn.
+           * Start the description stagger the moment the
+           * BRANDS flip lands, without waiting for the white
+           * wipe behind it.
            */
 
           onComplete: () => {
-            gsap.set(description, {
-              opacity: 1,
-            });
-
-            decodeDescription();
+            revealTween.restart();
           },
         },
         '<'
@@ -505,9 +371,11 @@ function PackagingSection() {
     }, root);
 
     return () => {
-      decodeTimeline?.kill();
+      revealTween?.kill();
 
       ctx?.revert();
+
+      split?.revert();
     };
   }, []);
 
