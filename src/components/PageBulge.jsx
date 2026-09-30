@@ -31,12 +31,12 @@ import { lenisRef } from '../lib/lenisInstance';
  */
 
 // ---- Tuning knobs ---------------------------------------------------------
-const MAGNIFY = 0.17; // centre magnification at full strength (0.17 ≈ 1.2×)
-const MAGNIFY_MOBILE = 0.12; // gentler + cheaper on small screens
-const VELOCITY_FOR_MAX = 2600; // px/s of scroll that counts as "full strength"
-const RESPONSE = 0.65; // <1 = boosts gentle scrolls, >1 = only fast scrolls
-const RISE = 9; // how fast the bulge builds   (1/s)
-const FALL = 3.2; // how slowly it relaxes back  (1/s, lower = floatier)
+const MAGNIFY = 0.085; // centre magnification at full strength (0.085 ≈ 1.09×)
+const MAGNIFY_MOBILE = 0.06; // gentler + cheaper on small screens
+const VELOCITY_SOFT = 1400; // px/s at which the bulge reaches ~63% (it saturates, so
+                            // speed jitter during a steady scroll doesn't pulse it)
+const RISE = 4.5; // how fast the bulge builds   (1/s)
+const FALL = 3.5; // how slowly it relaxes back  (1/s)
 const SHAPE = 1.0; // falloff exponent: higher = tighter bulge in the middle
 const MAP_SIZE = 256; // displacement map resolution (bilinear-scaled up)
 const OFF_EPS = 0.004; // below this strength the filter is switched off
@@ -179,10 +179,11 @@ function PageBulge() {
       const y = lenisRef.current ? lenisRef.current.scroll : window.scrollY;
       const instant = Math.abs(y - lastY) / dt;
       lastY = y;
-      // light smoothing on the measured speed to kill frame jitter
-      vel += (instant - vel) * (1 - Math.exp(-dt * 30));
+      // heavy smoothing on the measured speed: removes per-frame/wheel-tick
+      // jitter, which is what made the bulge pulse ("wave") while scrolling
+      vel += (instant - vel) * (1 - Math.exp(-dt * 7));
 
-      const target = Math.pow(Math.min(1, vel / VELOCITY_FOR_MAX), RESPONSE);
+      const target = 1 - Math.exp(-vel / VELOCITY_SOFT); // saturating, 0..1
       const rate = target > amt ? RISE : FALL;
       amt += (target - amt) * (1 - Math.exp(-dt * rate));
 
