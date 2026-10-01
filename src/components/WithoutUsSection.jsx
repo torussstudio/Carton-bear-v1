@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef } from 'react';
 import bearHand from '../images/Bear-hand.webp';
-import { gsap, ScrollTrigger, prefersReducedMotion } from '../lib/gsapSetup';
+import { gsap, ScrollTrigger, prefersReducedMotion, SplitText } from '../lib/gsapSetup';
 import './Nav.css';
 import './WithoutUsSection.css';
 
@@ -84,25 +84,42 @@ function WithoutUsSection() {
   const dotRefs = useRef([]);
   const textRefs = useRef([]);
   const titleRef = useRef(null);
+  const listRef = useRef(null);
 
   /*
-   * Main heading — the same blur-stagger entrance as the Hero title:
-   * each line y 60 -> 0, opacity 0 -> 1, blur(28px) -> none,
-   * 0.9s power3.out, 0.12s stagger. Plays once as it scrolls in.
+   * Text entrance — the same character stagger as the Process section:
+   *
+   *   main heading  chars y 50 -> 0, opacity 0 -> 1, 0.03s stagger,
+   *                 0.8s power3.out (like "CLEAR PROCESS / NO CHAOS")
+   *   pain points   chars y 18 -> 0, opacity 0 -> 1, 0.025s stagger,
+   *                 0.55s back.out(1.7) (like "UNDERSTAND"), one item
+   *                 at a time as each scrolls into view
+   *
+   * Plays once, never reverses.
    */
 
   useLayoutEffect(() => {
     const title = titleRef.current;
+    const list = listRef.current;
 
-    if (!title || prefersReducedMotion()) return undefined;
+    if (!title || !list || prefersReducedMotion()) return undefined;
+
+    const splits = [];
 
     const ctx = gsap.context(() => {
-      gsap.from(title.querySelectorAll('.without-us-title-line'), {
-        y: 60,
-        opacity: 0,
-        filter: 'blur(28px)',
-        stagger: 0.12,
-        duration: 0.9,
+      const titleSplit = SplitText.create(title.querySelectorAll('.without-us-title-line'), {
+        type: 'words,chars',
+      });
+
+      splits.push(titleSplit);
+
+      gsap.set(titleSplit.chars, { opacity: 0, y: 50 });
+
+      gsap.to(titleSplit.chars, {
+        opacity: 1,
+        y: 0,
+        stagger: 0.03,
+        duration: 0.8,
         ease: 'power3.out',
         scrollTrigger: {
           trigger: title,
@@ -110,9 +127,33 @@ function WithoutUsSection() {
           toggleActions: 'play none none none',
         },
       });
+
+      list.querySelectorAll('.without-us-pain-point').forEach((item) => {
+        const split = SplitText.create(item, { type: 'words,chars' });
+
+        splits.push(split);
+
+        gsap.set(split.chars, { opacity: 0, y: 18 });
+
+        gsap.to(split.chars, {
+          opacity: 1,
+          y: 0,
+          stagger: 0.025,
+          duration: 0.55,
+          ease: 'back.out(1.7)',
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 90%',
+            toggleActions: 'play none none none',
+          },
+        });
+      });
     }, title);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      splits.forEach((split) => split.revert());
+    };
   }, []);
 
   useLayoutEffect(() => {
@@ -276,12 +317,14 @@ function WithoutUsSection() {
             PAIN POINTS
         ========================================== */}
 
-        <ul className="without-us-pain-points without-us-red-glow">
+        <ul
+          className="without-us-pain-points without-us-red-glow"
+          ref={listRef}
+        >
           {PAIN_POINTS.map((point) => (
             <li
               key={point}
               className="without-us-pain-point"
-              data-reveal="fade"
             >
               <span className="without-us-arrow">
                 &gt;
