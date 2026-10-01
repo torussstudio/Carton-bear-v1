@@ -83,6 +83,37 @@ function WithoutUsSection() {
   const pathRefs = useRef([]);
   const dotRefs = useRef([]);
   const textRefs = useRef([]);
+  const titleRef = useRef(null);
+
+  /*
+   * Main heading — the same blur-stagger entrance as the Hero title:
+   * each line y 60 -> 0, opacity 0 -> 1, blur(28px) -> none,
+   * 0.9s power3.out, 0.12s stagger. Plays once as it scrolls in.
+   */
+
+  useLayoutEffect(() => {
+    const title = titleRef.current;
+
+    if (!title || prefersReducedMotion()) return undefined;
+
+    const ctx = gsap.context(() => {
+      gsap.from(title.querySelectorAll('.without-us-title-line'), {
+        y: 60,
+        opacity: 0,
+        filter: 'blur(28px)',
+        stagger: 0.12,
+        duration: 0.9,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: title,
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+        },
+      });
+    }, title);
+
+    return () => ctx.revert();
+  }, []);
 
   useLayoutEffect(() => {
     if (
@@ -229,18 +260,14 @@ function WithoutUsSection() {
 
         <h2
           className="without-us-title without-us-title-glow"
-          data-reveal="lines"
+          ref={titleRef}
         >
-          <span className="reveal-mask">
-            <span className="without-us-title-line">
-              Without Us, You&apos;re
-            </span>
+          <span className="without-us-title-line">
+            Without Us, You&apos;re
           </span>
 
-          <span className="reveal-mask">
-            <span className="without-us-title-line">
-              Dealing With :
-            </span>
+          <span className="without-us-title-line">
+            Dealing With :
           </span>
         </h2>
 
