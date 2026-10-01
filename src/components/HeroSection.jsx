@@ -5,6 +5,7 @@ import {
   SplitText,
   prefersReducedMotion,
 } from '../lib/gsapSetup';
+import { createRgbSplit } from '../lib/rgbSplit';
 import './HeroSection.css';
 import './Nav.css';
 
@@ -15,6 +16,22 @@ function HeroSection() {
   const rootRef = useRef(null);
   const kickerRef = useRef(null);
   const videoRef = useRef(null);
+  const rgbRef = useRef(null);
+
+  // RGB split controller (scroll-velocity driven; the entrance timeline
+  // below also feeds it). Declared first so it exists when the timeline
+  // is built. Does nothing for reduced-motion users.
+  useLayoutEffect(() => {
+    if (prefersReducedMotion() || !rootRef.current) return undefined;
+
+    const rgb = createRgbSplit(rootRef.current);
+    rgbRef.current = rgb;
+
+    return () => {
+      rgb.destroy();
+      rgbRef.current = null;
+    };
+  }, []);
 
   // Existing entrance timeline — now held until the preloader signals it's
   // actually done, so it can't play out underneath the overlay unseen.
@@ -113,6 +130,24 @@ function HeroSection() {
               duration: 0.6,
             },
             NAV_AT + 0.3
+          )
+
+          // RGB split rides the existing entrance: it opens as the title
+          // starts to move (absolute 0.8, same as the title) and settles to
+          // clean text while the kicker words land. It sits at the END of
+          // the chain at an absolute time, so every existing relative
+          // position ('-=0.35', '-=0.55', NAV_AT) is untouched.
+          .fromTo(
+            rgbRef.current ? rgbRef.current.state : {},
+            { intro: 0.75 },
+            {
+              intro: 0,
+              duration: 1.9,
+              ease: 'power2.out',
+              onUpdate: () => rgbRef.current && rgbRef.current.apply(),
+              onComplete: () => rgbRef.current && rgbRef.current.apply(),
+            },
+            0.8
           );
       }, rootRef);
     };
