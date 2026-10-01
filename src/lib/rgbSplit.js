@@ -7,9 +7,9 @@ import { lenisRef } from './lenisInstance';
  * It drives ONE CSS custom property, `--rgb-split` (0..1), on a root element.
  * The CSS turns that into a pair of red / cyan text-shadows offset left/right
  * by a few hundredths of an em, so the effect scales with each text's own
- * font size and costs nothing while idle (the class `rgb-split-on` is only
- * present while the amount is above a tiny epsilon, so resting text is
- * rendered exactly as before — no shadows at all).
+ * font size. The split is always present: at rest it holds a faint IDLE
+ * level, movement (the intro, or scroll velocity) lifts it, and it eases
+ * back down to the idle level when the movement stops.
  *
  * Two sources are combined:
  *   - `state.intro`  : tweened by the hero's existing GSAP entrance timeline
@@ -23,37 +23,28 @@ const SCROLL_SOFT = 450; //  px/s at which the scroll split reaches ~63% (a norm
 const SCROLL_MAX = 1; //   cap for the scroll contribution (0..1)
 const RISE = 9; //         how fast the split opens (1/s)
 const FALL = 4.5; //       how softly it settles back (1/s)
-const OFF_EPS = 0.004; //  below this, the effect is switched off entirely
+const IDLE = 0.24; //      resting split (0..1): a faint, always-on red/cyan edge.
+//                          Movement lifts it toward 1, then it eases back to this.
 
 export function createRgbSplit(root) {
   const state = { intro: 0, scroll: 0 };
 
-  let on = false;
   let last = -1;
 
   const apply = () => {
-    const total = Math.min(1, state.intro + state.scroll);
+    // idle floor + movement on top (movement uses the remaining headroom,
+    // so a full scroll/intro still peaks at exactly 1)
+    const moving = Math.min(1, state.intro + state.scroll);
+    const total = IDLE + (1 - IDLE) * moving;
 
-    if (total < OFF_EPS) {
-      if (on) {
-        on = false;
-        last = -1;
-        root.classList.remove('rgb-split-on');
-        root.style.removeProperty('--rgb-split');
-      }
-      return;
-    }
-
-    if (!on) {
-      on = true;
-      root.classList.add('rgb-split-on');
-    }
-
-    if (Math.abs(total - last) > 0.002) {
+    if (Math.abs(total - last) > 0.001) {
       last = total;
+      root.classList.add('rgb-split-on');
       root.style.setProperty('--rgb-split', total.toFixed(3));
     }
   };
+
+  apply(); // start in the idle state straight away
 
   let lastY = lenisRef.current ? lenisRef.current.scroll : window.scrollY;
   let lastT = performance.now();
@@ -69,7 +60,7 @@ export function createRgbSplit(root) {
     lastY = y;
 
     // the hero is only on screen near the top of the page — skip the maths
-    // (and keep everything off) once it has scrolled well out of view
+    // once it has scrolled well out of view (the idle level stays applied)
     if (y > window.innerHeight * 1.5 && state.scroll === 0 && state.intro === 0) {
       vel = 0;
       return;
@@ -81,7 +72,7 @@ export function createRgbSplit(root) {
     const rate = target > state.scroll ? RISE : FALL;
     state.scroll += (target - state.scroll) * (1 - Math.exp(-dt * rate));
 
-    if (state.scroll < OFF_EPS * 0.5) state.scroll = 0;
+    if (state.scroll < 0.002) state.scroll = 0;
 
     apply();
   };
