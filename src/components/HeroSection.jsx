@@ -24,9 +24,11 @@ function HeroSection() {
   useLayoutEffect(() => {
     if (prefersReducedMotion() || !rootRef.current) return undefined;
 
-    // the marquee scroller sits just below the hero and shares the effect
+    // the marquee scroller and the Packaging section sit below the hero and
+    // share the effect (one controller, one amount)
     const rgb = createRgbSplit(rootRef.current, [
       document.querySelector('.marquee'),
+      document.querySelector('.packaging'),
     ]);
     rgbRef.current = rgb;
 
