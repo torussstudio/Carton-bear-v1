@@ -85,6 +85,47 @@ function WithoutUsSection() {
   const textRefs = useRef([]);
   const titleRef = useRef(null);
   const listRef = useRef(null);
+  const footerTextRef = useRef(null);
+
+  /*
+   * Footer paragraph — the same word stagger as the Hero kicker and the
+   * Packaging description: words rise 50px with a 28px blur clearing,
+   * 0.03s stagger, 1s back.out(1.7). Plays once as it scrolls in.
+   */
+
+  useLayoutEffect(() => {
+    const el = footerTextRef.current;
+
+    if (!el || prefersReducedMotion()) return undefined;
+
+    let split;
+
+    const ctx = gsap.context(() => {
+      split = SplitText.create(el, {
+        type: 'words',
+        wordsClass: 'without-us-footer-word',
+      });
+
+      gsap.from(split.words, {
+        y: 50,
+        opacity: 0,
+        filter: 'blur(28px)',
+        stagger: 0.03,
+        duration: 1,
+        ease: 'back.out(1.7)',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 88%',
+          toggleActions: 'play none none none',
+        },
+      });
+    }, el);
+
+    return () => {
+      ctx.revert();
+      if (split) split.revert();
+    };
+  }, []);
 
   /*
    * Intro text — one directed timeline, not separate fades:
@@ -472,7 +513,7 @@ function WithoutUsSection() {
 
         <p
           className="without-us-footer-text"
-          data-reveal="fade"
+          ref={footerTextRef}
         >
           Whether you&apos;re a global brand sourcing from India, a growing
           export business, or an agency managing international production
