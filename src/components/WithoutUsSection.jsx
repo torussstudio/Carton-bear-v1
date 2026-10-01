@@ -224,10 +224,9 @@ function WithoutUsSection() {
             strokeDashoffset: lengths[i],
           });
         });
-        // The paths use round line caps, which paint a tiny dot at the
-        // path ends even when the dash is fully pushed out of view. Keep
-        // each path completely invisible until its own draw begins (it is
-        // switched on at the start of its tween below).
+        // Paths use butt caps (round caps paint a dot at the ends of a
+        // zero-length dash) and stay completely invisible until their own
+        // draw begins (switched on at the start of their tween below).
         gsap.set(paths, { opacity: 0 });
         gsap.set(dots, { opacity: 0, scale: 0.4, transformOrigin: '50% 50%' });
         gsap.set(texts, { opacity: 0, y: '+=6' });
@@ -415,7 +414,7 @@ function WithoutUsSection() {
                 fill="none"
                 stroke="#ffd400"
                 strokeWidth="1"
-                strokeLinecap="round"
+                strokeLinecap="butt"
                 opacity="0.85"
               />
 
