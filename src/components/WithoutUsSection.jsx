@@ -87,15 +87,18 @@ function WithoutUsSection() {
   const listRef = useRef(null);
 
   /*
-   * Text entrance — the same character stagger as the Process section:
+   * Intro text — one directed timeline, not separate fades:
    *
-   *   main heading  chars y 50 -> 0, opacity 0 -> 1, 0.03s stagger,
-   *                 0.8s power3.out (like "CLEAR PROCESS / NO CHAOS")
-   *   pain points   chars y 18 -> 0, opacity 0 -> 1, 0.025s stagger,
-   *                 0.55s back.out(1.7) (like "UNDERSTAND"), one item
-   *                 at a time as each scrolls into view
+   *   1. "Without Us, You're"  chars rise (y 56 -> 0) with a soft blur
+   *                            clearing, power4.out — states the thesis.
+   *   2. "Dealing With :"      starts as line 1 is ~70% settled (overlap
+   *                            keeps it flowing), a touch slower stagger
+   *                            so it lands with weight.
+   *   3. pain points           begin once line 2 has landed, one at a
+   *                            time (0.28s apart), shorter rise so they
+   *                            read as supporting copy.
    *
-   * Plays once, never reverses.
+   * Plays once when the heading scrolls in; never reverses.
    */
 
   useLayoutEffect(() => {
@@ -107,46 +110,72 @@ function WithoutUsSection() {
     const splits = [];
 
     const ctx = gsap.context(() => {
-      const titleSplit = SplitText.create(title.querySelectorAll('.without-us-title-line'), {
-        type: 'words,chars',
-      });
+      const lines = title.querySelectorAll('.without-us-title-line');
+      const items = list.querySelectorAll('.without-us-pain-point');
 
-      splits.push(titleSplit);
+      const lineSplits = Array.from(lines).map((line) =>
+        SplitText.create(line, { type: 'words,chars' })
+      );
+      const itemSplits = Array.from(items).map((item) =>
+        SplitText.create(item, { type: 'words,chars' })
+      );
 
-      gsap.set(titleSplit.chars, { opacity: 0, y: 50 });
+      splits.push(...lineSplits, ...itemSplits);
 
-      gsap.to(titleSplit.chars, {
-        opacity: 1,
-        y: 0,
-        stagger: 0.03,
-        duration: 0.8,
-        ease: 'power3.out',
+      lineSplits.forEach((split) =>
+        gsap.set(split.chars, { opacity: 0, y: 56, filter: 'blur(6px)' })
+      );
+      itemSplits.forEach((split) =>
+        gsap.set(split.chars, { opacity: 0, y: 18 })
+      );
+
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: title,
-          start: 'top 85%',
+          start: 'top 82%',
           toggleActions: 'play none none none',
         },
       });
 
-      list.querySelectorAll('.without-us-pain-point').forEach((item) => {
-        const split = SplitText.create(item, { type: 'words,chars' });
+      // 1. main statement
+      tl.to(lineSplits[0].chars, {
+        opacity: 1,
+        y: 0,
+        filter: 'blur(0px)',
+        stagger: 0.035,
+        duration: 1,
+        ease: 'power4.out',
+      });
 
-        splits.push(split);
-
-        gsap.set(split.chars, { opacity: 0, y: 18 });
-
-        gsap.to(split.chars, {
-          opacity: 1,
-          y: 0,
-          stagger: 0.025,
-          duration: 0.55,
-          ease: 'back.out(1.7)',
-          scrollTrigger: {
-            trigger: item,
-            start: 'top 90%',
-            toggleActions: 'play none none none',
+      // 2. "Dealing With :" — overlaps the tail of line 1
+      if (lineSplits[1]) {
+        tl.to(
+          lineSplits[1].chars,
+          {
+            opacity: 1,
+            y: 0,
+            filter: 'blur(0px)',
+            stagger: 0.045,
+            duration: 1,
+            ease: 'power4.out',
           },
-        });
+          '>-0.55'
+        );
+      }
+
+      // 3. supporting pain points, one by one after the heading lands
+      itemSplits.forEach((split, i) => {
+        tl.to(
+          split.chars,
+          {
+            opacity: 1,
+            y: 0,
+            stagger: 0.02,
+            duration: 0.55,
+            ease: 'back.out(1.7)',
+          },
+          i === 0 ? '>-0.35' : `<${0.28}`
+        );
       });
     }, title);
 
