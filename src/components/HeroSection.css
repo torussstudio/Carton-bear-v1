@@ -279,3 +279,12 @@
     calc(var(--rgb-split, 0) * -0.07em) 0 0 rgba(255, 45, 85, 0.75),
     calc(var(--rgb-split, 0) * 0.07em) 0 0 rgba(0, 225, 255, 0.75);
 }
+
+/* Marquee scroller — same split, driven by the same controller */
+
+.marquee.rgb-split-on .marquee-item,
+.marquee.rgb-split-on .marquee-divider {
+  text-shadow:
+    calc(var(--rgb-split, 0) * -0.05em) 0 0 rgba(255, 45, 85, 0.75),
+    calc(var(--rgb-split, 0) * 0.05em) 0 0 rgba(0, 225, 255, 0.75);
+}

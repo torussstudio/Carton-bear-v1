@@ -26,7 +26,10 @@ const FALL = 4.5; //       how softly it settles back (1/s)
 const IDLE = 0.24; //      resting split (0..1): a faint, always-on red/cyan edge.
 //                          Movement lifts it toward 1, then it eases back to this.
 
-export function createRgbSplit(root) {
+export function createRgbSplit(root, extraRoots = []) {
+  // `root` is the hero; `extraRoots` are other elements (e.g. the marquee
+  // scroller) that should carry the very same split amount.
+  const targets = [root, ...extraRoots.filter(Boolean)];
   const state = { intro: 0, scroll: 0 };
 
   let last = -1;
@@ -39,8 +42,11 @@ export function createRgbSplit(root) {
 
     if (Math.abs(total - last) > 0.001) {
       last = total;
-      root.classList.add('rgb-split-on');
-      root.style.setProperty('--rgb-split', total.toFixed(3));
+      const v = total.toFixed(3);
+      targets.forEach((el) => {
+        el.classList.add('rgb-split-on');
+        el.style.setProperty('--rgb-split', v);
+      });
     }
   };
 
@@ -86,8 +92,10 @@ export function createRgbSplit(root) {
       gsap.ticker.remove(tick);
       state.intro = 0;
       state.scroll = 0;
-      root.classList.remove('rgb-split-on');
-      root.style.removeProperty('--rgb-split');
+      targets.forEach((el) => {
+        el.classList.remove('rgb-split-on');
+        el.style.removeProperty('--rgb-split');
+      });
     },
   };
 }

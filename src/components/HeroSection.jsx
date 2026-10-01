@@ -24,7 +24,10 @@ function HeroSection() {
   useLayoutEffect(() => {
     if (prefersReducedMotion() || !rootRef.current) return undefined;
 
-    const rgb = createRgbSplit(rootRef.current);
+    // the marquee scroller sits just below the hero and shares the effect
+    const rgb = createRgbSplit(rootRef.current, [
+      document.querySelector('.marquee'),
+    ]);
     rgbRef.current = rgb;
 
     return () => {
