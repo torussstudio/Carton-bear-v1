@@ -18,7 +18,8 @@ import { lenisRef } from './lenisInstance';
  *                      loop), eased up fast and released smoothly.
  */
 
-const SCROLL_SOFT = 1800; // px/s at which the scroll split reaches ~63%
+const SCROLL_SOFT = 450; //  px/s at which the scroll split reaches ~63% (a normal
+//                           wheel flick on this site's slow Lenis is ~600px/s)
 const SCROLL_MAX = 1; //   cap for the scroll contribution (0..1)
 const RISE = 9; //         how fast the split opens (1/s)
 const FALL = 4.5; //       how softly it settles back (1/s)

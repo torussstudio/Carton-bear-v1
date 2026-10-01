@@ -139,11 +139,11 @@ function HeroSection() {
           // position ('-=0.35', '-=0.55', NAV_AT) is untouched.
           .fromTo(
             rgbRef.current ? rgbRef.current.state : {},
-            { intro: 0.75 },
+            { intro: 1 },
             {
               intro: 0,
-              duration: 1.9,
-              ease: 'power2.out',
+              duration: 2.4,
+              ease: 'power1.out',
               onUpdate: () => rgbRef.current && rgbRef.current.apply(),
               onComplete: () => rgbRef.current && rgbRef.current.apply(),
             },
