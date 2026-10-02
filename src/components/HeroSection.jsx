@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Nav from './Nav.jsx';
 import {
   gsap,
@@ -17,6 +17,21 @@ function HeroSection() {
   const kickerRef = useRef(null);
   const videoRef = useRef(null);
   const rgbRef = useRef(null);
+
+  // Pick the hero video in JS: the `media` attribute on <source> is NOT
+  // honoured inside <video> (only inside <picture>), so the browser always
+  // took the same file. <= 640px gets the mobile cut, everything else desktop.
+  const [isMobileVideo, setIsMobileVideo] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 640px)').matches
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 640px)');
+    const onChange = (e) => setIsMobileVideo(e.matches);
+    setIsMobileVideo(mq.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
 
   // RGB split controller (scroll-velocity driven; the entrance timeline
   // below also feeds it). Declared first so it exists when the timeline
@@ -453,6 +468,7 @@ function HeroSection() {
 
       <video
         ref={videoRef}
+        src={isMobileVideo ? heroVideoMobile : heroVideo}
         className="bear-hero-video"
         autoPlay
         muted
@@ -461,16 +477,6 @@ function HeroSection() {
         preload="auto"
         aria-hidden="true"
       >
-        <source
-          src={heroVideoMobile}
-          type="video/mp4"
-          media="(max-width: 640px)"
-        />
-
-        <source
-          src={heroVideo}
-          type="video/mp4"
-        />
       </video>
 
 
