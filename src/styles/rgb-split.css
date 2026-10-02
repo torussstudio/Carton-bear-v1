@@ -1,0 +1,145 @@
+/* =========================================
+   RGB SPLIT (chromatic aberration) — site-wide
+   Driven by --rgb-split (0..1), written by
+   src/lib/rgbSplit.js onto every page section
+   that is on screen (class .rgb-split-on).
+
+   Every text block gets a red shadow to the left
+   and a cyan one to the right, offset by
+   --rgb-k × the split × 1em, so it scales with
+   the text's own size. Tiers below only pick --rgb-k:
+
+     display  big headings          ~ .04em
+     body     paragraphs            ~ .06em  (small type needs a touch more em)
+     button   pills / CTAs          ~ .04em
+     fine     tags, numbers, links  ~ .03em  (kept very light for legibility)
+
+   An element that already has its own glow can pass
+   it in as --rgb-glow; it is painted on top of the split.
+========================================= */
+
+/* ---------- display: headings ---------- */
+
+.rgb-split-on :is(
+  .packaging .word,
+  .built-title-line,
+  .built-card-title,
+  .process-title-line-text,
+  .process-step-title,
+  .service-heading,
+  .services-bottom-word,
+  .dispatches-title-line,
+  .shipping-title-line,
+  .shipping-copy-title,
+  .video-title,
+  .highlight-strip-text,
+  .footer-wordmark
+) {
+  --rgb-k: 0.04;
+  text-shadow:
+    calc(var(--rgb-split, 0) * var(--rgb-k) * -1em) 0 0 rgba(255, 45, 85, 0.75),
+    calc(var(--rgb-split, 0) * var(--rgb-k) * 1em) 0 0 rgba(0, 225, 255, 0.75),
+    var(--rgb-glow, 0 0 0 transparent);
+}
+
+/* hero + marquee were tuned at 0.05em */
+.rgb-split-on :is(
+  .bear-hero-title-line,
+  .marquee-item,
+  .marquee-divider
+) {
+  --rgb-k: 0.05;
+  text-shadow:
+    calc(var(--rgb-split, 0) * var(--rgb-k) * -1em) 0 0 rgba(255, 45, 85, 0.75),
+    calc(var(--rgb-split, 0) * var(--rgb-k) * 1em) 0 0 rgba(0, 225, 255, 0.75),
+    var(--rgb-glow, 0 0 0 transparent);
+}
+
+/* ---------- body: paragraphs ---------- */
+
+.rgb-split-on :is(
+  .bear-hero-kicker,
+  .packaging-desc,
+  .built-card-desc,
+  .process-description,
+  .shipping-copy-desc,
+  .shipping-closing-line,
+  .footer-tagline,
+  .without-us-footer-text
+) {
+  --rgb-k: 0.06;
+  text-shadow:
+    calc(var(--rgb-split, 0) * var(--rgb-k) * -1em) 0 0 rgba(255, 45, 85, 0.75),
+    calc(var(--rgb-split, 0) * var(--rgb-k) * 1em) 0 0 rgba(0, 225, 255, 0.75),
+    var(--rgb-glow, 0 0 0 transparent);
+}
+
+.rgb-split-on .bear-hero-kicker {
+  --rgb-k: 0.07;
+}
+
+/* Packaging description keeps its soft white glow */
+.rgb-split-on .packaging-desc {
+  --rgb-glow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+/* ---------- buttons ---------- */
+
+.rgb-split-on :is(
+  .bear-pill,
+  .prefooter-cta,
+  .without-us-button
+) {
+  --rgb-k: 0.04;
+  text-shadow:
+    calc(var(--rgb-split, 0) * var(--rgb-k) * -1em) 0 0 rgba(255, 45, 85, 0.75),
+    calc(var(--rgb-split, 0) * var(--rgb-k) * 1em) 0 0 rgba(0, 225, 255, 0.75),
+    var(--rgb-glow, 0 0 0 transparent);
+}
+
+/* the Without Us button already has a yellow glow */
+.rgb-split-on .without-us-button {
+  --rgb-glow:
+    0 0 6px rgba(255, 212, 0, 0.9),
+    0 0 14px rgba(255, 212, 0, 0.7),
+    0 0 24px rgba(255, 212, 0, 0.4);
+}
+
+/* ---------- fine print: tags, numbers, links, footer ---------- */
+
+.rgb-split-on :is(
+  .built-card-badge,
+  .built-card-number,
+  .built-kicker-text,
+  .service-tag,
+  .dispatches-list-text,
+  .dispatches-list-number,
+  .footer-col-title,
+  .footer-links a,
+  .footer-social-link,
+  .footer-status,
+  .footer-copyright
+) {
+  --rgb-k: 0.03;
+  text-shadow:
+    calc(var(--rgb-split, 0) * var(--rgb-k) * -1em) 0 0 rgba(255, 45, 85, 0.7),
+    calc(var(--rgb-split, 0) * var(--rgb-k) * 1em) 0 0 rgba(0, 225, 255, 0.7),
+    var(--rgb-glow, 0 0 0 transparent);
+}
+
+/* ---------- elements whose glow is a keyframe animation ----------
+   (Without Us title + pain points). The keyframes in
+   WithoutUsSection.css list --rgb-a / --rgb-b first, so the split
+   rides along with the pulsing glow instead of replacing it. */
+
+.rgb-split-on :is(.without-us-title-glow, .without-us-red-glow) {
+  --rgb-a: calc(var(--rgb-split, 0) * -0.04em) 0 0 rgba(255, 45, 85, 0.75);
+  --rgb-b: calc(var(--rgb-split, 0) * 0.04em) 0 0 rgba(0, 225, 255, 0.75);
+}
+
+/* ---------- never on hidden / decorative layers ---------- */
+
+.rgb-split-on .word-bg,
+.rgb-split-on .packaging-desc-char:not(.state-3) {
+  text-shadow: none;
+}

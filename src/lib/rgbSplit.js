@@ -2,37 +2,52 @@ import { gsap } from './gsapSetup';
 import { lenisRef } from './lenisInstance';
 
 /**
- * RGB split (chromatic aberration) controller for text.
+ * RGB split (chromatic aberration) controller for text — site-wide.
  *
- * It drives ONE CSS custom property, `--rgb-split` (0..1), on a root element.
- * The CSS turns that into a pair of red / cyan text-shadows offset left/right
- * by a few hundredths of an em, so the effect scales with each text's own
- * font size. The split is always present: at rest it holds a faint IDLE
- * level, movement (the intro, or scroll velocity) lifts it, and it eases
- * back down to the idle level when the movement stops.
+ * It drives ONE CSS custom property, `--rgb-split` (0..1). The shared
+ * stylesheet (src/styles/rgb-split.css) turns it into a pair of red / cyan
+ * text-shadows offset left/right by a few hundredths of an em, so the effect
+ * scales with each text's own font size. The split is always present: at rest
+ * it holds a faint IDLE level, movement (the hero intro, or scroll velocity)
+ * lifts it, and it eases back down to the idle level when the movement stops.
  *
- * Two sources are combined:
+ * Sources combined:
  *   - `state.intro`  : tweened by the hero's existing GSAP entrance timeline
  *   - `state.scroll` : derived from Lenis scroll velocity, computed on the
  *                      SAME gsap.ticker Lenis already runs on (no extra rAF
  *                      loop), eased up fast and released smoothly.
+ *
+ * Performance: the property is written only to the page sections that are
+ * currently on screen (IntersectionObserver), so a style recalculation never
+ * walks the whole page. Nothing is written while the value is unchanged.
  */
 
-const SCROLL_SOFT = 450; //  px/s at which the scroll split reaches ~63% (a normal
-//                           wheel flick on this site's slow Lenis is ~600px/s)
+const SCROLL_SOFT = 450; //  px/s at which the scroll split reaches ~63%
 const SCROLL_MAX = 1; //   cap for the scroll contribution (0..1)
 const RISE = 9; //         how fast the split opens (1/s)
 const FALL = 4.5; //       how softly it settles back (1/s)
-const IDLE = 0.24; //      resting split (0..1): a faint, always-on red/cyan edge.
-//                          Movement lifts it toward 1, then it eases back to this.
+const IDLE = 0.24; //      resting split (0..1): a faint, always-on red/cyan edge
 
-export function createRgbSplit(root, extraRoots = []) {
-  // `root` is the hero; `extraRoots` are other elements (e.g. the marquee
-  // scroller) that should carry the very same split amount.
-  const targets = [root, ...extraRoots.filter(Boolean)];
+export function createRgbSplit() {
   const state = { intro: 0, scroll: 0 };
 
+  // every top-level block of the page (hero, marquee, packaging, ... footer)
+  const host = document.getElementById('crtContent');
+  // (a section GSAP has pinned sits inside a .pin-spacer wrapper — look through it)
+  const sections = host
+    ? Array.from(host.children).flatMap((el) =>
+        el.classList.contains('pin-spacer') ? Array.from(el.children) : [el]
+      )
+    : [];
+  const visible = new Set();
+
+  let value = ''; //  current --rgb-split string
   let last = -1;
+
+  const paint = (el) => {
+    el.classList.add('rgb-split-on');
+    el.style.setProperty('--rgb-split', value);
+  };
 
   const apply = () => {
     // idle floor + movement on top (movement uses the remaining headroom,
@@ -42,15 +57,29 @@ export function createRgbSplit(root, extraRoots = []) {
 
     if (Math.abs(total - last) > 0.001) {
       last = total;
-      const v = total.toFixed(3);
-      targets.forEach((el) => {
-        el.classList.add('rgb-split-on');
-        el.style.setProperty('--rgb-split', v);
-      });
+      value = total.toFixed(3);
+      visible.forEach((el) => el.style.setProperty('--rgb-split', value));
     }
   };
 
+  // sections get the live value the moment they come on screen (with a
+  // margin so it is already in place before they enter)
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          visible.add(e.target);
+          paint(e.target);
+        } else {
+          visible.delete(e.target);
+        }
+      });
+    },
+    { rootMargin: '25% 0px 25% 0px' }
+  );
+
   apply(); // start in the idle state straight away
+  sections.forEach((el) => io.observe(el));
 
   let lastY = lenisRef.current ? lenisRef.current.scroll : window.scrollY;
   let lastT = performance.now();
@@ -64,13 +93,6 @@ export function createRgbSplit(root, extraRoots = []) {
     const y = lenisRef.current ? lenisRef.current.scroll : window.scrollY;
     const instant = Math.min(Math.abs(y - lastY) / dt, SCROLL_SOFT * 3);
     lastY = y;
-
-    // the hero is only on screen near the top of the page — skip the maths
-    // once it has scrolled well out of view (the idle level stays applied)
-    if (y > window.innerHeight * 1.5 && state.scroll === 0 && state.intro === 0) {
-      vel = 0;
-      return;
-    }
 
     vel += (instant - vel) * (1 - Math.exp(-dt * 8));
 
@@ -90,12 +112,14 @@ export function createRgbSplit(root, extraRoots = []) {
     apply,
     destroy() {
       gsap.ticker.remove(tick);
+      io.disconnect();
       state.intro = 0;
       state.scroll = 0;
-      targets.forEach((el) => {
+      sections.forEach((el) => {
         el.classList.remove('rgb-split-on');
         el.style.removeProperty('--rgb-split');
       });
+      visible.clear();
     },
   };
 }

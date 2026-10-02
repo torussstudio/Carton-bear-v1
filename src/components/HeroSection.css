@@ -259,48 +259,4 @@
 
 }
 
-/* =========================================
-   RGB SPLIT (chromatic aberration)
-   Driven by --rgb-split (0..1), set from
-   src/lib/rgbSplit.js. The class is only on
-   while the amount is non-zero, so resting
-   text has no shadow at all.
-========================================= */
-
-.bear-hero.rgb-split-on .bear-hero-title-line {
-  text-shadow:
-    calc(var(--rgb-split, 0) * -0.05em) 0 0 rgba(255, 45, 85, 0.75),
-    calc(var(--rgb-split, 0) * 0.05em) 0 0 rgba(0, 225, 255, 0.75);
-}
-
-/* smaller type needs a little more em to read the same */
-.bear-hero.rgb-split-on .bear-hero-kicker {
-  text-shadow:
-    calc(var(--rgb-split, 0) * -0.07em) 0 0 rgba(255, 45, 85, 0.75),
-    calc(var(--rgb-split, 0) * 0.07em) 0 0 rgba(0, 225, 255, 0.75);
-}
-
-/* Marquee scroller — same split, driven by the same controller */
-
-.marquee.rgb-split-on .marquee-item,
-.marquee.rgb-split-on .marquee-divider {
-  text-shadow:
-    calc(var(--rgb-split, 0) * -0.05em) 0 0 rgba(255, 45, 85, 0.75),
-    calc(var(--rgb-split, 0) * 0.05em) 0 0 rgba(0, 225, 255, 0.75);
-}
-
-/* Packaging section — headline words and description, same controller.
-   The description keeps its existing soft white glow (listed last). */
-
-.packaging.rgb-split-on .word {
-  text-shadow:
-    calc(var(--rgb-split, 0) * -0.04em) 0 0 rgba(255, 45, 85, 0.75),
-    calc(var(--rgb-split, 0) * 0.04em) 0 0 rgba(0, 225, 255, 0.75);
-}
-
-.packaging.rgb-split-on .packaging-desc {
-  text-shadow:
-    calc(var(--rgb-split, 0) * -0.06em) 0 0 rgba(255, 45, 85, 0.75),
-    calc(var(--rgb-split, 0) * 0.06em) 0 0 rgba(0, 225, 255, 0.75),
-    0 0 8px rgba(255, 255, 255, 0.8);
-}
+/* RGB split lives in src/styles/rgb-split.css (site-wide) */
