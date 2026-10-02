@@ -22,6 +22,9 @@
 
   background-color: var(--built-cream);
 
+  /* breathing room under the last row / girl image */
+  padding-bottom: clamp(40px, 6vw, 100px);
+
   overflow: hidden;
 
   box-sizing: border-box;

@@ -604,7 +604,7 @@ function ProcessSection() {
 
           box-sizing: border-box;
 
-          padding-top: 100px;
+          padding-top: 60px;
           padding-bottom: 100px;
 
           overflow-x: hidden;
@@ -617,7 +617,7 @@ function ProcessSection() {
 
           box-sizing: border-box;
 
-          margin-bottom: 100px;
+          margin-bottom: 60px;
 
           padding-top: 18px;
           padding-left: 30px;
@@ -868,13 +868,13 @@ function ProcessSection() {
         @media (max-width: 1200px) {
 
           .process-section {
-            padding-top: 90px;
+            padding-top: 55px;
             padding-bottom: 90px;
           }
 
 
           .process-heading-wrap {
-            margin-bottom: 80px;
+            margin-bottom: 50px;
 
             padding-left: 28px;
             padding-right: 28px;
@@ -927,13 +927,13 @@ function ProcessSection() {
         @media (max-width: 900px) {
 
           .process-section {
-            padding-top: 80px;
+            padding-top: 48px;
             padding-bottom: 70px;
           }
 
 
           .process-heading-wrap {
-            margin-bottom: 70px;
+            margin-bottom: 44px;
 
             padding-left: 24px;
             padding-right: 24px;
@@ -1010,13 +1010,13 @@ function ProcessSection() {
         @media (max-width: 720px) {
 
           .process-section {
-            padding-top: 72px;
+            padding-top: 42px;
             padding-bottom: 55px;
           }
 
 
           .process-heading-wrap {
-            margin-bottom: 55px;
+            margin-bottom: 36px;
 
             padding-left: 18px;
             padding-right: 18px;
@@ -1088,7 +1088,7 @@ function ProcessSection() {
 
             width: 100%;
 
-            padding-top: 65px;
+            padding-top: 36px;
             padding-bottom: 40px;
 
             padding-left: 0;
@@ -1102,7 +1102,7 @@ function ProcessSection() {
 
             width: 100%;
 
-            margin-bottom: 48px;
+            margin-bottom: 30px;
 
             padding-top: 10px;
 
@@ -1248,13 +1248,13 @@ function ProcessSection() {
         @media (max-width: 480px) {
 
           .process-section {
-            padding-top: 55px;
+            padding-top: 30px;
             padding-bottom: 32px;
           }
 
 
           .process-heading-wrap {
-            margin-bottom: 40px;
+            margin-bottom: 26px;
 
             padding-left: 12px;
             padding-right: 12px;
