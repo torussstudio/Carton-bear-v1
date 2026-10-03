@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef } from 'react';
 import bearHand from '../images/Bear-hand.webp';
-import { gsap, ScrollTrigger, prefersReducedMotion } from '../lib/gsapSetup';
+import { gsap, ScrollTrigger, prefersReducedMotion, SplitText } from '../lib/gsapSetup';
 import './Nav.css';
 import './WithoutUsSection.css';
 
@@ -83,6 +83,148 @@ function WithoutUsSection() {
   const pathRefs = useRef([]);
   const dotRefs = useRef([]);
   const textRefs = useRef([]);
+  const titleRef = useRef(null);
+  const listRef = useRef(null);
+  const footerTextRef = useRef(null);
+
+  /*
+   * Footer paragraph — the same word stagger as the Hero kicker and the
+   * Packaging description: words rise 50px with a 28px blur clearing,
+   * 0.03s stagger, 1s back.out(1.7). Plays once as it scrolls in.
+   */
+
+  useLayoutEffect(() => {
+    const el = footerTextRef.current;
+
+    if (!el || prefersReducedMotion()) return undefined;
+
+    let split;
+
+    const ctx = gsap.context(() => {
+      split = SplitText.create(el, {
+        type: 'words',
+        wordsClass: 'without-us-footer-word',
+      });
+
+      gsap.from(split.words, {
+        y: 50,
+        opacity: 0,
+        filter: 'blur(28px)',
+        stagger: 0.03,
+        duration: 1,
+        ease: 'back.out(1.7)',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 88%',
+          toggleActions: 'play none none none',
+        },
+      });
+    }, el);
+
+    return () => {
+      ctx.revert();
+      if (split) split.revert();
+    };
+  }, []);
+
+  /*
+   * Intro text — one directed timeline, not separate fades:
+   *
+   *   1. "Without Us, You're"  chars rise (y 56 -> 0) with a soft blur
+   *                            clearing, power4.out — states the thesis.
+   *   2. "Dealing With :"      starts as line 1 is ~70% settled (overlap
+   *                            keeps it flowing), a touch slower stagger
+   *                            so it lands with weight.
+   *   3. pain points           begin once line 2 has landed, one at a
+   *                            time (0.28s apart), shorter rise so they
+   *                            read as supporting copy.
+   *
+   * Plays once when the heading scrolls in; never reverses.
+   */
+
+  useLayoutEffect(() => {
+    const title = titleRef.current;
+    const list = listRef.current;
+
+    if (!title || !list || prefersReducedMotion()) return undefined;
+
+    const splits = [];
+
+    const ctx = gsap.context(() => {
+      const lines = title.querySelectorAll('.without-us-title-line');
+      const items = list.querySelectorAll('.without-us-pain-point');
+
+      const lineSplits = Array.from(lines).map((line) =>
+        SplitText.create(line, { type: 'words,chars' })
+      );
+      const itemSplits = Array.from(items).map((item) =>
+        SplitText.create(item, { type: 'words,chars' })
+      );
+
+      splits.push(...lineSplits, ...itemSplits);
+
+      lineSplits.forEach((split) =>
+        gsap.set(split.chars, { opacity: 0, y: 56, filter: 'blur(6px)' })
+      );
+      itemSplits.forEach((split) =>
+        gsap.set(split.chars, { opacity: 0, y: 18 })
+      );
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: title,
+          start: 'top 82%',
+          toggleActions: 'play none none none',
+        },
+      });
+
+      // 1. main statement
+      tl.to(lineSplits[0].chars, {
+        opacity: 1,
+        y: 0,
+        filter: 'blur(0px)',
+        stagger: 0.035,
+        duration: 1,
+        ease: 'power4.out',
+      });
+
+      // 2. "Dealing With :" — overlaps the tail of line 1
+      if (lineSplits[1]) {
+        tl.to(
+          lineSplits[1].chars,
+          {
+            opacity: 1,
+            y: 0,
+            filter: 'blur(0px)',
+            stagger: 0.045,
+            duration: 1,
+            ease: 'power4.out',
+          },
+          '>-0.55'
+        );
+      }
+
+      // 3. supporting pain points, one by one after the heading lands
+      itemSplits.forEach((split, i) => {
+        tl.to(
+          split.chars,
+          {
+            opacity: 1,
+            y: 0,
+            stagger: 0.02,
+            duration: 0.55,
+            ease: 'back.out(1.7)',
+          },
+          i === 0 ? '>-0.35' : `<${0.28}`
+        );
+      });
+    }, title);
+
+    return () => {
+      ctx.revert();
+      splits.forEach((split) => split.revert());
+    };
+  }, []);
 
   useLayoutEffect(() => {
     if (
@@ -123,6 +265,10 @@ function WithoutUsSection() {
             strokeDashoffset: lengths[i],
           });
         });
+        // Paths use butt caps (round caps paint a dot at the ends of a
+        // zero-length dash) and stay completely invisible until their own
+        // draw begins (switched on at the start of their tween below).
+        gsap.set(paths, { opacity: 0 });
         gsap.set(dots, { opacity: 0, scale: 0.4, transformOrigin: '50% 50%' });
         gsap.set(texts, { opacity: 0, y: '+=6' });
 
@@ -145,6 +291,7 @@ function WithoutUsSection() {
 
         CALLOUTS.forEach((_, i) => {
           stepTl
+            .set(paths[i], { opacity: 0.85 }, i + 0.001)
             .to(
               paths[i],
               { strokeDashoffset: 0, duration: 1, ease: 'power2.inOut' },
@@ -229,18 +376,14 @@ function WithoutUsSection() {
 
         <h2
           className="without-us-title without-us-title-glow"
-          data-reveal="lines"
+          ref={titleRef}
         >
-          <span className="reveal-mask">
-            <span className="without-us-title-line">
-              Without Us, You&apos;re
-            </span>
+          <span className="without-us-title-line">
+            Without Us, You&apos;re
           </span>
 
-          <span className="reveal-mask">
-            <span className="without-us-title-line">
-              Dealing With :
-            </span>
+          <span className="without-us-title-line">
+            Dealing With :
           </span>
         </h2>
 
@@ -249,12 +392,14 @@ function WithoutUsSection() {
             PAIN POINTS
         ========================================== */}
 
-        <ul className="without-us-pain-points without-us-red-glow">
+        <ul
+          className="without-us-pain-points without-us-red-glow"
+          ref={listRef}
+        >
           {PAIN_POINTS.map((point) => (
             <li
               key={point}
               className="without-us-pain-point"
-              data-reveal="fade"
             >
               <span className="without-us-arrow">
                 &gt;
@@ -310,7 +455,7 @@ function WithoutUsSection() {
                 fill="none"
                 stroke="#ffd400"
                 strokeWidth="1"
-                strokeLinecap="round"
+                strokeLinecap="butt"
                 opacity="0.85"
               />
 
@@ -368,7 +513,7 @@ function WithoutUsSection() {
 
         <p
           className="without-us-footer-text"
-          data-reveal="fade"
+          ref={footerTextRef}
         >
           Whether you&apos;re a global brand sourcing from India, a growing
           export business, or an agency managing international production

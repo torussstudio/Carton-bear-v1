@@ -22,6 +22,9 @@
 
   background-color: var(--built-cream);
 
+  /* breathing room under the last row / girl image */
+  padding-bottom: clamp(40px, 6vw, 100px);
+
   overflow: hidden;
 
   box-sizing: border-box;
@@ -172,12 +175,21 @@
   overflow-wrap: normal;
 }
 
+.built-title-row {
+  display: block;
+}
+
 .built-title-line {
   display: block;
 
   width: max-content;
 
   max-width: 100%;
+
+  will-change:
+    transform,
+    filter,
+    opacity;
 }
 
 .built-title-line--blue {
@@ -319,9 +331,12 @@
   color: var(--built-icon);
 }
 
-.built-card-icon svg {
-  width: 30px;
-  height: 30px;
+.built-card-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  user-select: none;
 }
 
 
@@ -742,11 +757,6 @@
     height: 52px;
 
     margin-bottom: 18px;
-  }
-
-  .built-card-icon svg {
-    width: 28px;
-    height: 28px;
   }
 
   .built-card-title {

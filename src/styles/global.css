@@ -1,6 +1,7 @@
 @import './fonts.css';
 @import "tailwindcss";
 @import './animations.css';
+@import './rgb-split.css';
 
 :root {
   --bg: #0d0b0a;

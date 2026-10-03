@@ -1,10 +1,11 @@
-import { useLayoutEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Nav from './Nav.jsx';
 import {
   gsap,
   SplitText,
   prefersReducedMotion,
 } from '../lib/gsapSetup';
+import { createRgbSplit } from '../lib/rgbSplit';
 import './HeroSection.css';
 import './Nav.css';
 
@@ -15,6 +16,38 @@ function HeroSection() {
   const rootRef = useRef(null);
   const kickerRef = useRef(null);
   const videoRef = useRef(null);
+  const rgbRef = useRef(null);
+
+  // Pick the hero video in JS: the `media` attribute on <source> is NOT
+  // honoured inside <video> (only inside <picture>), so the browser always
+  // took the same file. <= 640px gets the mobile cut, everything else desktop.
+  const [isMobileVideo, setIsMobileVideo] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 640px)').matches
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 640px)');
+    const onChange = (e) => setIsMobileVideo(e.matches);
+    setIsMobileVideo(mq.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+
+  // RGB split controller (scroll-velocity driven; the entrance timeline
+  // below also feeds it). Declared first so it exists when the timeline
+  // is built. Does nothing for reduced-motion users.
+  useLayoutEffect(() => {
+    if (prefersReducedMotion() || !rootRef.current) return undefined;
+
+    // one controller for the whole page (every section shares the amount)
+    const rgb = createRgbSplit();
+    rgbRef.current = rgb;
+
+    return () => {
+      rgb.destroy();
+      rgbRef.current = null;
+    };
+  }, []);
 
   // Existing entrance timeline — now held until the preloader signals it's
   // actually done, so it can't play out underneath the overlay unseen.
@@ -113,6 +146,24 @@ function HeroSection() {
               duration: 0.6,
             },
             NAV_AT + 0.3
+          )
+
+          // RGB split rides the existing entrance: it opens as the title
+          // starts to move (absolute 0.8, same as the title) and settles to
+          // clean text while the kicker words land. It sits at the END of
+          // the chain at an absolute time, so every existing relative
+          // position ('-=0.35', '-=0.55', NAV_AT) is untouched.
+          .fromTo(
+            rgbRef.current ? rgbRef.current.state : {},
+            { intro: 1 },
+            {
+              intro: 0,
+              duration: 2.4,
+              ease: 'power1.out',
+              onUpdate: () => rgbRef.current && rgbRef.current.apply(),
+              onComplete: () => rgbRef.current && rgbRef.current.apply(),
+            },
+            0.8
           );
       }, rootRef);
     };
@@ -417,6 +468,7 @@ function HeroSection() {
 
       <video
         ref={videoRef}
+        src={isMobileVideo ? heroVideoMobile : heroVideo}
         className="bear-hero-video"
         autoPlay
         muted
@@ -425,16 +477,6 @@ function HeroSection() {
         preload="auto"
         aria-hidden="true"
       >
-        <source
-          src={heroVideoMobile}
-          type="video/mp4"
-          media="(max-width: 640px)"
-        />
-
-        <source
-          src={heroVideo}
-          type="video/mp4"
-        />
       </video>
 
 
