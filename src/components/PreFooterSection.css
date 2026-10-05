@@ -322,6 +322,28 @@
 }
 
 
+/* =========================================
+   MOBILE — CENTERED CTA (<= 640px only)
+   The button was centred with transform:
+   translateX(-50%) but had no left: 50%, and
+   the data-reveal fade-in writes its own inline
+   transform anyway — so it sat off to the left.
+   Auto margins centre it without transform.
+   Nothing here applies above 640px.
+========================================= */
+
+@media (max-width: 640px) {
+
+  .prefooter-cta {
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    transform: none;
+  }
+}
+
+
 /* =========================================================
    ACCESSIBILITY
 ========================================================= */
