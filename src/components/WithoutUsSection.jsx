@@ -97,11 +97,20 @@ function WithoutUsSection() {
   const titleRef = useRef(null);
   const listRef = useRef(null);
   const footerTextRef = useRef(null);
+  const footerButtonRef = useRef(null);
 
   /*
    * Footer paragraph — the same word stagger as the Hero kicker and the
    * Packaging description: words rise 50px with a 28px blur clearing,
-   * 0.03s stagger, 1s back.out(1.7). Plays once as it scrolls in.
+   * 0.03s stagger, 1s back.out(1.7) — then the button rises in as the
+   * last words land. Plays once, when the paragraph actually scrolls
+   * into view.
+   *
+   * The paragraph sits INSIDE the section that gets pinned for the
+   * bear-hand sequence. Without `pinnedContainer` its trigger ignored
+   * the pin, so it fired mid-pin while the text was still off-screen
+   * and had finished by the time you scrolled down to it.
+   * `refreshPriority: -1` makes it measure after the pin is set up.
    */
 
   useLayoutEffect(() => {
@@ -117,19 +126,37 @@ function WithoutUsSection() {
         wordsClass: 'without-us-footer-word',
       });
 
-      gsap.from(split.words, {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 88%',
+          toggleActions: 'play none none none',
+          pinnedContainer: sectionRef.current,
+          refreshPriority: -1,
+        },
+      });
+
+      tl.from(split.words, {
         y: 50,
         opacity: 0,
         filter: 'blur(28px)',
         stagger: 0.03,
         duration: 1,
         ease: 'back.out(1.7)',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 88%',
-          toggleActions: 'play none none none',
-        },
       });
+
+      if (footerButtonRef.current) {
+        tl.from(
+          footerButtonRef.current,
+          {
+            y: 24,
+            opacity: 0,
+            duration: 0.7,
+            ease: 'power3.out',
+          },
+          '-=0.55'
+        );
+      }
     }, el);
 
     return () => {
@@ -572,7 +599,7 @@ function WithoutUsSection() {
         <button
           type="button"
           className="bear-pill bear-pill--solid without-us-button"
-          data-reveal="fade"
+          ref={footerButtonRef}
         >
           Talk To Us About Export
         </button>
