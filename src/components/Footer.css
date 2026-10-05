@@ -211,7 +211,7 @@
 .footer-col-title {
 
   font-family:
-    'Anton',    'Sharp Grotesk Black',    sans-serif;
+    var(--font-anton),    'Sharp Grotesk Black',    sans-serif;
 
   font-weight: 900;
 

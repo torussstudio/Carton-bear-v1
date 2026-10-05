@@ -1,0 +1,948 @@
+/* Styles for ProcessSection.jsx — moved verbatim out of the component's inline
+   <style> tag so Next.js can bundle and cache them like the other
+   section stylesheets. */
+
+/* =====================================================
+   BASE / DESKTOP
+====================================================== */
+
+.process-section {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
+  box-sizing: border-box;
+
+  padding-top: 60px;
+  padding-bottom: 100px;
+
+  overflow-x: hidden;
+}
+
+
+.process-heading-wrap {
+  width: 100%;
+  max-width: 100%;
+
+  box-sizing: border-box;
+
+  margin-bottom: 60px;
+
+  padding-top: 18px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+
+.process-main-title {
+  width: 100%;
+  max-width: 100%;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+}
+
+
+.process-title-line {
+  display: block;
+
+  width: 100%;
+
+  overflow: hidden;
+}
+
+
+.process-title-line-text {
+  display: block;
+
+  width: 100%;
+
+  font-size: clamp(
+    44px,
+    10.5vw,
+    150px
+  );
+
+  line-height: 0.8;
+
+  overflow-wrap: normal;
+}
+
+
+.process-row {
+  width: 100%;
+  max-width: 100%;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+}
+
+
+.process-row-inner {
+
+  width: 100%;
+  max-width: 100%;
+
+  min-height: 120px;
+
+  display: grid;
+
+  grid-template-columns:
+    55px
+    minmax(0, 1fr)
+    1px
+    minmax(280px, 42%);
+
+  align-items: center;
+
+  box-sizing: border-box;
+
+  padding-left: 30px;
+  padding-right: 50px;
+}
+
+
+/* =====================================================
+   NUMBER
+====================================================== */
+
+.process-number {
+
+  min-width: 0;
+
+  font-family:
+    'Sharp_Grotesk_PE_Trial_Book',
+    serif;
+
+  font-size:
+    clamp(17px, 1.45vw, 24px);
+
+  font-weight: 500;
+
+  line-height: 1;
+
+  color: #17140f;
+}
+
+
+/* =====================================================
+   TITLE
+====================================================== */
+
+.process-title-wrap {
+
+  min-width: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  padding-right: 40px;
+
+  box-sizing: border-box;
+}
+
+
+.process-dash {
+
+  width: 24px;
+  height: 1px;
+
+  flex: 0 0 auto;
+
+  margin-right: 16px;
+
+  background: #17140f;
+}
+
+
+.process-step-title {
+
+  min-width: 0;
+  max-width: 100%;
+
+  margin: 0;
+
+  font-family:
+    'Easy Pixel Regular',
+    Arial,
+    sans-serif;
+
+  font-size:
+    clamp(30px, 4vw, 58px);
+
+  font-weight: 500;
+
+  line-height: 0.95;
+
+  letter-spacing: 0;
+
+  text-transform: uppercase;
+
+  color: #17140f;
+
+  white-space: nowrap;
+
+  overflow-wrap: normal;
+}
+
+
+/* =====================================================
+   DIVIDER
+====================================================== */
+
+.process-divider {
+
+  width: 1px;
+  height: 46px;
+
+  justify-self: center;
+
+  background: #17140f;
+}
+
+
+/* =====================================================
+   DESCRIPTION
+====================================================== */
+
+.process-description-wrap {
+
+  min-width: 0;
+
+  padding-left: 30px;
+
+  box-sizing: border-box;
+}
+
+
+.process-description {
+
+  width: 100%;
+  max-width: 700px;
+
+  margin: 0;
+
+  font-family:
+    'Easy Pixel Regular',
+    Arial,
+    sans-serif;
+
+  font-size: clamp(13px, 1.95vw, 19px);
+
+  font-weight: 500;
+
+  line-height: 1.42;
+
+  color: #17140f;
+
+  overflow-wrap: break-word;
+
+  word-break: normal;
+}
+
+
+/* =====================================================
+   LARGE DESKTOP
+====================================================== */
+
+@media (min-width: 1440px) {
+
+  .process-row-inner {
+    min-height: 125px;
+
+    padding-left: 40px;
+    padding-right: 60px;
+  }
+
+
+  .process-title-wrap {
+    padding-right: 50px;
+  }
+
+
+  .process-description-wrap {
+    padding-left: 35px;
+  }
+
+}
+
+
+/* =====================================================
+   MEDIUM DESKTOP
+====================================================== */
+
+@media (max-width: 1200px) {
+
+  .process-section {
+    padding-top: 55px;
+    padding-bottom: 90px;
+  }
+
+
+  .process-heading-wrap {
+    margin-bottom: 50px;
+
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+
+
+  .process-row-inner {
+
+    grid-template-columns:
+      50px
+      minmax(0, 1fr)
+      1px
+      minmax(250px, 40%);
+
+    min-height: 112px;
+
+    padding-left: 28px;
+    padding-right: 30px;
+  }
+
+
+  .process-step-title {
+    font-size:
+      clamp(27px, 4vw, 48px);
+  }
+
+
+  .process-title-wrap {
+    padding-right: 28px;
+  }
+
+
+  .process-description-wrap {
+    padding-left: 24px;
+  }
+
+
+  .process-description {
+    font-size:
+      clamp(12px, 1.1vw, 15px);
+  }
+
+}
+
+
+/* =====================================================
+   TABLET
+====================================================== */
+
+@media (max-width: 900px) {
+
+  .process-section {
+    padding-top: 48px;
+    padding-bottom: 70px;
+  }
+
+
+  .process-heading-wrap {
+    margin-bottom: 44px;
+
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+
+  .process-title-line-text {
+    font-size:
+      clamp(42px, 11vw, 100px);
+  }
+
+
+  .process-row-inner {
+
+    grid-template-columns:
+      44px
+      minmax(0, 1fr)
+      1px
+      minmax(210px, 38%);
+
+    min-height: 105px;
+
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+
+  .process-number {
+    font-size: 16px;
+  }
+
+
+  .process-title-wrap {
+    padding-right: 20px;
+  }
+
+
+  .process-dash {
+    width: 20px;
+
+    margin-right: 12px;
+  }
+
+
+  .process-step-title {
+    font-size:
+      clamp(24px, 4.8vw, 42px);
+  }
+
+
+  .process-divider {
+    height: 42px;
+  }
+
+
+  .process-description-wrap {
+    padding-left: 20px;
+  }
+
+
+  .process-description {
+    font-size: 12px;
+
+    line-height: 1.38;
+  }
+
+}
+
+
+/* =====================================================
+   SMALL TABLET
+====================================================== */
+
+@media (max-width: 720px) {
+
+  .process-section {
+    padding-top: 42px;
+    padding-bottom: 55px;
+  }
+
+
+  .process-heading-wrap {
+    margin-bottom: 36px;
+
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+
+  .process-title-line-text {
+    font-size:
+      clamp(38px, 11.5vw, 82px);
+
+    line-height: 0.82;
+  }
+
+
+  .process-row-inner {
+
+    grid-template-columns:
+      40px
+      minmax(0, 1fr)
+      1px
+      minmax(170px, 36%);
+
+    min-height: 100px;
+
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+
+  .process-title-wrap {
+    padding-right: 16px;
+  }
+
+
+  .process-dash {
+    width: 17px;
+
+    margin-right: 10px;
+  }
+
+
+  .process-step-title {
+    font-size:
+      clamp(22px, 5.5vw, 36px);
+  }
+
+
+  .process-description-wrap {
+    padding-left: 16px;
+  }
+
+
+  .process-description {
+    font-size: 11px;
+
+    line-height: 1.38;
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE
+====================================================== */
+
+@media (max-width: 640px) {
+
+  .process-section {
+
+    width: 100%;
+
+    padding-top: 36px;
+    padding-bottom: 40px;
+
+    padding-left: 0;
+    padding-right: 0;
+
+    overflow-x: hidden;
+  }
+
+
+  .process-heading-wrap {
+
+    width: 100%;
+
+    margin-bottom: 30px;
+
+    padding-top: 10px;
+
+    padding-left: 16px;
+    padding-right: 16px;
+
+    box-sizing: border-box;
+  }
+
+
+  .process-title-line-text {
+
+    font-size:
+      clamp(40px, 13vw, 72px);
+
+    line-height: 0.82;
+
+    letter-spacing: -0.03em;
+
+    white-space: normal;
+  }
+
+
+  /*
+   * ---------------------------------------------
+   * MOBILE ROW
+   *
+   * Number + title stay on the first row.
+   * Description moves below.
+   * ---------------------------------------------
+   */
+
+  .process-row-inner {
+
+    display: grid;
+
+    grid-template-columns:
+      38px
+      minmax(0, 1fr);
+
+    min-height: auto;
+
+    width: 100%;
+
+    padding:
+      22px
+      16px
+      24px;
+
+    row-gap: 15px;
+
+    box-sizing: border-box;
+  }
+
+
+  .process-number {
+
+    grid-column: 1;
+    grid-row: 1;
+
+    padding-top: 4px;
+
+    font-size: 14px;
+  }
+
+
+  .process-title-wrap {
+
+    grid-column: 2;
+    grid-row: 1;
+
+    width: 100%;
+
+    min-width: 0;
+
+    padding-right: 0;
+  }
+
+
+  .process-dash {
+
+    width: 16px;
+
+    margin-right: 10px;
+  }
+
+
+  .process-step-title {
+
+    min-width: 0;
+
+    font-size:
+      clamp(25px, 7.8vw, 38px);
+
+    line-height: 0.95;
+
+    white-space: normal;
+
+    overflow-wrap: break-word;
+
+    word-break: normal;
+  }
+
+
+  .process-divider {
+    display: none;
+  }
+
+
+  .process-description-wrap {
+
+    grid-column: 2;
+    grid-row: 2;
+
+    width: 100%;
+
+    min-width: 0;
+
+    padding-left: 0;
+  }
+
+
+  .process-description {
+
+    width: 100%;
+
+    max-width: 100%;
+
+    font-size: 11px;
+
+    line-height: 1.45;
+
+    overflow-wrap: break-word;
+  }
+
+}
+
+
+/* =====================================================
+   SMALL PHONES
+====================================================== */
+
+@media (max-width: 480px) {
+
+  .process-section {
+    padding-top: 30px;
+    padding-bottom: 32px;
+  }
+
+
+  .process-heading-wrap {
+    margin-bottom: 26px;
+
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+
+  .process-title-line-text {
+
+    font-size:
+      clamp(36px, 13vw, 62px);
+
+    line-height: 0.84;
+  }
+
+
+  .process-row-inner {
+
+    grid-template-columns:
+      34px
+      minmax(0, 1fr);
+
+    padding:
+      20px
+      12px
+      22px;
+
+    row-gap: 14px;
+  }
+
+
+  .process-number {
+    font-size: 12px;
+
+    padding-top: 3px;
+  }
+
+
+  .process-dash {
+
+    width: 14px;
+
+    margin-right: 8px;
+  }
+
+
+  .process-step-title {
+
+    font-size:
+      clamp(22px, 7.5vw, 32px);
+
+    line-height: 0.98;
+  }
+
+
+  .process-description {
+
+    font-size: 10.5px;
+
+    line-height: 1.45;
+  }
+
+}
+
+
+/* =====================================================
+   VERY SMALL PHONES
+====================================================== */
+
+@media (max-width: 360px) {
+
+  .process-section {
+    padding-top: 48px;
+    padding-bottom: 28px;
+  }
+
+
+  .process-heading-wrap {
+    margin-bottom: 34px;
+
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+
+  .process-title-line-text {
+
+    font-size:
+      clamp(32px, 12.8vw, 52px);
+
+    line-height: 0.86;
+  }
+
+
+  .process-row-inner {
+
+    grid-template-columns:
+      30px
+      minmax(0, 1fr);
+
+    padding:
+      18px
+      10px
+      20px;
+
+    row-gap: 12px;
+  }
+
+
+  .process-number {
+    font-size: 11px;
+  }
+
+
+  .process-dash {
+    width: 12px;
+
+    margin-right: 7px;
+  }
+
+
+  .process-step-title {
+
+    font-size:
+      clamp(20px, 7.2vw, 28px);
+
+    line-height: 1;
+  }
+
+
+  .process-description {
+
+    font-size: 10px;
+
+    line-height: 1.42;
+  }
+
+}
+
+
+/* =====================================================
+   EXTRA SMALL DEVICES
+====================================================== */
+
+@media (max-width: 320px) {
+
+  .process-title-line-text {
+    font-size: 34px;
+  }
+
+
+  .process-step-title {
+    font-size: 19px;
+  }
+
+
+  .process-description {
+    font-size: 9.5px;
+  }
+
+}
+
+
+/* =====================================================
+   TOUCH DEVICES
+====================================================== */
+
+@media (hover: none) and (pointer: coarse) {
+
+  .process-title-line,
+  .process-row {
+    transform: none;
+  }
+
+}
+
+
+/* =====================================================
+   PROCESS TITLE DECODER
+   Same visual language as PackagingSection
+====================================================== */
+
+.process-step-title {
+  overflow: hidden;
+}
+
+.process-decode-char {
+  position: relative;
+
+  display: inline-block;
+
+  color: transparent;
+
+  text-shadow: none;
+
+  vertical-align: baseline;
+
+  white-space: pre;
+
+  overflow: visible;
+}
+
+.process-decode-char::before {
+  content: '';
+
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width: 0;
+  height: 1.2em;
+
+  background: #17140f;
+
+  transform:
+    translate(-50%, -55%);
+
+  pointer-events: none;
+}
+
+.process-decode-char.state-1::before {
+  width: 1px;
+}
+
+.process-decode-char.state-2::before {
+  width: 0.9em;
+}
+
+.process-decode-char.state-3 {
+  color: inherit;
+
+  text-shadow: inherit;
+}
+
+.process-decode-char.state-3::before {
+  width: 0;
+}
+
+
+/* =====================================================
+   DESCRIPTION WIPE
+   Initial state is hidden only through clipping.
+   No opacity/fade is used.
+====================================================== */
+
+.process-description {
+  clip-path: inset(0 100% 0 0);
+  -webkit-clip-path: inset(0 100% 0 0);
+  will-change: clip-path;
+}
+
+
+/* =====================================================
+   REDUCED MOTION
+====================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .process-title-line,
+  .process-row {
+    animation: none !important;
+
+    transition: none !important;
+
+    transform: none !important;
+  }
+
+  .process-description {
+    clip-path: none !important;
+    -webkit-clip-path: none !important;
+    will-change: auto;
+  }
+
+  .process-decode-char {
+    color: inherit !important;
+  }
+
+  .process-decode-char::before {
+    width: 0 !important;
+  }
+
+}

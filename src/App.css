@@ -1,3 +1,0 @@
-/* Page-wide bulge now lives in PageBulge.jsx (viewport-sized lens).
-   No filter on the content wrapper any more — a filter on a tall
-   ancestor was expensive and broke position:fixed/pinning. */

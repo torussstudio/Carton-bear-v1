@@ -1,4 +1,7 @@
+'use client';
+
 import { useLayoutEffect, useRef } from 'react';
+import Image from 'next/image';
 
 import packagingDesign from '../images/packaging-design.png';
 import packagingSystems from '../images/packaging-systems.png';
@@ -421,12 +424,13 @@ function ServicesSection() {
 
             <div className="service-image-wrapper">
 
-              <img
+              <Image
                 src={service.image}
                 alt={service.title}
                 className="service-image"
                 width={IMAGE_WIDTH}
                 height={IMAGE_HEIGHT}
+                loading="eager"
               />
 
             </div>

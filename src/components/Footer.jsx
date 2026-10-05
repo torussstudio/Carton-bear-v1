@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import footerBoxImg from '../images/footer-box-img.png';
 import './Footer.css';
 
@@ -89,12 +90,14 @@ function Footer() {
           </nav>
         </div>
 
-        <img
+        <Image
           src={footerBoxImg}
           alt=""
           aria-hidden="true"
           className="footer-box-art"
           data-reveal="image"
+          sizes="(max-width: 1024px) 270px, 420px"
+          loading="eager"
         />
       </div>
 

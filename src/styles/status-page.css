@@ -1,0 +1,87 @@
+/* Shared styling for the app-level status screens
+   (not-found.js, error.js, loading.js). Uses the site's existing palette
+   and fonts; the blue grid background comes from global.css (html/body). */
+
+.status-page {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--bear-text);
+}
+
+.status-page-logo {
+  width: 96px;
+  height: auto;
+}
+
+.status-page-code {
+  font-family: 'Easy Pixel Regular', monospace;
+  font-size: 18px;
+  letter-spacing: 0.2em;
+  color: var(--bear-gold);
+}
+
+.status-page-title {
+  font-family: var(--font-sharp);
+  font-weight: 400;
+  font-size: clamp(40px, 8vw, 96px);
+  line-height: 0.92;
+  text-transform: uppercase;
+  color: var(--bear-accent);
+}
+
+.status-page-text {
+  max-width: 520px;
+  font-family: 'Sharp Grotesk Book', 'Myriad Pro', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  text-transform: uppercase;
+  color: var(--bear-text);
+}
+
+.status-page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.status-page-actions .bear-pill {
+  text-decoration: none;
+}
+
+/* loading.js — a quiet blue screen with a pulsing bear, so a slow
+   client-side navigation never flashes white. */
+.status-page--loading {
+  gap: 0;
+}
+
+.status-page-pulse {
+  width: 96px;
+  height: auto;
+  animation: status-page-pulse 1.1s ease-in-out infinite;
+}
+
+@keyframes status-page-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .status-page-pulse {
+    animation: none;
+  }
+}

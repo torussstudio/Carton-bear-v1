@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import './ShippingSection.css';
 
 import ecommerceImage from '../images/e-commerce.webp';
@@ -88,10 +89,11 @@ function ShippingSection() {
               className="shipping-image"
               data-reveal="image"
             >
-              <img
+              <Image
                 src={item.image}
                 alt=""
                 className="shipping-image-content"
+                sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 540px"
                 loading={index === 0 ? 'eager' : 'lazy'}
               />
             </div>

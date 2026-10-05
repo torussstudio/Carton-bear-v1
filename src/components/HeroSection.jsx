@@ -1,4 +1,6 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+'use client';
+
+import { useLayoutEffect, useRef, useSyncExternalStore } from 'react';
 import Nav from './Nav.jsx';
 import {
   gsap,
@@ -9,8 +11,25 @@ import { createRgbSplit } from '../lib/rgbSplit';
 import './HeroSection.css';
 import './Nav.css';
 
-import heroVideo from '../Videos/Hero-bear-video.mp4';
-import heroVideoMobile from '../Videos/Hero-bear-video-mobile.mp4';
+// Served from /public/videos (Next.js doesn't bundle video imports).
+const heroVideo = '/videos/hero-bear-video.mp4';
+const heroVideoMobile = '/videos/hero-bear-video-mobile.mp4';
+
+// Pick the hero video in JS: the `media` attribute on <source> is NOT
+// honoured inside <video> (only inside <picture>), so the browser always
+// took the same file. <= 640px gets the mobile cut, everything else desktop.
+const MOBILE_VIDEO_QUERY = '(max-width: 640px)';
+
+const subscribeMobileVideo = (onChange) => {
+  const mq = window.matchMedia(MOBILE_VIDEO_QUERY);
+  mq.addEventListener('change', onChange);
+  return () => mq.removeEventListener('change', onChange);
+};
+const getMobileVideo = () => window.matchMedia(MOBILE_VIDEO_QUERY).matches;
+// The server can't know the screen size: render the <video> without a src
+// there (null) and let the client pick the right file right after hydration.
+// No hydration mismatch, and a phone never starts downloading the desktop cut.
+const getMobileVideoOnServer = () => null;
 
 function HeroSection() {
   const rootRef = useRef(null);
@@ -18,20 +37,12 @@ function HeroSection() {
   const videoRef = useRef(null);
   const rgbRef = useRef(null);
 
-  // Pick the hero video in JS: the `media` attribute on <source> is NOT
-  // honoured inside <video> (only inside <picture>), so the browser always
-  // took the same file. <= 640px gets the mobile cut, everything else desktop.
-  const [isMobileVideo, setIsMobileVideo] = useState(
-    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 640px)').matches
+  // true = mobile cut, false = desktop cut, null = not known yet (server)
+  const isMobileVideo = useSyncExternalStore(
+    subscribeMobileVideo,
+    getMobileVideo,
+    getMobileVideoOnServer
   );
-
-  useEffect(() => {
-    const mq = window.matchMedia('(max-width: 640px)');
-    const onChange = (e) => setIsMobileVideo(e.matches);
-    setIsMobileVideo(mq.matches);
-    mq.addEventListener('change', onChange);
-    return () => mq.removeEventListener('change', onChange);
-  }, []);
 
   // RGB split controller (scroll-velocity driven; the entrance timeline
   // below also feeds it). Declared first so it exists when the timeline
@@ -468,7 +479,13 @@ function HeroSection() {
 
       <video
         ref={videoRef}
-        src={isMobileVideo ? heroVideoMobile : heroVideo}
+        src={
+          isMobileVideo === null
+            ? undefined
+            : isMobileVideo
+              ? heroVideoMobile
+              : heroVideo
+        }
         className="bear-hero-video"
         autoPlay
         muted

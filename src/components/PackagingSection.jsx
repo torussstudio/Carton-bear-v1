@@ -1,5 +1,6 @@
+'use client';
+
 import { useLayoutEffect, useRef } from 'react';
-import girlVideo from '../Videos/Eye Closing Video Animation.mp4';
 import './PackagingSection.css';
 
 import {
@@ -21,6 +22,9 @@ const DESCRIPTION =
  */
 
 const VIDEO_START_SCALE = 1.1;
+
+// Served from /public/videos (Next.js doesn't bundle video imports).
+const girlVideo = '/videos/eye-closing-video-animation.mp4';
 
 function PackagingSection() {
   const rootRef = useRef(null);

@@ -1,4 +1,7 @@
+'use client';
+
 import { useLayoutEffect, useRef } from 'react';
+import Image from 'next/image';
 import bearHand from '../images/Bear-hand.webp';
 import { gsap, ScrollTrigger, prefersReducedMotion, SplitText } from '../lib/gsapSetup';
 import './Nav.css';
@@ -450,7 +453,9 @@ function WithoutUsSection() {
               {/* Pointer line — drawn box -> dot (bottom to top) */}
 
               <path
-                ref={(el) => (pathRefs.current[i] = el)}
+                ref={(el) => {
+                  pathRefs.current[i] = el;
+                }}
                 d={callout.path}
                 fill="none"
                 stroke="#ffd400"
@@ -463,7 +468,9 @@ function WithoutUsSection() {
               {/* Pointer dot */}
 
               <circle
-                ref={(el) => (dotRefs.current[i] = el)}
+                ref={(el) => {
+                  dotRefs.current[i] = el;
+                }}
                 cx={callout.dotX}
                 cy={callout.dotY}
                 r="2.5"
@@ -474,12 +481,17 @@ function WithoutUsSection() {
               {/* Label */}
 
               <text
-                ref={(el) => (textRefs.current[i] = el)}
+                ref={(el) => {
+                  textRefs.current[i] = el;
+                }}
                 x={callout.labelX}
                 y={callout.labelY}
                 textAnchor={callout.anchor}
                 fill="#ffd400"
-                fontFamily="Roboto Slab, serif"
+                // Roboto Slab is self-hosted through next/font (src/fonts);
+                // a CSS variable can't go in an SVG presentation attribute,
+                // so the family is set through `style` instead.
+                style={{ fontFamily: 'var(--font-roboto-slab), serif' }}
                 fontSize="9.5"
                 letterSpacing="0.01em"
               >
@@ -495,11 +507,13 @@ function WithoutUsSection() {
             BEAR HAND IMAGE
         ========================================== */}
 
-        <img
+        <Image
           ref={handImageRef}
           src={bearHand}
           alt="A furry bear hand holding a glowing packaging box"
           className="bear-hand-image"
+          sizes="100vw"
+          loading="eager"
         />
 
       </div>
