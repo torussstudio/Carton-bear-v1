@@ -46,7 +46,7 @@
 .shipping-title-line {
   display: block;
 
-  font-size: clamp(28px, 5.2vw, 52px);
+  font-size: clamp(28px, 5.2vw, 90px);
 }
 
 
@@ -213,6 +213,8 @@
   text-transform: uppercase;
 
   color: var(--shipping-red);
+
+  letter-spacing: 0.04em;
 
   line-height: 0.9;
 
