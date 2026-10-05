@@ -558,6 +558,142 @@
 
 
 /* =========================================================
+   FAQ ACCORDION
+   Each row is now a question button + an answer panel.
+   The flex row that used to sit on the <li> moves onto
+   the button (same alignment and gaps per breakpoint),
+   so closed rows look exactly as before. The answer
+   opens with a grid-rows 0fr -> 1fr height transition.
+========================================================= */
+
+.dispatches-list-item {
+  display: block;
+}
+
+.dispatches-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dispatches-question:focus-visible {
+  outline: 2px solid var(--dispatches-orange);
+  outline-offset: 6px;
+}
+
+.dispatches-answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 0.55s;
+}
+
+.dispatches-list-item.is-open .dispatches-answer {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition:
+    grid-template-rows 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 0s;
+}
+
+.dispatches-answer-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.dispatches-answer-text {
+  max-width: 78%;
+  margin: 0;
+  padding-top: 16px;
+  font-family: "Easy Pixel Regular", Arial, sans-serif;
+  font-weight: 400;
+  font-size: clamp(14px, 1.15vw, 18px);
+  line-height: 1.6;
+  color: rgba(23, 20, 15, 0.78);
+
+  /* Swipe left -> right as the answer opens (same wipe as the
+     Services tags): clipped from the right while closed, then
+     the clip opens across the text. Snaps shut instantly on
+     close, since the panel is collapsing anyway. */
+  clip-path: inset(0 100% 0 0);
+  -webkit-clip-path: inset(0 100% 0 0);
+  transition:
+    clip-path 0s linear 0.3s,
+    -webkit-clip-path 0s linear 0.3s;
+}
+
+.dispatches-list-item.is-open .dispatches-answer-text {
+  clip-path: inset(0 0% 0 0);
+  -webkit-clip-path: inset(0 0% 0 0);
+  transition:
+    clip-path 0.75s cubic-bezier(0.65, 0, 0.35, 1) 0.15s,
+    -webkit-clip-path 0.75s cubic-bezier(0.65, 0, 0.35, 1) 0.15s;
+}
+
+@media (max-width: 960px) and (min-width: 641px) {
+  .dispatches-question {
+    gap: 20px;
+  }
+
+  .dispatches-answer-text {
+    max-width: 82%;
+    font-size: clamp(14px, 1.9vw, 17px);
+  }
+}
+
+@media (max-width: 640px) {
+  .dispatches-list-item {
+    display: block;
+  }
+
+  .dispatches-question {
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .dispatches-answer-text {
+    max-width: calc(100% - 58px);
+    padding-top: 12px;
+    font-size: clamp(13.5px, 3.8vw, 16px);
+    line-height: 1.55;
+  }
+}
+
+@media (max-width: 480px) {
+  .dispatches-question {
+    gap: 10px;
+  }
+
+  .dispatches-answer-text {
+    max-width: calc(100% - 52px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dispatches-answer,
+  .dispatches-list-item.is-open .dispatches-answer,
+  .dispatches-answer-text,
+  .dispatches-list-item.is-open .dispatches-answer-text {
+    transition: none;
+  }
+}
+
+
+/* =========================================================
    ACCESSIBILITY
 ========================================================= */
 
