@@ -807,6 +807,43 @@
 
 
 /* =========================================
+   MOBILE — CENTERED HEADER (<= 760px only)
+   Kicker, title and girl image centered.
+   The image used to be centered with
+   `transform: translateX(50%)`, but the GSAP
+   zoom writes its own inline transform and
+   wiped that out, pushing the image left.
+   Auto margins center it without using
+   transform, so the animation can't undo it.
+   Desktop / tablet (> 760px) is untouched.
+========================================== */
+
+@media (max-width: 760px) {
+
+  .built-kicker {
+    justify-content: center;
+  }
+
+  .built-title {
+    text-align: center;
+  }
+
+  .built-title-line {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .built-image {
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    transform: none;
+  }
+}
+
+
+/* =========================================
    REDUCED MOTION
 ========================================== */
 
