@@ -48,6 +48,7 @@ const SHIPPING_ITEMS = [
 function ShippingSection() {
   const rootRef = useRef(null);
   const titleRef = useRef(null);
+  const closingRef = useRef(null);
 
   useLayoutEffect(() => {
     const root = rootRef.current;
@@ -157,6 +158,59 @@ function ShippingSection() {
           },
         });
       });
+
+      /*
+       * ---------------------------------------------------------
+       * CLOSING STATEMENT — flip-up word reveal, the same motion as
+       * the Packaging title and the Highlight strip: each word starts
+       * tipped back (rotationX -72, rotationY 7), 45px down and 100px
+       * away in z, pivoting on its bottom edge, then flips up to rest.
+       * 0.55s power3.out, words in reading order across all three
+       * lines. Plays once.
+       * ---------------------------------------------------------
+       */
+
+      const closing = closingRef.current;
+
+      if (closing) {
+        const lineSplits = Array.from(
+          closing.querySelectorAll('.shipping-closing-line')
+        ).map((line) =>
+          SplitText.create(line, {
+            type: 'words',
+            wordsClass: 'shipping-closing-word',
+          })
+        );
+        splits.push(...lineSplits);
+
+        const words = lineSplits.flatMap((split) => split.words);
+
+        gsap.set(words, {
+          opacity: 0,
+          y: 45,
+          rotationX: -72,
+          rotationY: 7,
+          z: -100,
+          transformOrigin: '50% 100%',
+          transformStyle: 'preserve-3d',
+        });
+
+        gsap.to(words, {
+          opacity: 1,
+          y: 0,
+          rotationX: 0,
+          rotationY: 0,
+          z: 0,
+          duration: 0.55,
+          ease: 'power3.out',
+          stagger: 0.09,
+          scrollTrigger: {
+            trigger: closing,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+        });
+      }
     }, root);
 
     return () => {
@@ -239,10 +293,10 @@ function ShippingSection() {
 
       <div
         className="shipping-closing"
-        data-reveal="lines"
+        ref={closingRef}
       >
 
-        <div className="reveal-mask">
+        <div className="shipping-closing-row">
           <p className="shipping-closing-line shipping-closing-line--lg">
             Good Packaging <br />
             Doesn&apos;t{' '}
@@ -253,14 +307,14 @@ function ShippingSection() {
         </div>
 
 
-        <div className="reveal-mask">
+        <div className="shipping-closing-row">
           <p className="shipping-closing-line">
             It Just Quietly Makes
           </p>
         </div>
 
 
-        <div className="reveal-mask">
+        <div className="shipping-closing-row">
           <p className="shipping-closing-line">
             The Brand Feel More Legit.
           </p>
