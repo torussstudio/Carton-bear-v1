@@ -320,9 +320,14 @@ function HeroSection() {
       }
     );
 
+    // quickTo needs GSAP's real transform property names: the aliases
+    // 'rotateX' / 'rotateY' and the 'scale' shorthand are "not eligible for
+    // reset", so GSAP warned on every mouse move and never moved them —
+    // only the x/y drift worked. rotationX / rotationY and separate
+    // scaleX + scaleY tweens make the full tilt + zoom actually run.
     const rotateXTo = gsap.quickTo(
       video,
-      'rotateX',
+      'rotationX',
       {
         duration: 1.3,
         ease: 'power3.out',
@@ -331,21 +336,35 @@ function HeroSection() {
 
     const rotateYTo = gsap.quickTo(
       video,
-      'rotateY',
+      'rotationY',
       {
         duration: 1.3,
         ease: 'power3.out',
       }
     );
 
-    const scaleTo = gsap.quickTo(
+    const scaleXTo = gsap.quickTo(
       video,
-      'scale',
+      'scaleX',
       {
         duration: 1.4,
         ease: 'power3.out',
       }
     );
+
+    const scaleYTo = gsap.quickTo(
+      video,
+      'scaleY',
+      {
+        duration: 1.4,
+        ease: 'power3.out',
+      }
+    );
+
+    const scaleTo = (value) => {
+      scaleXTo(value);
+      scaleYTo(value);
+    };
 
     const handlePointerMove = (event) => {
       if (
@@ -452,7 +471,8 @@ function HeroSection() {
       yTo.tween?.kill();
       rotateXTo.tween?.kill();
       rotateYTo.tween?.kill();
-      scaleTo.tween?.kill();
+      scaleXTo.tween?.kill();
+      scaleYTo.tween?.kill();
 
       gsap.set(video, {
         clearProps: 'transform',
