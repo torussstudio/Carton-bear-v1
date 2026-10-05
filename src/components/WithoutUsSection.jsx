@@ -25,6 +25,9 @@ const PAIN_POINTS = [
   `path`       - authored from the BOX end to the DOT end so the
                  stroke-dashoffset draw animation grows bottom -> top,
                  ending exactly on the dot.
+  `mobile`     - label position for phones (<= 600px). The labels are
+                 drawn bigger there to stay readable, so they sit
+                 beside their dot instead of where the desktop ones do.
 */
 const CALLOUTS = [
   {
@@ -36,6 +39,7 @@ const CALLOUTS = [
     dotX: 186,
     dotY: 86,
     path: 'M222,105 C208,98 196,91 186,86',
+    mobile: { x: 180, y: 76, anchor: 'end' },
   },
   {
     key: 'production-management',
@@ -46,6 +50,7 @@ const CALLOUTS = [
     dotX: 215,
     dotY: 20,
     path: 'M255,85 C245,60 230,35 215,20',
+    mobile: { x: 208, y: 16, anchor: 'end' },
   },
   {
     key: 'packaging-execution',
@@ -56,6 +61,7 @@ const CALLOUTS = [
     dotX: 300,
     dotY: 22,
     path: 'M280,82 C286,60 294,38 300,22',
+    mobile: { x: 307, y: 16, anchor: 'start' },
   },
   {
     key: 'export-readiness',
@@ -66,6 +72,7 @@ const CALLOUTS = [
     dotX: 356,
     dotY: 60,
     path: 'M312,97 C328,85 344,72 356,60',
+    mobile: { x: 363, y: 57, anchor: 'start' },
   },
   {
     key: 'dispatch-support',
@@ -76,6 +83,7 @@ const CALLOUTS = [
     dotX: 384,
     dotY: 120,
     path: 'M330,120 C348,113 366,113 384,120',
+    mobile: { x: 384, y: 136, anchor: 'start' },
   },
 ];
 
@@ -430,6 +438,13 @@ function WithoutUsSection() {
 
       <div className="bear-hand-visual" ref={handVisualRef}>
 
+        {/* Stage: holds the hand + its callout lines together. On
+            desktop it is exactly the size of the image (same as
+            before). On phones the outer .bear-hand-visual becomes a
+            full-screen dark frame and this stage is centred in it,
+            so the pinned sequence fills the screen like on desktop. */}
+        <div className="bear-hand-stage">
+
         {/* =========================================
             SVG POINTER LINES
 
@@ -478,25 +493,42 @@ function WithoutUsSection() {
               />
 
 
-              {/* Label */}
+              {/* Label — desktop and mobile variants; CSS shows one.
+                  GSAP fades/slides the wrapping group. */}
 
-              <text
+              <g
                 ref={(el) => {
                   textRefs.current[i] = el;
                 }}
-                x={callout.labelX}
-                y={callout.labelY}
-                textAnchor={callout.anchor}
+                className="bear-callout-label"
                 fill="#ffd400"
                 // Roboto Slab is self-hosted through next/font (src/fonts);
                 // a CSS variable can't go in an SVG presentation attribute,
                 // so the family is set through `style` instead.
                 style={{ fontFamily: 'var(--font-roboto-slab), serif' }}
-                fontSize="9.5"
-                letterSpacing="0.01em"
               >
-                {callout.label}
-              </text>
+                <text
+                  className="bear-callout-text bear-callout-text--desktop"
+                  x={callout.labelX}
+                  y={callout.labelY}
+                  textAnchor={callout.anchor}
+                  fontSize="9.5"
+                  letterSpacing="0.01em"
+                >
+                  {callout.label}
+                </text>
+
+                <text
+                  className="bear-callout-text bear-callout-text--mobile"
+                  x={callout.mobile.x}
+                  y={callout.mobile.y}
+                  textAnchor={callout.mobile.anchor}
+                  fontSize="14"
+                  letterSpacing="0.01em"
+                >
+                  {callout.label}
+                </text>
+              </g>
 
             </g>
           ))}
@@ -515,6 +547,8 @@ function WithoutUsSection() {
           sizes="100vw"
           loading="eager"
         />
+
+        </div>
 
       </div>
 
