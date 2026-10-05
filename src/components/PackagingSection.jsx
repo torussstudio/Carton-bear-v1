@@ -1,5 +1,6 @@
+'use client';
+
 import { useLayoutEffect, useRef } from 'react';
-import girlVideo from '../Videos/Eye Closing Video Animation.mp4';
 import './PackagingSection.css';
 
 import {
@@ -12,15 +13,11 @@ import {
 const DESCRIPTION =
   "BECAUSE PACKAGING ISN'T JUST PROTECTION. IT'S PERCEPTION. IT'S RECALL. IT'S RETENTION. IT'S ONE OF THE BIGGEST BRAND TOUCHPOINTS YOU HAVE>>";
 
-/*
- * Scroll-scrubbed video zoom.
- *
- * The video starts at this scale and eases down to 1
- * (fully zoomed out) by the time it is completely on screen.
- * 1.1 = subtle zoom. Raise for a stronger zoom.
- */
 
 const VIDEO_START_SCALE = 1.1;
+
+// Served from /public/videos (Next.js doesn't bundle video imports).
+const girlVideo = '/videos/eye-closing-video-animation.mp4';
 
 function PackagingSection() {
   const rootRef = useRef(null);
@@ -139,12 +136,6 @@ function PackagingSection() {
         return;
       }
 
-      /*
-       * ========================================================
-       * MASTER TITLE TIMELINE
-       * ========================================================
-       */
-
       const masterTimeline =
         gsap.timeline({
           scrollTrigger: {
@@ -153,7 +144,7 @@ function PackagingSection() {
             start: 'top 90%',
 
             toggleActions:
-              'play none none reverse',
+              'play none none none',
 
             invalidateOnRefresh: true,
           },
@@ -161,12 +152,6 @@ function PackagingSection() {
           defaults: {
             ease: 'power3.out',
           },
-
-          /*
-           * Scrolling back above the section rewinds the title;
-           * re-hide the description words so the stagger can
-           * play again next time.
-           */
 
           onReverseComplete: () => {
             revealTween.pause(0);

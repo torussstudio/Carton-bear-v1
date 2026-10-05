@@ -1,4 +1,7 @@
+'use client';
+
 import { useLayoutEffect, useRef } from 'react';
+import Image from 'next/image';
 import bearHand from '../images/Bear-hand.webp';
 import { gsap, ScrollTrigger, prefersReducedMotion, SplitText } from '../lib/gsapSetup';
 import './Nav.css';
@@ -22,6 +25,9 @@ const PAIN_POINTS = [
   `path`       - authored from the BOX end to the DOT end so the
                  stroke-dashoffset draw animation grows bottom -> top,
                  ending exactly on the dot.
+  `mobile`     - label position for phones (<= 600px). The labels are
+                 drawn bigger there to stay readable, so they sit
+                 beside their dot instead of where the desktop ones do.
 */
 const CALLOUTS = [
   {
@@ -33,6 +39,7 @@ const CALLOUTS = [
     dotX: 186,
     dotY: 86,
     path: 'M222,105 C208,98 196,91 186,86',
+    mobile: { x: 180, y: 76, anchor: 'end' },
   },
   {
     key: 'production-management',
@@ -43,6 +50,7 @@ const CALLOUTS = [
     dotX: 215,
     dotY: 20,
     path: 'M255,85 C245,60 230,35 215,20',
+    mobile: { x: 208, y: 16, anchor: 'end' },
   },
   {
     key: 'packaging-execution',
@@ -53,6 +61,7 @@ const CALLOUTS = [
     dotX: 300,
     dotY: 22,
     path: 'M280,82 C286,60 294,38 300,22',
+    mobile: { x: 307, y: 16, anchor: 'start' },
   },
   {
     key: 'export-readiness',
@@ -63,6 +72,7 @@ const CALLOUTS = [
     dotX: 356,
     dotY: 60,
     path: 'M312,97 C328,85 344,72 356,60',
+    mobile: { x: 363, y: 57, anchor: 'start' },
   },
   {
     key: 'dispatch-support',
@@ -73,6 +83,7 @@ const CALLOUTS = [
     dotX: 384,
     dotY: 120,
     path: 'M330,120 C348,113 366,113 384,120',
+    mobile: { x: 384, y: 136, anchor: 'start' },
   },
 ];
 
@@ -86,11 +97,20 @@ function WithoutUsSection() {
   const titleRef = useRef(null);
   const listRef = useRef(null);
   const footerTextRef = useRef(null);
+  const footerButtonRef = useRef(null);
 
   /*
    * Footer paragraph — the same word stagger as the Hero kicker and the
    * Packaging description: words rise 50px with a 28px blur clearing,
-   * 0.03s stagger, 1s back.out(1.7). Plays once as it scrolls in.
+   * 0.03s stagger, 1s back.out(1.7) — then the button rises in as the
+   * last words land. Plays once, when the paragraph actually scrolls
+   * into view.
+   *
+   * The paragraph sits INSIDE the section that gets pinned for the
+   * bear-hand sequence. Without `pinnedContainer` its trigger ignored
+   * the pin, so it fired mid-pin while the text was still off-screen
+   * and had finished by the time you scrolled down to it.
+   * `refreshPriority: -1` makes it measure after the pin is set up.
    */
 
   useLayoutEffect(() => {
@@ -106,19 +126,37 @@ function WithoutUsSection() {
         wordsClass: 'without-us-footer-word',
       });
 
-      gsap.from(split.words, {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 88%',
+          toggleActions: 'play none none none',
+          pinnedContainer: sectionRef.current,
+          refreshPriority: -1,
+        },
+      });
+
+      tl.from(split.words, {
         y: 50,
         opacity: 0,
         filter: 'blur(28px)',
         stagger: 0.03,
         duration: 1,
         ease: 'back.out(1.7)',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 88%',
-          toggleActions: 'play none none none',
-        },
       });
+
+      if (footerButtonRef.current) {
+        tl.from(
+          footerButtonRef.current,
+          {
+            y: 24,
+            opacity: 0,
+            duration: 0.7,
+            ease: 'power3.out',
+          },
+          '-=0.55'
+        );
+      }
     }, el);
 
     return () => {
@@ -427,6 +465,13 @@ function WithoutUsSection() {
 
       <div className="bear-hand-visual" ref={handVisualRef}>
 
+        {/* Stage: holds the hand + its callout lines together. On
+            desktop it is exactly the size of the image (same as
+            before). On phones the outer .bear-hand-visual becomes a
+            full-screen dark frame and this stage is centred in it,
+            so the pinned sequence fills the screen like on desktop. */}
+        <div className="bear-hand-stage">
+
         {/* =========================================
             SVG POINTER LINES
 
@@ -450,7 +495,9 @@ function WithoutUsSection() {
               {/* Pointer line — drawn box -> dot (bottom to top) */}
 
               <path
-                ref={(el) => (pathRefs.current[i] = el)}
+                ref={(el) => {
+                  pathRefs.current[i] = el;
+                }}
                 d={callout.path}
                 fill="none"
                 stroke="#ffd400"
@@ -463,7 +510,9 @@ function WithoutUsSection() {
               {/* Pointer dot */}
 
               <circle
-                ref={(el) => (dotRefs.current[i] = el)}
+                ref={(el) => {
+                  dotRefs.current[i] = el;
+                }}
                 cx={callout.dotX}
                 cy={callout.dotY}
                 r="2.5"
@@ -471,20 +520,42 @@ function WithoutUsSection() {
               />
 
 
-              {/* Label */}
+              {/* Label — desktop and mobile variants; CSS shows one.
+                  GSAP fades/slides the wrapping group. */}
 
-              <text
-                ref={(el) => (textRefs.current[i] = el)}
-                x={callout.labelX}
-                y={callout.labelY}
-                textAnchor={callout.anchor}
+              <g
+                ref={(el) => {
+                  textRefs.current[i] = el;
+                }}
+                className="bear-callout-label"
                 fill="#ffd400"
-                fontFamily="Roboto Slab, serif"
-                fontSize="9.5"
-                letterSpacing="0.01em"
+                // Roboto Slab is self-hosted through next/font (src/fonts);
+                // a CSS variable can't go in an SVG presentation attribute,
+                // so the family is set through `style` instead.
+                style={{ fontFamily: 'var(--font-roboto-slab), serif' }}
               >
-                {callout.label}
-              </text>
+                <text
+                  className="bear-callout-text bear-callout-text--desktop"
+                  x={callout.labelX}
+                  y={callout.labelY}
+                  textAnchor={callout.anchor}
+                  fontSize="9.5"
+                  letterSpacing="0.01em"
+                >
+                  {callout.label}
+                </text>
+
+                <text
+                  className="bear-callout-text bear-callout-text--mobile"
+                  x={callout.mobile.x}
+                  y={callout.mobile.y}
+                  textAnchor={callout.mobile.anchor}
+                  fontSize="14"
+                  letterSpacing="0.01em"
+                >
+                  {callout.label}
+                </text>
+              </g>
 
             </g>
           ))}
@@ -495,12 +566,16 @@ function WithoutUsSection() {
             BEAR HAND IMAGE
         ========================================== */}
 
-        <img
+        <Image
           ref={handImageRef}
           src={bearHand}
           alt="A furry bear hand holding a glowing packaging box"
           className="bear-hand-image"
+          sizes="100vw"
+          loading="eager"
         />
+
+        </div>
 
       </div>
 
@@ -524,7 +599,7 @@ function WithoutUsSection() {
         <button
           type="button"
           className="bear-pill bear-pill--solid without-us-button"
-          data-reveal="fade"
+          ref={footerButtonRef}
         >
           Talk To Us About Export
         </button>

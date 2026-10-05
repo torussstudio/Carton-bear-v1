@@ -1,4 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+'use client';
+
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import { prefersReducedMotion } from '../lib/gsapSetup';
 import logo from '../logo/carton-bear-logo.png';
 import preloaderBg from '../images/preloader-bg.webp';
@@ -28,7 +31,7 @@ function Preloader({ onComplete }) {
   const targetRef = useRef(0);
   const displayRef = useRef(0);
   const rafRef = useRef(null);
-  const startTimeRef = useRef(performance.now());
+  const startTimeRef = useRef(0); // set on mount (below)
   const doneFiredRef = useRef(false);
 
   // Lock page scroll while the preloader is up.
@@ -42,6 +45,19 @@ function Preloader({ onComplete }) {
   // even under `overflow: hidden`. So the lock is released when the preloader
   // reaches its 'done' phase (effect re-runs when `isDone` flips), and also on
   // real unmount.
+  // Fresh mount = loading starts over. Reset the shared "preloader done"
+  // flag BEFORE any sibling reads it (this layout effect runs ahead of the
+  // Hero's and PageBulge's), so a client-side navigation back to the home
+  // page (e.g. from the 404 page) can't start the hero entrance underneath
+  // a fresh preloader. On a normal first load the flag is simply unset.
+  //
+  // The start time is stamped here too (not during render, which must stay
+  // pure); this runs before the progress effects below read it.
+  useLayoutEffect(() => {
+    startTimeRef.current = performance.now();
+    window.__preloaderDone = false;
+  }, []);
+
   const isDone = phase === 'done';
   useEffect(() => {
     if (isDone) return undefined;
@@ -197,15 +213,15 @@ function Preloader({ onComplete }) {
   return (
     <div
       className={`preloader ${phase === 'exiting' ? 'preloader--exiting' : ''}`}
-      style={{ backgroundImage: `url(${preloaderBg})` }}
+      style={{ backgroundImage: `url(${preloaderBg.src})` }}
       role="status"
       aria-live="polite"
       aria-busy={phase === 'loading'}
     >
-      <img className="preloader-watermark" src={logo} alt="" aria-hidden="true" />
+      <Image className="preloader-watermark" src={logo} alt="" aria-hidden="true" preload />
 
       <div className="preloader-topbar">
-        <img className="preloader-logo" src={logo} alt="Carton Bear" />
+        <Image className="preloader-logo" src={logo} alt="Carton Bear" preload />
         <div className="preloader-badge">
           <span className="preloader-badge-outline">Carton</span>
           <span className="preloader-badge-solid">World</span>
@@ -272,7 +288,14 @@ function Preloader({ onComplete }) {
           <span className="preloader-dash preloader-dash--4" aria-hidden="true" />
 
           <div className="preloader-box-float">
-            <img className="preloader-box-img" src={preloaderBox} alt="" aria-hidden="true" />
+            <Image
+              className="preloader-box-img"
+              src={preloaderBox}
+              alt=""
+              aria-hidden="true"
+              sizes="(max-width: 640px) 75vw, 416px"
+              preload
+            />
             <span className="preloader-box-shadow" />
           </div>
         </div>

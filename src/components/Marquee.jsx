@@ -1,3 +1,5 @@
+'use client';
+
 import { useLayoutEffect, useRef } from 'react';
 import './Marquee.css';
 import { gsap, ScrollTrigger, prefersReducedMotion } from '../lib/gsapSetup';

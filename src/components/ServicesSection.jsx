@@ -1,4 +1,7 @@
+'use client';
+
 import { useLayoutEffect, useRef } from 'react';
+import Image from 'next/image';
 
 import packagingDesign from '../images/packaging-design.png';
 import packagingSystems from '../images/packaging-systems.png';
@@ -56,6 +59,26 @@ const SERVICES = [
 ];
 
 
+/*
+ * Cards from this index onward (0-based) get a one-way text reveal:
+ * heading + tags play once on the way down and then stay revealed;
+ * scrolling back up does NOT reverse them.
+ *
+ * 0 = every row (current). Use 3 to limit it to the bottom row only.
+ */
+
+const PLAY_ONCE_FROM_CARD = 0;
+
+/*
+ * Intrinsic size of the service artwork. Gives the <img> a reserved
+ * aspect ratio before it has loaded, so the grid never jumps when the
+ * pictures arrive (which used to throw ScrollTrigger's measurements off).
+ */
+
+const IMAGE_WIDTH = 360;
+const IMAGE_HEIGHT = 168;
+
+
 function ServicesSection() {
   const sectionRef = useRef(null);
   const bottomTextRef = useRef(null);
@@ -67,6 +90,35 @@ function ServicesSection() {
 
     let bottomSplit;
     const imageCleanups = [];
+
+    /*
+     * Re-measure every ScrollTrigger once the pictures have loaded
+     * (debounced), so trigger positions match the final layout.
+     */
+
+    let refreshTimer;
+
+    const scheduleRefresh = () => {
+      clearTimeout(refreshTimer);
+
+      refreshTimer = setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 120);
+    };
+
+    section
+      .querySelectorAll('.service-image')
+      .forEach((img) => {
+        if (!img.complete) {
+          img.addEventListener('load', scheduleRefresh, {
+            once: true,
+          });
+
+          img.addEventListener('error', scheduleRefresh, {
+            once: true,
+          });
+        }
+      });
 
     const ctx = gsap.context(() => {
       const cards = gsap.utils.toArray('.service-card');
@@ -103,7 +155,9 @@ function ServicesSection() {
        * ---------------------------------------------------------
        */
 
-      headings.forEach((heading) => {
+      headings.forEach((heading, headingIndex) => {
+        const playOnce = headingIndex >= PLAY_ONCE_FROM_CARD;
+
         const split = SplitText.create(heading, {
           type: 'chars',
         });
@@ -122,7 +176,9 @@ function ServicesSection() {
           scrollTrigger: {
             trigger: heading,
             start: 'top 88%',
-            toggleActions: 'play none none reverse',
+            toggleActions: playOnce
+              ? 'play none none none'
+              : 'play none none reverse',
           },
         });
       });
@@ -136,7 +192,9 @@ function ServicesSection() {
        * ---------------------------------------------------------
        */
 
-      tagGroups.forEach((group) => {
+      tagGroups.forEach((group, groupIndex) => {
+        const playOnce = groupIndex >= PLAY_ONCE_FROM_CARD;
+
         const tags = group.querySelectorAll('.service-tag');
 
         gsap.set(tags, {
@@ -153,7 +211,9 @@ function ServicesSection() {
           scrollTrigger: {
             trigger: group,
             start: 'top 90%',
-            toggleActions: 'play none none reverse',
+            toggleActions: playOnce
+              ? 'play none none none'
+              : 'play none none reverse',
           },
         });
       });
@@ -254,7 +314,10 @@ function ServicesSection() {
             transformPerspective: 1000,
             duration: 0.45,
             ease: 'power3.out',
-            overwrite: true,
+            // 'auto' only replaces earlier hover tweens (same properties).
+            // `true` used to kill EVERYTHING on the image, including the
+            // clip-path reveal, leaving it stuck half-revealed.
+            overwrite: 'auto',
           });
         };
 
@@ -266,7 +329,7 @@ function ServicesSection() {
             scale: 1,
             duration: 0.7,
             ease: 'power3.out',
-            overwrite: true,
+            overwrite: 'auto',
           });
         };
 
@@ -326,6 +389,8 @@ function ServicesSection() {
 
 
     return () => {
+      clearTimeout(refreshTimer);
+
       imageCleanups.forEach((cleanup) => cleanup());
 
       bottomSplit?.revert();
@@ -359,10 +424,13 @@ function ServicesSection() {
 
             <div className="service-image-wrapper">
 
-              <img
+              <Image
                 src={service.image}
                 alt={service.title}
                 className="service-image"
+                width={IMAGE_WIDTH}
+                height={IMAGE_HEIGHT}
+                loading="eager"
               />
 
             </div>

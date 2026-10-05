@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Roboto+Slab:wght@400;500;600&display=swap');
+/* Anton / Roboto Slab are self-hosted via next/font (src/fonts) —
+   the old Google Fonts @import was removed. */
 
 
 /* =========================================
@@ -28,7 +29,7 @@
   margin: 0 0 56px;
 
   font-family:
-    'Anton',
+    var(--font-anton),
     'Sharp Grotesk Black',
     sans-serif;
 
@@ -45,7 +46,7 @@
 .shipping-title-line {
   display: block;
 
-  font-size: clamp(28px, 5.2vw, 52px);
+  font-size: clamp(28px, 5.2vw, 90px);
 }
 
 
@@ -213,6 +214,8 @@
 
   color: var(--shipping-red);
 
+  letter-spacing: 0.04em;
+
   line-height: 0.9;
 
   font-size: clamp(22px, 7vw, 110px);
@@ -227,6 +230,28 @@
   font-size: clamp(22px, 7vw, 120px);
 
   margin-bottom: 30px;
+}
+
+
+/* Row wrappers for the closing lines. Same layout as
+   the old .reveal-mask wrappers (block row, line shrinks
+   to its text), but no overflow clipping, so the 3D
+   word flip isn't cut off. Each line gets perspective
+   for the flip. */
+.shipping-closing-row {
+  display: block;
+}
+
+.shipping-closing-row > .shipping-closing-line {
+  display: inline-block;
+  perspective: 1200px;
+  perspective-origin: 50% 45%;
+}
+
+.shipping-closing-word {
+  display: inline-block;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
 }
 
 
@@ -321,7 +346,7 @@
   }
 
   .shipping-title-line {
-    font-size: clamp(28px, 8vw, 44px);
+    font-size: clamp(34px, 9.8vw, 54px);
 
     line-height: 1.02;
 
@@ -548,7 +573,7 @@
 
   .shipping-title-line {
 
-    font-size: clamp(25px, 8.5vw, 38px);
+    font-size: clamp(31px, 10vw, 46px);
   }
 
 
@@ -644,7 +669,7 @@
 
   .shipping-title-line {
 
-    font-size: 24px;
+    font-size: 30px;
   }
 
 

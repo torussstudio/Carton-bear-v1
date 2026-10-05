@@ -1,4 +1,7 @@
+'use client';
+
 import { useLayoutEffect, useRef } from 'react';
+import Image from 'next/image';
 
 import heroImage from '../images/Carton.webp';
 import './BuiltForBrandsSection.css';
@@ -351,11 +354,12 @@ function BuiltForBrandsSection() {
 
         <div className="built-right">
 
-          <img
+          <Image
             src={heroImage}
             alt="Retro illustration of a woman in a red dress holding a vintage TV showing the Carton Bear logo"
             className="built-image"
             ref={imageRef}
+            loading="eager"
           />
 
         </div>
@@ -384,7 +388,13 @@ function BuiltForBrandsSection() {
               className="built-card-icon"
               aria-hidden="true"
             >
-              <img src={ICONS[card.icon]} alt="" draggable="false" />
+              <Image
+                src={ICONS[card.icon]}
+                alt=""
+                draggable="false"
+                sizes="56px"
+                loading="eager"
+              />
             </span>
 
 

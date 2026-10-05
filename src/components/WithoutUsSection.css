@@ -259,6 +259,26 @@
 
 
 /* =========================================
+   HAND STAGE
+   Wraps the image + callout SVG. On desktop it
+   is exactly the image's size, so nothing moves;
+   on phones it gets centred in a full-screen frame
+   (see "MOBILE PINNED STAGE" below).
+========================================= */
+
+.bear-hand-stage {
+  position: relative;
+  width: 100%;
+}
+
+/* Callout labels come in a desktop and a mobile
+   variant; only one is shown at a time. */
+.bear-callout-text--mobile {
+  display: none;
+}
+
+
+/* =========================================
    SVG CALLOUTS
 ========================================= */
 
@@ -922,6 +942,67 @@
       10px 12px;
   }
 
+}
+
+
+/* =========================================
+   MOBILE PINNED STAGE (<= 600px only)
+
+   1. Sticky position: the hand visual becomes a
+      full-screen dark frame with the hand centred,
+      so while the section is pinned the bear hand +
+      nodes fill the screen like on desktop (before,
+      the short image pinned at the very top with the
+      paragraph and a strip of blue page showing
+      underneath).
+
+   2. Node lines: the image + SVG are laid out as an
+      exact scaled-down copy of the desktop layout
+      (the desktop -40px image offset as a % of the
+      width, same SVG offset and tilt), so every line
+      lands on the box at any phone width. The fixed
+      -40px used to be ~11% of a phone-sized image and
+      slid the box away from the lines.
+
+   3. Labels switch to the larger mobile variant,
+      placed beside their dots (see CALLOUTS[].mobile).
+
+   Placed last so it wins over the older phone rules
+   above. Nothing here applies above 600px.
+========================================= */
+
+@media (max-width: 600px) {
+
+  .without-us-intro {
+    margin-bottom: 0;
+  }
+
+  .bear-hand-visual {
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+    min-height: 100svh;
+    margin-bottom: 0;
+  }
+
+  .bear-hand-image {
+    /* desktop: -40px on a 1360px-wide image */
+    margin-left: -2.94%;
+  }
+
+  .bear-hand-callouts {
+    top: -6%;
+    left: -1%;
+    transform: rotate(4deg);
+  }
+
+  .bear-callout-text--desktop {
+    display: none;
+  }
+
+  .bear-callout-text--mobile {
+    display: inline;
+  }
 }
 
 
