@@ -1,375 +1,551 @@
-.preloader {
+/* ==========================================================================
+   Carton Bear preloader: "Seal & Ship"
+   Progress is driven by CSS variables written from Preloader.jsx:
+     --p        0..1   tape fill
+     --d0..--d2 0..9   odometer digits (ones, tens, hundreds)
+   ========================================================================== */
+
+.cb-pl {
+  --p: 0;
+  --d0: 0;
+  --d1: 0;
+  --d2: 0;
+  --tape-h: clamp(38px, 4.4vw, 60px);
+  --frame: clamp(14px, 2vw, 28px);
+  --pad: clamp(16px, 2.2vw, 30px);
+  --gap: clamp(22px, 4.2vh, 46px);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
   position: fixed;
   inset: 0;
   z-index: 9999;
-  display: flex;
-  flex-direction: column;
   overflow: hidden;
-  background-color: var(--bear-bg);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   color: var(--bear-text);
-  transform: translateY(0);
-  transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  background: transparent;
+}
+
+.cb-pl.is-exiting {
+  pointer-events: none;
+}
+
+/* ---------- split panels ---------- */
+.cb-pl-panel {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  overflow: hidden;
   will-change: transform;
 }
 
-/* Solid wipe on exit — the overlay stays fully opaque and slides clean off
-   the top of the viewport, so the real page never shows through mid-fade. */
-.preloader--exiting {
-  transform: translateY(-101%);
-  pointer-events: none;
+.cb-pl-panel--top {
+  top: 0;
 }
 
-/* ---------- watermark bear ---------- */
-.preloader-watermark {
+.cb-pl-panel--bottom {
+  top: 50%;
+}
+
+.cb-pl-scene {
   position: absolute;
-  left: -6%;
-  bottom: -10%;
-  width: 46vw;
-  max-width: 560px;
-  opacity: 0.07;
-  filter: brightness(0) invert(1);
-  pointer-events: none;
-  user-select: none;
+  left: 0;
+  width: 100%;
+  height: 200%;
+  background-color: var(--bear-bg);
+  background-image: var(--pl-bg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  will-change: transform;
 }
 
-/* ---------- top bar ---------- */
-.preloader-topbar {
-  position: relative;
-  z-index: 2;
+.cb-pl-panel--top .cb-pl-scene {
+  top: 0;
+}
+
+.cb-pl-panel--bottom .cb-pl-scene {
+  top: -100%;
+}
+
+/* Inner edge shadows sell the "flaps" once the halves start to part. */
+.cb-pl-panel--top::after,
+.cb-pl-panel--bottom::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 40px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.cb-pl-panel--top::after {
+  bottom: 0;
+  background: linear-gradient(to top, rgba(0, 0, 40, 0.45), transparent);
+}
+
+.cb-pl-panel--bottom::after {
+  top: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 40, 0.45), transparent);
+}
+
+.cb-pl.is-exiting .cb-pl-panel::after {
+  opacity: 1;
+}
+
+/* ---------- atmosphere ---------- */
+.cb-pl-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 34px 34px;
+  background-position: center center;
+}
+
+.cb-pl-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 75% 65% at 50% 50%,
+    transparent 45%,
+    rgba(0, 0, 50, 0.42) 100%
+  );
+}
+
+/* ---------- dieline frame + crop marks ---------- */
+.cb-pl-frame {
+  position: absolute;
+  inset: var(--frame);
+  border: 1px dashed rgba(236, 233, 242, 0.16);
+  pointer-events: none;
+  animation: cb-pl-fade 1s ease 0.1s both;
+}
+
+.cb-pl-corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: var(--bear-gold);
+  border-style: solid;
+  border-width: 0;
+  animation: cb-pl-corner 0.9s var(--ease-out) 0.15s both;
+}
+
+.cb-pl-corner--tl { top: -2px; left: -2px; border-top-width: 2px; border-left-width: 2px; transform-origin: top left; }
+.cb-pl-corner--tr { top: -2px; right: -2px; border-top-width: 2px; border-right-width: 2px; transform-origin: top right; }
+.cb-pl-corner--bl { bottom: -2px; left: -2px; border-bottom-width: 2px; border-left-width: 2px; transform-origin: bottom left; }
+.cb-pl-corner--br { bottom: -2px; right: -2px; border-bottom-width: 2px; border-right-width: 2px; transform-origin: bottom right; }
+
+/* ---------- reveal helpers ---------- */
+/* .cb-pl-clip is the mask (and the exit target), .cb-pl-rise the entrance. */
+.cb-pl-clip {
+  overflow: hidden;
+  padding-bottom: 0.08em;
+}
+
+.cb-pl-rise {
+  display: inline-block;
+  animation: cb-pl-rise 1s var(--ease-out) 0.3s both;
+}
+
+.cb-pl-rise--2 { animation-delay: 0.38s; }
+.cb-pl-rise--3 { animation-delay: 0.55s; }
+.cb-pl-rise--4 { animation-delay: 0.62s; }
+
+/* Entrance animations hold their end state with fill-mode, which would
+   override the GSAP exit tweens on the same elements. Their end state is
+   "no transform", so dropping them on exit causes no jump. */
+.cb-pl.is-exiting .cb-pl-rise,
+.cb-pl.is-exiting .cb-pl-count-in {
+  animation: none;
+}
+
+/* ---------- top row ---------- */
+.cb-pl-top {
+  position: absolute;
+  top: calc(var(--frame) + var(--pad));
+  left: calc(var(--frame) + var(--pad));
+  right: calc(var(--frame) + var(--pad));
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 26px 34px 0;
+  gap: 16px;
 }
 
-.preloader-logo {
-  height: 58px;
-  width: auto;
-  display: block;
+.cb-pl-brand {
+  font-family: 'Sharp Grotesk PE Trial Bold', sans-serif;
+  font-weight: 800;
+  font-size: clamp(12px, 1.1vw, 15px);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--bear-text);
 }
 
-.preloader-badge {
-  display: flex;
+.cb-pl-brand sup {
+  font-size: 0.6em;
+  margin-left: 2px;
+}
+
+.cb-pl-badge {
+  display: inline-flex;
   align-items: stretch;
   font-family: 'Sharp Grotesk PE Trial Bold', sans-serif;
   font-weight: 800;
-  font-size: clamp(12px, 1.6vw, 15px);
-  letter-spacing: 0.04em;
+  font-size: clamp(11px, 1.1vw, 14px);
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
-.preloader-badge-outline {
+.cb-pl-badge-outline {
   border: 1.5px solid var(--bear-gold);
-  color: var(--bear-gold);
-  padding: 7px 16px;
-  border-radius: 20px 0 0 20px;
   border-right: none;
-  display: flex;
-  align-items: center;
+  color: var(--bear-gold);
+  padding: 6px 14px;
+  border-radius: 20px 0 0 20px;
 }
 
-.preloader-badge-solid {
+.cb-pl-badge-solid {
   background: var(--bear-gold);
   color: var(--bear-bg);
-  padding: 7px 18px;
+  padding: 6px 16px;
   border-radius: 0 20px 20px 0;
-  display: flex;
-  align-items: center;
 }
 
-/* ---------- stamps ---------- */
-.preloader-stamp {
+/* ---------- bear mark ---------- */
+.cb-pl-mark {
   position: absolute;
-  z-index: 1;
-  font-family: 'Sharp Grotesk PE Trial Bold', sans-serif;
-  font-weight: 700;
-  font-size: 13px;
-  line-height: 1.35;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  color: var(--bear-text);
-  opacity: 0.16;
-  border: 1.5px solid currentColor;
-  padding: 12px 14px;
-  white-space: nowrap;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  bottom: calc(50% + var(--tape-h) / 2 + var(--gap));
+  width: clamp(88px, 9vw, 148px);
 }
 
-.preloader-stamp--left {
-  top: 26%;
-  left: 5%;
-  transform: rotate(-8deg);
+.cb-pl-mark-in {
+  animation: cb-pl-mark-in 1.2s var(--ease-out) 0.1s both;
 }
 
-.preloader-stamp--right {
-  top: 24%;
-  right: 6%;
-  text-align: center;
-  transform: rotate(6deg);
-}
-
-.preloader-chevrons {
-  position: absolute;
-  z-index: 1;
-  right: 3%;
-  top: 55%;
-  display: flex;
-  gap: 2px;
-  font-size: 46px;
-  color: var(--bear-text);
-  opacity: 0.12;
-  font-family: 'Sharp Grotesk PE Trial Black', sans-serif;
-}
-
-/* ---------- center ---------- */
-.preloader-center {
-  position: relative;
-  z-index: 2;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 20px 20px clamp(28px, 7vh, 90px);
-}
-
-.preloader-title {
-  position: relative;
-  font-family: 'Sharp Grotesk PE Trial Black', sans-serif;
-  font-weight: 900;
-  line-height: 0.92;
-  text-transform: uppercase;
-  font-size: clamp(40px, 8.6vw, 96px);
-  letter-spacing: -0.01em;
-}
-
-.preloader-title-line {
-  position: relative;
-  display: block;
-}
-
-.preloader-title-line--white {
-  color: #fbfaf7;
-  opacity: 0.94;
-}
-
-.preloader-title-line--yellow {
-  color: var(--bear-gold);
-}
-
-.preloader-crown {
-  position: absolute;
-  top: -0.55em;
-  right: -0.1em;
-  width: 0.55em;
-  height: 0.42em;
-  color: var(--bear-gold);
-  transform: rotate(8deg);
-}
-
-/* ---------- box stage ---------- */
-.preloader-box-stage {
-  position: relative;
-  width: min(92vw, 520px);
-  height: min(74vw, 400px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: clamp(6px, 1.4vw, 16px) 0;
-}
-
-.preloader-orbit {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  color: var(--bear-gold);
-  opacity: 0.55;
-  animation: preloader-spin 14s linear infinite;
-}
-
-.preloader-dash {
-  position: absolute;
-  width: 26px;
-  height: 3px;
-  border-radius: 2px;
-  background: var(--bear-gold);
-  opacity: 0.8;
-}
-
-.preloader-dash--1 { top: 14%; left: 6%; transform: rotate(-18deg); }
-.preloader-dash--2 { top: 34%; right: 2%; width: 18px; transform: rotate(10deg); }
-.preloader-dash--3 { bottom: 20%; left: -2%; width: 18px; transform: rotate(14deg); }
-.preloader-dash--4 { bottom: 8%; right: 8%; transform: rotate(-12deg); }
-
-.preloader-box-float {
-  position: relative;
-  z-index: 1;
-  width: 80%;
-  animation: preloader-float 2.6s ease-in-out infinite;
-}
-
-.preloader-box-img {
+.cb-pl-mark-img {
   display: block;
   width: 100%;
   height: auto;
-  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.35));
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 40, 0.45));
+  animation: cb-pl-float 3.4s ease-in-out 1.3s infinite;
 }
 
-.preloader-box-shadow {
+/* ---------- packing tape (progress) ---------- */
+.cb-pl-tape {
   position: absolute;
-  left: 50%;
-  bottom: -14px;
-  width: 62%;
-  height: 16px;
-  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.4) 0%, transparent 72%);
-  transform: translateX(-50%);
-  animation: preloader-shadow 2.6s ease-in-out infinite;
+  top: 50%;
+  left: -6%;
+  width: 112%;
+  height: var(--tape-h);
+  margin-top: calc(var(--tape-h) / -2);
+  transform: rotate(-2.4deg);
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 40, 0.45));
 }
 
-@keyframes preloader-float {
-  0%, 100% { transform: translateY(-4%); }
-  50% { transform: translateY(6%); }
+/* "Fold here" guide the tape is laid along. */
+.cb-pl-tape-guide {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  border-top: 2px dashed rgba(255, 212, 0, 0.35);
+  transform-origin: left center;
+  animation: cb-pl-draw 1.2s var(--ease-out) 0.2s both;
 }
 
-@keyframes preloader-shadow {
-  0%, 100% { transform: translateX(-50%) scale(0.86); opacity: 0.55; }
-  50% { transform: translateX(-50%) scale(1); opacity: 0.32; }
-}
-
-@keyframes preloader-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-/* ---------- progress ---------- */
-.preloader-progress {
-  width: min(86vw, 420px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.preloader-progress-track {
-  width: 100%;
-  height: 14px;
-  border-radius: 20px;
-  border: 1.5px solid var(--bear-gold);
-  background: rgba(255, 255, 255, 0.06);
+.cb-pl-tape-fill {
+  position: absolute;
+  inset: 0;
   overflow: hidden;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.32) 0%,
+      rgba(255, 255, 255, 0) 30%,
+      rgba(0, 0, 0, 0) 72%,
+      rgba(0, 0, 0, 0.14) 100%
+    ),
+    var(--bear-gold);
+  clip-path: inset(0 calc((1 - var(--p)) * 100%) 0 0);
 }
 
-.preloader-progress-fill {
+.cb-pl-tape-run {
+  display: flex;
+  width: max-content;
   height: 100%;
-  border-radius: 20px;
-  background: var(--bear-gold);
-  transition: width 0.12s linear;
+  animation: cb-pl-marquee 22s linear infinite;
 }
 
-.preloader-progress-pct {
-  margin-top: 14px;
-  font-family: 'Sharp Grotesk PE Trial Black', sans-serif;
-  font-weight: 900;
-  font-size: clamp(20px, 3vw, 26px);
-  color: var(--bear-gold);
-  font-variant-numeric: tabular-nums;
-}
-
-.preloader-caption {
-  margin-top: 10px;
-  font-family: 'Easy Pixel Regular', sans-serif;
-  font-size: clamp(11px, 1.6vw, 14px);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--bear-text);
-  opacity: 0.75;
-  line-height: 1.6;
-}
-
-/* ---------- bottom ticker ---------- */
-.preloader-ticker {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  overflow: hidden;
-  background: var(--bear-gold);
-  border-top: 3px solid var(--bear-bg);
-  border-bottom: 3px solid var(--bear-bg);
-  padding: 10px 0;
-}
-
-.preloader-ticker-track {
+.cb-pl-tape-group {
   display: flex;
-  width: max-content;
-  animation: preloader-ticker 18s linear infinite;
+  height: 100%;
 }
 
-.preloader-ticker-sequence {
-  display: flex;
-  width: max-content;
-}
-
-.preloader-ticker-item {
+.cb-pl-tape-item {
   display: inline-flex;
   align-items: center;
-  gap: 14px;
-  flex-shrink: 0;
-  padding: 0 22px;
+  gap: 0.7em;
+  padding: 0 1.1em;
   font-family: 'Sharp Grotesk PE Trial Bold', sans-serif;
   font-weight: 800;
-  font-size: clamp(13px, 1.8vw, 16px);
-  letter-spacing: 0.05em;
+  font-size: calc(var(--tape-h) * 0.34);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--bear-bg);
   white-space: nowrap;
+  color: var(--bear-bg);
 }
 
-.preloader-ticker-globe {
-  font-size: 0.9em;
-}
-
-.preloader-ticker-stripes {
-  width: 22px;
-  height: 14px;
+.cb-pl-tape-stripes {
+  width: 1.6em;
+  height: 0.95em;
   flex-shrink: 0;
   background-image: repeating-linear-gradient(
     -45deg,
     var(--bear-bg) 0,
-    var(--bear-bg) 3px,
-    transparent 3px,
-    transparent 8px
+    var(--bear-bg) 2.5px,
+    transparent 2.5px,
+    transparent 7px
   );
 }
 
-@keyframes preloader-ticker {
+.cb-pl-globe {
+  width: 1.05em;
+  height: 1.05em;
+  flex-shrink: 0;
+}
+
+/* Torn leading edge that rides the end of the tape. */
+.cb-pl-tape-edge {
+  position: absolute;
+  top: 0;
+  left: calc(var(--p) * 100%);
+  width: 9px;
+  height: 100%;
+  margin-left: -1px;
+  background: var(--bear-gold);
+  clip-path: polygon(
+    0 0, 100% 6%, 20% 14%, 100% 24%, 10% 33%, 90% 43%, 15% 52%,
+    100% 61%, 20% 70%, 95% 80%, 10% 89%, 100% 96%, 0 100%
+  );
+}
+
+/* ---------- stage label ---------- */
+.cb-pl-stage {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(50% + var(--tape-h) / 2 + var(--gap));
+  display: flex;
+  justify-content: center;
+}
+
+.cb-pl-stage-in {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 14px;
+  font-family: 'Easy Pixel Regular', monospace;
+  font-size: clamp(12px, 1vw, 15px);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.cb-pl-stage-num {
+  color: var(--bear-gold);
+}
+
+.cb-pl-stage-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  color: var(--bear-text);
+}
+
+.cb-pl-stage-word > span {
+  display: inline-block;
+  animation: cb-pl-swap 0.6s var(--ease-out) both;
+}
+
+/* ---------- caption ---------- */
+.cb-pl-caption {
+  position: absolute;
+  left: calc(var(--frame) + var(--pad));
+  bottom: calc(var(--frame) + var(--pad));
+  max-width: 280px;
+  font-family: 'Easy Pixel Regular', monospace;
+  font-size: clamp(11px, 0.9vw, 13px);
+  line-height: 1.7;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bear-text);
+  opacity: 0.72;
+}
+
+/* ---------- odometer counter ---------- */
+.cb-pl-count {
+  position: absolute;
+  right: calc(var(--frame) + var(--pad) - 0.04em);
+  bottom: calc(var(--frame) + var(--pad) - 0.02em);
+  overflow: hidden;
+  font-family: 'Sharp Grotesk PE Trial Black', sans-serif;
+  font-weight: 900;
+  font-size: clamp(84px, 13vw, 210px);
+  line-height: 1;
+  color: var(--bear-gold);
+}
+
+.cb-pl-count-in {
+  display: flex;
+  align-items: flex-start;
+  animation: cb-pl-rise 1.1s var(--ease-out) 0.45s both;
+}
+
+.cb-pl-digit {
+  display: block;
+  height: 0.8em;
+  overflow: hidden;
+  transition: opacity 0.4s ease;
+}
+
+.cb-pl-digit-strip {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.4s var(--ease-out);
+}
+
+.cb-pl-digit-strip > span {
+  display: block;
+  height: 0.8em;
+  line-height: 0.8;
+  text-align: center;
+}
+
+.cb-pl-digit--2 .cb-pl-digit-strip { transform: translateY(calc(var(--d2) * -10%)); }
+.cb-pl-digit--1 .cb-pl-digit-strip { transform: translateY(calc(var(--d1) * -10%)); }
+.cb-pl-digit--0 .cb-pl-digit-strip { transform: translateY(calc(var(--d0) * -10%)); }
+
+/* Leading zeros sit back so the live digits read first. */
+.cb-pl[data-lead='1'] .cb-pl-digit--2,
+.cb-pl[data-lead='2'] .cb-pl-digit--2,
+.cb-pl[data-lead='2'] .cb-pl-digit--1 {
+  opacity: 0.22;
+}
+
+.cb-pl-count-pct {
+  font-family: 'Sharp Grotesk PE Trial Bold', sans-serif;
+  font-size: 0.24em;
+  margin: 0.02em 0 0 0.12em;
+  color: var(--bear-text);
+}
+
+/* ---------- exit knife cut ---------- */
+.cb-pl-cut {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  margin-top: -1px;
+  z-index: 3;
+  background: #fff;
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.85), 0 0 2px #fff;
+  transform: scaleX(0);
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+/* ---------- keyframes ---------- */
+@keyframes cb-pl-rise {
+  from { transform: translateY(110%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes cb-pl-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes cb-pl-corner {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes cb-pl-draw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes cb-pl-mark-in {
+  from { transform: translateY(36px) scale(0.86); opacity: 0; filter: blur(10px); }
+  to { transform: translateY(0) scale(1); opacity: 1; filter: blur(0); }
+}
+
+@keyframes cb-pl-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+@keyframes cb-pl-marquee {
   from { transform: translate3d(0, 0, 0); }
   to { transform: translate3d(-50%, 0, 0); }
 }
 
-/* ---------- responsive ---------- */
-@media (max-width: 640px) {
-  .preloader-topbar { padding: 18px 18px 0; }
-  .preloader-logo { height: 40px; }
-  .preloader-stamp,
-  .preloader-chevrons { display: none; }
-  .preloader-title { font-size: clamp(34px, 12vw, 56px); }
+@keyframes cb-pl-swap {
+  from { transform: translateY(105%); }
+  to { transform: translateY(0); }
 }
 
-@media (max-width: 380px) {
-  .preloader-progress { width: 90vw; }
+/* ---------- responsive ---------- */
+@media (max-width: 640px) {
+  .cb-pl {
+    --tape-h: 36px;
+    --frame: 12px;
+    --pad: 14px;
+  }
+
+  .cb-pl-badge-outline { padding: 5px 11px; }
+  .cb-pl-badge-solid { padding: 5px 12px; }
+
+  .cb-pl-mark { width: 84px; }
+
+  .cb-pl-stage-in {
+    gap: 10px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+
+  .cb-pl-caption {
+    max-width: 42vw;
+    font-size: 10px;
+    line-height: 1.6;
+  }
+
+  .cb-pl-count { font-size: clamp(64px, 21vw, 100px); }
+}
+
+@media (max-height: 520px) and (orientation: landscape) {
+  .cb-pl { --gap: 14px; }
+  .cb-pl-mark { width: 64px; }
+  .cb-pl-caption { display: none; }
+  .cb-pl-count { font-size: 72px; }
 }
 
 /* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
-  .preloader,
-  .preloader-box-float,
-  .preloader-box-shadow,
-  .preloader-orbit,
-  .preloader-ticker-track {
+  .cb-pl *,
+  .cb-pl *::before,
+  .cb-pl *::after {
     animation: none !important;
-    transition: opacity 0.4s ease !important;
+  }
+
+  .cb-pl-digit-strip {
+    transition: none;
   }
 }
