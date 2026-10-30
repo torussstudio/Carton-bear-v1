@@ -1,16 +1,22 @@
-import Image from 'next/image';
-import logo from '../logo/carton-bear-logo.png';
+import preloaderBg from '../images/preloader-bg.webp';
 import '../styles/status-page.css';
 
 /*
- * Route-level loading UI. The home page is fully static and has its own
- * branded <Preloader />, so this only ever shows during a client-side
- * navigation (e.g. 404 page -> "Back To Home") while the page streams in.
+ * Route-level loading UI.
+ *
+ * This used to show a pulsing logo, which appeared BEFORE the home page's
+ * own <Preloader /> (always in `next dev`, and on slow streams), so visitors
+ * saw two different loaders back to back. It now renders exactly the
+ * preloader's first frame (same textured blue, nothing else), so if it shows
+ * at all it hands over to <Preloader /> invisibly.
  */
 export default function Loading() {
   return (
-    <div className="status-page status-page--loading" role="status" aria-label="Loading">
-      <Image src={logo} alt="" className="status-page-pulse" preload />
-    </div>
+    <div
+      className="status-page-shell"
+      role="status"
+      aria-label="Loading"
+      style={{ backgroundImage: `url(${preloaderBg.src})` }}
+    />
   );
 }

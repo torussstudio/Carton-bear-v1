@@ -56,8 +56,20 @@
   text-decoration: none;
 }
 
-/* loading.js — a quiet blue screen with a pulsing bear, so a slow
-   client-side navigation never flashes white. */
+/* loading.js: the preloader's first frame (textured blue, nothing on it),
+   so it blends straight into <Preloader /> instead of showing a second
+   loader. */
+.status-page-shell {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: var(--bear-bg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Pulsing bear, kept in case another status screen uses it. */
 .status-page--loading {
   gap: 0;
 }
